@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A shadow-chaser's travel guide to the total solar eclipses over Spain on 12 August 2026 and 2 August 2027 - region by region, with eclipse data, weather, crowds and flights from Schiphol.">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="Chasing the Shadow - Spain Eclipse Guide 2026 & 2027">
+<meta property="og:description" content="Region-by-region travel guide to Spain's 2026 & 2027 total solar eclipses.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='%23F2B441'/%3E%3Ccircle cx='62' cy='44' r='38' fill='%23161229'/%3E%3C/svg%3E">
+</head>
+<body>
+<title>Chasing the Shadow — Spain Eclipse Guide 2026 & 2027</title>
+<style>
+  :root{
+    --ground:#161229;
+    --ground-2:#1E1838;
+    --panel:#241D44;
+    --panel-2:#2C2350;
+    --line:#3A2F61;
+    --text:#EDE9F0;
+    --muted:#A99FC4;
+    --faint:#7C72A0;
+    --accent:#F2B441;      /* solar gold / photosphere */
+    --accent-2:#E5604D;    /* chromosphere coral */
+    --glow:#8E7FB0;        /* twilight lilac */
+    --good:#7FD1A8;
+    --warn:#E5604D;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"Cascadia Code","SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;}
+  a{color:var(--accent);}
+
+  /* ---------- type ---------- */
+  .display{font-family:var(--serif);font-weight:400;line-height:1.04;letter-spacing:-0.01em;}
+  .mono{font-family:var(--mono);}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:86vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  #sky{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;}
+  .hero-grad{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(22,18,41,0) 38%,rgba(22,18,41,.55) 68%,rgba(22,18,41,.96) 100%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;padding-bottom:7vh;padding-top:9vh;}
+  .hero h1{
+    font-size:clamp(2.8rem,8vw,6rem);
+    margin:.18em 0 .28em;
+    max-width:14ch;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent);}
+  .hero .lede{
+    font-size:clamp(1.05rem,2.2vw,1.4rem);
+    color:var(--muted);
+    max-width:54ch;
+    margin:0;
+  }
+  .hero .lede strong{color:var(--text);font-weight:600;}
+
+  /* ---------- year toggle ---------- */
+  .yearbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(22,18,41,.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .yearbar .wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px;}
+  .brandmark{font-family:var(--mono);font-size:.72rem;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;}
+  .toggle{display:flex;gap:6px;margin-left:auto;background:var(--ground-2);border:1px solid var(--line);border-radius:999px;padding:4px;}
+  .toggle button{
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;
+    border:0;background:transparent;color:var(--muted);
+    padding:8px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .toggle button[aria-selected="true"]{background:var(--accent);color:#2A1C04;font-weight:700;}
+  .toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  /* ---------- overview ---------- */
+  section{padding:72px 0;}
+  .sechead{margin-bottom:8px;}
+  .seclede{color:var(--muted);max-width:64ch;margin:.4em 0 0;}
+
+  .yearpanel{display:none;}
+  .yearpanel.active{display:block;}
+
+  .yearhead{
+    display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+    border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:8px;
+  }
+  .yearhead .big{font-size:clamp(2.2rem,5vw,3.4rem);}
+  .yearhead .when{font-family:var(--mono);color:var(--accent);font-size:.9rem;letter-spacing:.1em;}
+
+  .note{
+    display:grid;grid-template-columns:1fr 1fr;gap:0;
+    border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:36px 0 8px;
+  }
+  .note > div{padding:24px 26px;}
+  .note > div:first-child{border-right:1px solid var(--line);background:var(--ground-2);}
+  .note h4{margin:0 0 8px;font-family:var(--mono);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-2);}
+  .note p{margin:0;color:var(--muted);font-size:.96rem;}
+  .note .good h4{color:var(--good);}
+
+  /* ---------- region grid ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;margin-top:34px;}
+  .card{
+    position:relative;text-align:left;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:24px 24px 20px;color:var(--text);font-family:inherit;font-size:inherit;
+    transition:transform .2s ease,border-color .2s ease,background .2s ease;
+    display:flex;flex-direction:column;gap:14px;min-height:230px;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--accent);background:var(--panel-2);}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+  .tag{
+    display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;
+    padding:4px 9px;border-radius:999px;border:1px solid var(--line);color:var(--muted);align-self:flex-start;
+  }
+  .tag.pick{background:var(--accent);color:#2A1C04;border-color:var(--accent);font-weight:700;}
+  .tag.clear{color:var(--good);border-color:var(--good);}
+  .tag.risk{color:var(--accent-2);border-color:var(--accent-2);}
+  .card h3{font-family:var(--serif);font-size:1.7rem;margin:0;line-height:1.05;}
+  .card .sub{color:var(--muted);font-size:.92rem;margin:-6px 0 0;flex:1;}
+  .cardstats{display:flex;gap:22px;border-top:1px solid var(--line);padding-top:14px;margin-top:auto;}
+  .cardstats div{display:flex;flex-direction:column;}
+  .cardstats .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);}
+  .cardstats .v{font-family:var(--mono);font-size:1.04rem;color:var(--accent);font-weight:600;margin-top:2px;}
+  .card .open{position:absolute;top:22px;right:22px;color:var(--faint);font-family:var(--mono);font-size:1.1rem;transition:.2s;}
+  .card:hover .open{color:var(--accent);transform:translate(3px,-3px);}
+
+  /* ---------- detail view ---------- */
+  #detail{display:none;}
+  #detail.active{display:block;}
+  .back{
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.08em;color:var(--muted);
+    background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 18px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;transition:.18s;
+  }
+  .back:hover{border-color:var(--accent);color:var(--accent);}
+  .back:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+  .dhead{margin:32px 0 0;}
+  .dhead .eyebrow{margin-bottom:14px;display:block;}
+  .dhead h2{font-family:var(--serif);font-size:clamp(2.4rem,6vw,4.2rem);margin:0;line-height:1;}
+  .dhead .tagline{font-size:1.2rem;color:var(--muted);margin:14px 0 0;max-width:60ch;font-style:italic;font-family:var(--serif);}
+
+  .ephemeris{
+    margin:36px 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    background:linear-gradient(180deg,var(--ground-2),var(--panel));
+  }
+  .ephemeris .ehead{
+    font-family:var(--mono);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-2);
+    padding:14px 22px;border-bottom:1px solid var(--line);
+  }
+  .erow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));}
+  .erow > div{padding:20px 22px;border-right:1px solid var(--line);border-top:1px solid var(--line);}
+  .erow .k{font-family:var(--mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:8px;}
+  .erow .v{font-family:var(--mono);font-size:1.55rem;color:var(--accent);font-weight:600;line-height:1;}
+  .erow .v small{font-size:.8rem;color:var(--muted);font-weight:400;}
+
+  .dbody{display:grid;grid-template-columns:1fr;gap:0;}
+  .block{padding:30px 0;border-top:1px solid var(--line);}
+  .block:first-child{border-top:0;}
+  .block h3{
+    font-family:var(--mono);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);margin:0 0 14px;display:flex;align-items:center;gap:12px;
+  }
+  .block h3::before{content:"";width:22px;height:1px;background:var(--accent);display:inline-block;}
+  .block p{margin:0 0 14px;color:var(--text);}
+  .block p:last-child{margin-bottom:0;}
+  .block .muted{color:var(--muted);}
+  .pill{
+    display:inline-block;font-family:var(--mono);font-size:.74rem;
+    padding:3px 10px;border-radius:6px;background:var(--ground-2);border:1px solid var(--line);
+    color:var(--text);margin:2px 4px 2px 0;
+  }
+
+  .verdict{
+    margin:40px 0 0;padding:28px 30px;border-radius:14px;
+    border:1px solid var(--accent);background:linear-gradient(135deg,rgba(242,180,65,.10),rgba(229,96,77,.06));
+  }
+  .verdict h3{font-family:var(--mono);font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
+  .verdict p{margin:0;font-family:var(--serif);font-size:1.3rem;line-height:1.4;}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:46px 0 60px;color:var(--faint);font-size:.85rem;}
+  footer .wrap{display:flex;flex-direction:column;gap:14px;}
+  footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);}
+  footer a:hover{color:var(--accent);}
+  .srclist{display:flex;flex-wrap:wrap;gap:8px 18px;}
+  .disc{max-width:70ch;line-height:1.5;}
+
+  @media (max-width:680px){
+    .note{grid-template-columns:1fr;}
+    .note > div:first-child{border-right:0;border-bottom:1px solid var(--line);}
+    .erow > div{border-right:0;}
+    body{font-size:16px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="hero-grad"></div>
+  <div class="hero-inner">
+    <div class="wrap">
+      <span class="eyebrow">A field guide for the shadow-chaser &middot; Schiphol &rarr; Spain</span>
+      <h1 class="display">Two summers, two times the sky goes <em>dark</em>.</h1>
+      <p class="lede">Spain sits under the Moon's shadow on <strong>12 August 2026</strong> and again on <strong>2 August 2027</strong>. The 2026 path runs evening-low across the green north; 2027 climbs high over the sun-baked south. This guide picks the regions that balance a real shot at totality against heat, crowds, and a holiday worth having &mdash; one page each.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ============ YEAR BAR ============ -->
+<nav class="yearbar" aria-label="Choose eclipse year">
+  <div class="wrap">
+    <span class="brandmark">Chasing the Shadow</span>
+    <div class="toggle" role="tablist" aria-label="Eclipse year">
+      <button role="tab" id="tab-2026" aria-selected="true" aria-controls="year-2026" onclick="showYear('2026')">12 Aug 2026</button>
+      <button role="tab" id="tab-2027" aria-selected="false" aria-controls="year-2027" onclick="showYear('2027')">02 Aug 2027</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main>
+  <!-- HOME / GRID -->
+  <div id="home">
+    <section>
+      <div class="wrap">
+
+        <!-- 2026 -->
+        <div class="yearpanel active" id="year-2026" role="tabpanel" aria-labelledby="tab-2026">
+          <div class="yearhead">
+            <span class="display big">The evening eclipse</span>
+            <span class="when">12 AUG 2026 &middot; ~20:30 CEST &middot; sun low in the WNW</span>
+          </div>
+          <p class="seclede">An hour before sunset the shadow sweeps the green north and dry interior. Totality is short (under two minutes) and the Sun sits painfully low &mdash; so an open western horizon is non-negotiable. The trade-off below is real and unavoidable.</p>
+
+          <div class="note">
+            <div>
+              <h4>The catch</h4>
+              <p>The cool, comfortable regions you'd want in August (the green Atlantic north) are also the cloudiest &mdash; roughly 55&ndash;60% cloud cover. The reliably clear regions (interior, islands) are either furnace-hot or packed and pricey. You cannot have cool + clear + uncrowded at once.</p>
+            </div>
+            <div class="good">
+              <h4>The relief</h4>
+              <p>There's a far better eclipse next summer in the south &mdash; high sun, long totality, near-zero cloud. So treat 2026 as the relaxed one: pick the region for the <em>holiday</em>, take totality as a bonus, and keep your nerves for 2027.</p>
+            </div>
+          </div>
+
+          <div class="grid" id="grid-2026"></div>
+        </div>
+
+        <!-- 2027 -->
+        <div class="yearpanel" id="year-2027" role="tabpanel" aria-labelledby="tab-2027">
+          <div class="yearhead">
+            <span class="display big">The morning eclipse</span>
+            <span class="when">02 AUG 2027 &middot; ~10:47 CEST &middot; sun high &amp; safe</span>
+          </div>
+          <p class="seclede">This is the easy one. Mid-morning, the Sun well clear of the horizon &mdash; no mountains or haze to dodge &mdash; totality stretching past two and a half minutes, and the famously dry Andalusian August keeping the sky cloudless. The price is heat, but the eclipse falls in the cooler morning hours.</p>
+
+          <div class="note">
+            <div class="good">
+              <h4>Why it's the better eclipse</h4>
+              <p>Up to ~6m 23s on the centreline (out at sea); ~2m 54s in the city of C&aacute;diz versus barely 1m 45s anywhere in 2026. High sun means you can stand almost anywhere with a clear view. August Andalusia is about as cloud-free as Europe gets.</p>
+            </div>
+            <div>
+              <h4>The catch</h4>
+              <p>It's southern Spain in August &mdash; daytime highs of 30&ndash;36&deg;C. But the eclipse is at ~10:47, before the worst heat, and the coast (Costa de la Luz) runs several degrees milder than the interior. Plan beaches and shade for the afternoons.</p>
+            </div>
+          </div>
+
+          <div class="grid" id="grid-2027"></div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+  <!-- DETAIL -->
+  <div id="detail">
+    <section>
+      <div class="wrap">
+        <button class="back" onclick="closeDetail()">&larr; All regions</button>
+        <div id="detail-content"></div>
+        <button class="back" style="margin-top:40px;" onclick="closeDetail()">&larr; Back to all regions</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="disc">Eclipse times, durations and Sun altitudes are approximate and vary across each region &mdash; once you've chosen a spot, confirm the exact local circumstances and check for ridgelines or buildings on your western horizon (critical in 2026, when the Sun is only a few degrees up). Flight routes reflect summer 2026 schedules and change seasonally; always verify before booking. Weather figures are August climatological averages, not forecasts.</p>
+    <div class="srclist">
+      <span style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;">SOURCES &nbsp;</span>
+      <a href="https://eclipsophile.com/tse2026/">Eclipsophile (2026 weather)</a>
+      <a href="https://www.timeanddate.com/eclipse/solar/2026-august-12">timeanddate 2026</a>
+      <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_12,_2026">Wikipedia 2026</a>
+      <a href="https://spaineclipses.com/eclipse-2026/weather/">SpainEclipses weather</a>
+      <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_2,_2027">Wikipedia 2027</a>
+      <a href="https://www.spain.info/en/eclipses/">spain.info eclipses</a>
+      <a href="https://waw.travel/new-flights-on-the-camino-from-summer-2026/">AMS&rarr;north Spain flights</a>
+    </div>
+    <p style="margin-top:6px;">Made for a friend &middot; clear skies and safe glasses. &#127773;</p>
+  </div>
+</footer>
+
+<script>
+//==================== DATA ====================
+const REGIONS = {
+  "2026": [
+    {
+      id:"asturias", name:"Asturias", tag:"TOP PICK", tagClass:"pick",
+      sub:"Green, cool and in the path — the best balance of comfort and totality, now with a direct flight.",
+      stats:{ totality:"~1m 45s", cloud:"~55–60%" },
+      tagline:"Cider, sea cliffs and the Picos de Europa — the coolest place that still sees the full eclipse.",
+      eph:{ totality:"~1m 45s", time:"20:27 <small>CEST</small>", alt:"~12° <small>WNW</small>", temp:"~24°C", cloud:"55–60%" },
+      eclipse:"Asturias sits squarely inside the band of totality, with one of the longest durations on Spanish soil — close to 1m 48s near the centre line around Oviedo. Totality lands at roughly 20:27 local time, about an hour before sunset, with the Sun only ~12° above the west-northwest horizon.",
+      weather:"This is ‘green Spain’: Atlantic, mild and roughly 24°C in August — exactly the cool, comfortable climate you wanted. The honest downside is cloud. The northern coast averages 55–60% cloud cover in August, the highest risk on the whole 2026 path. A low Sun makes a horizon cloud-bank especially dangerous.",
+      crowds:"Far calmer than the islands or the Mediterranean. Nature-based tourism spreads people across a big region rather than concentrating them, and August prices here are sane compared with Mallorca.",
+      getting:"Best news of the trip: KLM launches a <strong>direct Schiphol→Asturias (OVD)</strong> service for summer 2026, joining Vueling and others — it lands you inside the path. Flight ~2h10. Bilbao (BIO, direct from AMS) is a strong backup, ~2h drive east.",
+      viewing:"Stand on a <strong>west-facing</strong> stretch of coast with open water to the WNW — the western Asturian coast around Cudillero, Cabo Vidio or Cabo Buséto. Critically, stay <strong>west of the Picos de Europa</strong>: those peaks will hide a 12° Sun if you're behind them. Rent a car so you can chase the clearest sky on the day.",
+      vacation:"Picos de Europa national park, the Covadonga lakes, fishing villages like Cudillero and Llanes, wild beaches, and sidra poured from a height in the cider houses. The Camino Primitivo starts here too. A genuinely beautiful week even if the cloud wins.",
+      verdict:"The smart 2026 choice if comfort and crowds matter more than guaranteed totality. Cool, gorgeous, in the path, easy to reach — just go mobile and accept the cloud gamble."
+    },
+    {
+      id:"cantabria", name:"Cantabria", tag:"COOL & SCENIC", tagClass:"",
+      sub:"Asturias’ quieter neighbour — same mild climate, elegant Santander, slightly shorter totality.",
+      stats:{ totality:"~1m 40s", cloud:"~55–60%" },
+      tagline:"Belle-époque beaches and prehistoric caves, with the eclipse over the Cantábrico.",
+      eph:{ totality:"~1m 40s", time:"20:28 <small>CEST</small>", alt:"~12° <small>WNW</small>", temp:"~23°C", cloud:"55–60%" },
+      eclipse:"Cantabria lies inside the path, a touch east of Asturias, so totality is fractionally shorter (~1m 40s) at around 20:28. Same low Sun, same hard requirement for an unobstructed western horizon.",
+      weather:"Mild Atlantic summer, ~23°C — the temperature box is ticked. Same cloud penalty as the rest of the north coast (55–60%), so the eclipse is a real gamble even if the holiday isn't.",
+      crowds:"Relaxed. Santander is a dignified resort city rather than a party hotspot, and the wider region absorbs visitors easily.",
+      getting:"No reliable year-round direct from Schiphol to Santander (SDR), so fly <strong>direct AMS→Bilbao (BIO)</strong> (Vueling, ~2h15) and drive ~1h west, or use the new <strong>AMS→Asturias (OVD)</strong> and approach from the other side.",
+      viewing:"West-facing coast with sea horizon — the beaches west of Santander and around Comillas/San Vicente de la Barquera. Keep the Picos de Europa behind you to the south, not between you and the Sun.",
+      vacation:"El Sardinero beach in Santander, the medieval cobbles of Santillana del Mar, the Altamira cave museum, Gaudí’s El Capricho in Comillas, and the eastern flank of the Picos. Pairs naturally with an Asturias leg.",
+      verdict:"A near-twin of Asturias for climate and crowds. Choose it if Santander, the caves and the eastern Picos appeal more than the Asturian coast — but you carry the same cloud risk."
+    },
+    {
+      id:"galicia", name:"Galicia", tag:"END OF THE EARTH", tagClass:"",
+      sub:"Seafood, Santiago and the Costa da Morte — dramatic, but note: Santiago city itself just misses totality.",
+      stats:{ totality:"~1m 35s", cloud:"~50–60%" },
+      tagline:"Finisterre — ‘the end of the world’ — with the eclipse Sun setting straight out over the Atlantic.",
+      eph:{ totality:"~1m 35s", time:"20:26 <small>CEST</small>", alt:"~14° <small>WNW</small>", temp:"~24°C", cloud:"50–60%" },
+      eclipse:"Galicia is where the shadow first touches Spain, around 19:27, with totality near 20:26 and the Sun a little higher here (~14°) than further east. <strong>Important:</strong> the city of Santiago de Compostela lies just outside the path — a 99.95% partial, which is <em>not</em> totality and looks nothing like it. You must position on the coast or further north, inside the band.",
+      weather:"Cool and Atlantic, ~24°C, but Galicia is famously damp — cloud odds run 50–60%. The far west coast sometimes clears at dusk as the land breeze kicks in, which can help.",
+      crowds:"Moderate. Santiago fills with pilgrims year-round, but the Costa da Morte and Rías are spacious.",
+      getting:"<strong>Direct Schiphol→Santiago (SCQ)</strong> runs daily in peak summer (KLM, plus Vueling/Ryanair/easyJet), ~2h20. Then drive ~1h15 west to the coast to be inside totality.",
+      viewing:"<strong>Cape Finisterre (Fisterra)</strong> and the Costa da Morte are made for this: west-facing Atlantic cliffs with nothing between you and the horizon — ideal for a low, setting eclipse Sun. Arrive hours early; it's an obvious magnet.",
+      vacation:"Santiago’s UNESCO old town and cathedral, the Rías Baixas estuaries, some of Europe’s best seafood and Albariño wine, and the symbolic end of the Camino at Finisterre. Rich even if Santiago itself only sees the partial.",
+      verdict:"Pick Galicia for the romance of totality over the Atlantic at ‘the end of the earth’ — but only if you commit to driving to the coast on eclipse day. Don’t watch from Santiago expecting the full show."
+    },
+    {
+      id:"aragon", name:"Aragón & the Ebro Valley", tag:"CLEAR-SKY BET", tagClass:"clear",
+      sub:"The driest sky on the 2026 path and room to breathe — if you can take the heat.",
+      stats:{ totality:"~1m 45s", cloud:"~20–25%" },
+      tagline:"Wide open plains, Moorish Zaragoza, and the best odds of actually seeing it.",
+      eph:{ totality:"~1m 45s", time:"20:31 <small>CEST</small>", alt:"~8° <small>W</small>", temp:"~34°C", cloud:"20–25%" },
+      eclipse:"The Ebro valley offers the clearest skies on mainland Spain for 2026 — cloud cover around 20–25%, statistically on par with Mallorca. Totality is ~1m 45s near 20:31. The Sun is very low here, ~8°, so you need a genuinely flat western horizon (which the plains conveniently provide).",
+      weather:"Hot and dry — August highs around 34°C, occasionally higher. This is the heat you were worried about. But it's <em>dry</em> heat, evenings cool quickly, and at 20:30 the Sun is already dropping. Follow the local rule: sightsee early morning and evening, siesta through the afternoon.",
+      crowds:"Low. Inland Spain empties toward the coast in August, leaving open countryside where you can simply pull over to a field. Zaragoza is a major city with excellent road and rail links — ideal for a last-minute drive if a cloud threatens.",
+      getting:"No convenient direct from Schiphol. Fly <strong>direct AMS→Barcelona (BCN)</strong>, then the high-speed AVE train to Zaragoza (~1h15), or fly to Madrid and take the AVE (~1h15). Hire a car at Zaragoza for eclipse-evening mobility.",
+      viewing:"The open Ebro plains make a flat western horizon easy to find — essential for an 8° Sun. Scout a spot with no distant hills or town silhouettes to the west. Space is the luxury here: you won't be fighting a crowd.",
+      vacation:"Zaragoza’s vast Basílica del Pilar, Mudéjar towers and Goya heritage; the Aragón Pyrenees within reach for cooler day trips; the Monasterio de Piedra waterfalls. Less polished than the coast, but authentic and uncrowded.",
+      verdict:"The rational choice if seeing totality matters most. Best clear-sky odds + space + escape routes. The cost is heat — manageable if you respect the afternoon and plan around it."
+    },
+    {
+      id:"mallorca", name:"Mallorca & the Balearics", tag:"LONGEST TOTALITY", tagClass:"risk",
+      sub:"The longest darkness in Spain and gorgeous — but peak-August crowds and eclipse-premium prices.",
+      stats:{ totality:"~2m 10s", cloud:"~20%" },
+      tagline:"The deepest eclipse on the path, watched from a west-coast cove — if you book very, very early.",
+      eph:{ totality:"~2m 10s", time:"20:33 <small>CEST</small>", alt:"~5° <small>W</small>", temp:"~30°C", cloud:"~20%" },
+      eclipse:"Mallorca gets the <strong>longest totality in Spain</strong> — about 2m 10s — and excellent ~20% cloud odds. The price: the Sun is at its lowest here, only ~4–6° up, so you absolutely need a clear sea horizon to the west. Totality is late, ~20:33.",
+      weather:"Around 30°C but tempered by sea breeze — beach-warm, not furnace-hot, the gentlest heat of the clear-sky options. Low humidity-driven cloud risk.",
+      crowds:"<strong>The real drawback.</strong> Mallorca in mid-August is already among Europe’s most saturated destinations; the eclipse stacks on top, and the low Sun funnels everyone onto the same narrow strip of west-facing coast. Expect jammed coastal roads, packed viewpoints and premium prices. Book flights and lodging many months ahead.",
+      getting:"Easiest of all: <strong>frequent direct Schiphol→Palma (PMI)</strong> with KLM, Transavia and easyJet, ~2h30.",
+      viewing:"You need a <strong>west / southwest-facing</strong> shore with open sea — the west coast around Banyalbufar, Port d’Andratx, Sant Elm and Sa Dragonera. Claim your spot hours early, or rent on that coast so you don’t have to drive into the crush at sunset.",
+      vacation:"Serra de Tramuntana (UNESCO) mountains and villages, Palma’s seafront cathedral, hidden calas and superb food — a top-tier holiday island. Just know you’re paying peak prices in peak season.",
+      verdict:"Choose Mallorca only if the longest totality is the goal and you’ll book early and tolerate crowds + cost. Given your worries about both heat and crowds, it’s the weakest fit of the clear-sky options — but the eclipse itself is the best."
+    }
+  ],
+  "2027": [
+    {
+      id:"cadiz", name:"Cádiz Province", tag:"TOP PICK", tagClass:"pick",
+      sub:"The longest mainland totality, a high safe Sun, near-zero cloud and the wild Costa de la Luz.",
+      stats:{ totality:"~2m 54s", cloud:"~10–15%" },
+      tagline:"Atlantic beaches, sherry and white villages — under nearly three minutes of midday darkness.",
+      eph:{ totality:"~2m 54s", time:"10:45 <small>CEST</small>", alt:"~40° <small>high</small>", temp:"~31°C", cloud:"10–15%" },
+      eclipse:"Cádiz is the headline act of 2027: almost the entire province lies in the path, the city itself getting <strong>~2m 54s</strong> of totality starting around 10:45. The Sun is high (~40°), so — unlike 2026 — there's no horizon problem at all. Watch from almost anywhere with open sky.",
+      weather:"Hot but Atlantic-tempered: the Costa de la Luz runs a few degrees cooler than inland Andalusia, ~31°C by afternoon. The eclipse falls at ~10:45, comfortably before peak heat. Cloud odds are tiny — single-to-low-double digits.",
+      crowds:"This will be a major draw, but the province is large with miles of broad beaches, so people disperse. Far less pinch-point pressure than a low-Sun coastal eclipse.",
+      getting:"No dependable direct AMS→Jerez (XRY). Easiest is <strong>direct Schiphol→Seville (SVQ)</strong> (Transavia/Vueling), then ~1h15 drive south; or fly <strong>AMS→Málaga (AGP)</strong> and drive ~2h west.",
+      viewing:"The high Sun frees you up: a Costa de la Luz beach (Zahara de los Atunes, Bolonia, Conil), the ramparts of Cádiz, or a hilltop white village like Vejer de la Frontera all work. Just want open sky to the south-east.",
+      vacation:"One of Spain’s best weeks: the ancient sea-girt city of Cádiz, Tarifa for wind- and kite-surfing, Jerez for sherry bodegas and flamenco, the pueblos blancos, and the Doñana wetlands nearby. Beach mornings, shade and tapas in the heat of the day.",
+      verdict:"The clear winner across both years. Longest mainland totality, high safe Sun, dependable sky, superb holiday. If you only do one, do this one."
+    },
+    {
+      id:"malaga", name:"Málaga & the Costa del Sol", tag:"EASIEST ACCESS", tagClass:"clear",
+      sub:"In the path, cloudless, and the simplest flight from Schiphol — a comfortable base for the 2027 eclipse.",
+      stats:{ totality:"~1m 48s", cloud:"~10–15%" },
+      tagline:"Picasso’s city, the Costa del Sol and Ronda — totality with the least travel friction.",
+      eph:{ totality:"~1m 48s", time:"10:48 <small>CEST</small>", alt:"~40° <small>high</small>", temp:"~31°C", cloud:"10–15%" },
+      eclipse:"Much of Málaga province lies in the path; the city gets ~1m 48s around 10:48, with the Sun high and safe. Shorter than Cádiz, but the convenience can win.",
+      weather:"Classic Costa del Sol August: hot, dry, ~31°C, sea-tempered on the coast, and almost guaranteed clear at eclipse time.",
+      crowds:"Busy resort coast in August, but the eclipse crowd has the whole Costa del Sol to spread across, and the high Sun means no scramble for special vantage points.",
+      getting:"<strong>The single easiest gateway in this guide:</strong> frequent <strong>direct Schiphol→Málaga (AGP)</strong> daily with KLM, Transavia, easyJet and Vueling, ~3h. Step off the plane and you’re essentially there.",
+      viewing:"High Sun, so any open spot does — a Costa del Sol beach, the Alcazaba ramparts in Málaga, or the dramatic gorge town of Ronda inland. Edge into central/eastern Málaga province to be safely inside the band.",
+      vacation:"Málaga’s revitalised old town and Picasso museum, the Alcazaba, Costa del Sol beaches, the clifftop city of Ronda, the Nerja caves — and the Alhambra in Granada is an easy day trip.",
+      verdict:"The low-friction choice for 2027: in the path, near-certain clear sky, and the most painless flight from home. Trade ~a minute of totality for maximum ease versus Cádiz."
+    },
+    {
+      id:"granada-almeria", name:"Granada & Almería", tag:"SOUTHERN EDGE", tagClass:"",
+      sub:"The Alhambra and Spain’s desert coast — spectacular country, but you must go south to reach the band.",
+      stats:{ totality:"<2m (edge)", cloud:"~10–15%" },
+      tagline:"Moorish palaces and the volcanic Cabo de Gata — totality near the path’s southern rim.",
+      eph:{ totality:"<2m <small>edge</small>", time:"10:49 <small>CEST</small>", alt:"~40° <small>high</small>", temp:"~31–34°C", cloud:"10–15%" },
+      eclipse:"Only the <strong>southern</strong> parts of Granada and Almería provinces fall inside the path — the coast and the Cabo de Gata area, not necessarily the inland cities. Totality is shorter here, near the edge, around 10:49 with a high Sun. Confirm your exact spot is inside the band before committing.",
+      weather:"Hot — Granada city interior can hit 34°C+, while the Almería coast (~31°C) is desert-dry and breezy. Among the lowest cloud odds in Europe; Almería is the driest corner of the continent.",
+      crowds:"Granada’s Alhambra is always busy (book tickets far ahead); the Cabo de Gata coast is comparatively wild and uncrowded.",
+      getting:"No easy direct from Schiphol to Granada (GRX) or Almería (LEI). Simplest is to fly <strong>AMS→Málaga (AGP)</strong> and drive (Granada ~1h30, Cabo de Gata ~2h30), treating this as an extension of a Málaga or Cádiz trip.",
+      viewing:"For totality, head to the <strong>southern coast</strong> — the Cabo de Gata natural park, Almería’s beaches, or the Granada coast near Motril. Granada city sits near the rim, so don’t assume the Alhambra is inside the path; verify and, if needed, drive south on the morning.",
+      vacation:"The Alhambra and Albaicín in Granada, the lunar Cabo de Gata-Níjar park with its volcanic coves, Spaghetti-Western deserts near Tabernas, and Sierra Nevada for height and cool air. Pairs beautifully with the Cádiz/Málaga regions.",
+      verdict:"Go here for the scenery and to combine with Málaga or Cádiz — but treat the eclipse as something you drive to the southern coast for, not a given in Granada city."
+    }
+  ]
+};
+
+//==================== RENDER GRID ====================
+function statCell(k,v){return '<div><span class="k">'+k+'</span><span class="v">'+v+'</span></div>';}
+
+function renderGrid(year){
+  const grid = document.getElementById('grid-'+year);
+  grid.innerHTML = REGIONS[year].map(function(r){
+    return ''
+    +'<button class="card" onclick="openDetail(\''+year+'\',\''+r.id+'\')" aria-label="Open '+r.name+' guide">'
+      +'<span class="open" aria-hidden="true">&#8599;</span>'
+      +'<span class="tag '+r.tagClass+'">'+r.tag+'</span>'
+      +'<h3>'+r.name+'</h3>'
+      +'<p class="sub">'+r.sub+'</p>'
+      +'<div class="cardstats">'
+        +statCell('Totality',r.stats.totality)
+        +statCell('Aug cloud',r.stats.cloud)
+      +'</div>'
+    +'</button>';
+  }).join('');
+}
+
+//==================== DETAIL ====================
+function ephCell(k,v){return '<div><div class="k">'+k+'</div><div class="v">'+v+'</div></div>';}
+function block(title,html){return '<div class="block"><h3>'+title+'</h3>'+html+'</div>';}
+
+function openDetail(year,id){
+  const r = REGIONS[year].find(function(x){return x.id===id;});
+  if(!r) return;
+  const yearLabel = year==="2026" ? "12 August 2026 · evening eclipse" : "2 August 2027 · morning eclipse";
+  const html = ''
+   +'<div class="dhead">'
+     +'<span class="eyebrow">'+yearLabel+'</span>'
+     +'<h2 class="display">'+r.name+'</h2>'
+     +'<p class="tagline">'+r.tagline+'</p>'
+   +'</div>'
+   +'<div class="ephemeris">'
+     +'<div class="ehead">Eclipse ephemeris &amp; conditions</div>'
+     +'<div class="erow">'
+       +ephCell('Totality',r.eph.totality)
+       +ephCell('Local time',r.eph.time)
+       +ephCell('Sun altitude',r.eph.alt)
+       +ephCell('Aug avg high',r.eph.temp)
+       +ephCell('Cloud cover',r.eph.cloud)
+     +'</div>'
+   +'</div>'
+   +'<div class="dbody">'
+     +block('The eclipse here','<p>'+r.eclipse+'</p>')
+     +block('Weather &amp; temperature','<p>'+r.weather+'</p>')
+     +block('Crowds','<p>'+r.crowds+'</p>')
+     +block('Getting there from Schiphol','<p>'+r.getting+'</p>')
+     +block('Where to actually stand','<p>'+r.viewing+'</p>')
+     +block('The rest of the holiday','<p>'+r.vacation+'</p>')
+   +'</div>'
+   +'<div class="verdict"><h3>Verdict</h3><p>'+r.verdict+'</p></div>';
+  document.getElementById('detail-content').innerHTML = html;
+  document.getElementById('home').style.display='none';
+  document.getElementById('detail').classList.add('active');
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function closeDetail(){
+  document.getElementById('detail').classList.remove('active');
+  document.getElementById('home').style.display='block';
+  window.scrollTo({top:0,behavior:'auto'});
+}
+
+//==================== YEAR TOGGLE ====================
+function showYear(year){
+  ['2026','2027'].forEach(function(y){
+    document.getElementById('year-'+y).classList.toggle('active', y===year);
+    const tab=document.getElementById('tab-'+y);
+    tab.setAttribute('aria-selected', y===year ? 'true':'false');
+  });
+  closeDetail();
+}
+
+renderGrid('2026');
+renderGrid('2027');
+
+//==================== HERO CORONA (canvas) ====================
+(function(){
+  const c = document.getElementById('sky');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W,H,cx,cy,R,dpr;
+
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = W*dpr; c.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    cx = W*0.72; cy = H*0.40;
+    R = Math.max(46, Math.min(W,H)*0.085);
+  }
+
+  // pre-generate stable corona rays
+  const rays = [];
+  for(let i=0;i<150;i++){
+    const a = (i/150)*Math.PI*2 + (i%3)*0.04;
+    rays.push({ a:a, len:0.6+((i*53)%100)/100*2.4, w:0.4+((i*29)%100)/100*1.6, ph:(i%10)/10*Math.PI*2 });
+  }
+  // stable starfield
+  const stars = [];
+  for(let i=0;i<90;i++){
+    stars.push({ x:((i*73)%100)/100, y:((i*37)%100)/100, r:((i*17)%100)/100*1.1+0.2, b:0.2+((i*51)%100)/100*0.6 });
+  }
+
+  function draw(t){
+    // twilight sky: deep indigo top, warm dusk glow toward the eclipse + horizon
+    const g = ctx.createLinearGradient(0,0,0,H);
+    g.addColorStop(0,'#100D22');
+    g.addColorStop(0.55,'#1A1430');
+    g.addColorStop(0.82,'#3A2547');
+    g.addColorStop(1,'#7A3A39');
+    ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+
+    // 360 dusk band glow low across the scene
+    const horizon = ctx.createRadialGradient(cx,H*1.05,H*0.1,cx,H*1.05,W*0.9);
+    horizon.addColorStop(0,'rgba(229,96,77,0.32)');
+    horizon.addColorStop(0.5,'rgba(242,180,65,0.10)');
+    horizon.addColorStop(1,'rgba(229,96,77,0)');
+    ctx.fillStyle = horizon; ctx.fillRect(0,0,W,H);
+
+    // stars
+    stars.forEach(function(s){
+      ctx.globalAlpha = s.b*0.7;
+      ctx.fillStyle = '#EDE9F0';
+      ctx.beginPath(); ctx.arc(s.x*W, s.y*H*0.7, s.r, 0, Math.PI*2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+
+    // outer corona glow
+    const halo = ctx.createRadialGradient(cx,cy,R*0.85,cx,cy,R*4.2);
+    halo.addColorStop(0,'rgba(242,180,65,0.55)');
+    halo.addColorStop(0.18,'rgba(242,180,65,0.18)');
+    halo.addColorStop(0.5,'rgba(180,160,210,0.08)');
+    halo.addColorStop(1,'rgba(180,160,210,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath(); ctx.arc(cx,cy,R*4.2,0,Math.PI*2); ctx.fill();
+
+    // corona rays
+    ctx.save();
+    ctx.translate(cx,cy);
+    rays.forEach(function(ray){
+      const flick = reduce ? 1 : (0.82 + 0.18*Math.sin(t*0.0014 + ray.ph));
+      const len = R*ray.len*flick;
+      const grd = ctx.createLinearGradient(0,0,Math.cos(ray.a)*len,Math.sin(ray.a)*len);
+      grd.addColorStop(0,'rgba(248,236,200,0.5)');
+      grd.addColorStop(1,'rgba(242,180,65,0)');
+      ctx.strokeStyle = grd;
+      ctx.lineWidth = ray.w;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(ray.a)*R*0.96, Math.sin(ray.a)*R*0.96);
+      ctx.lineTo(Math.cos(ray.a)*(R+len), Math.sin(ray.a)*(R+len));
+      ctx.stroke();
+    });
+    ctx.restore();
+
+    // chromosphere ring (thin coral rim)
+    ctx.beginPath(); ctx.arc(cx,cy,R*1.02,0,Math.PI*2);
+    ctx.strokeStyle='rgba(229,96,77,0.55)'; ctx.lineWidth=2.4; ctx.stroke();
+
+    // the black Moon disk
+    ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2);
+    ctx.fillStyle='#0C0A18'; ctx.fill();
+
+    // diamond ring: a bright point that subtly pulses on the rim
+    const dr = reduce ? 0.9 : (0.6 + 0.5*Math.abs(Math.sin(t*0.0008)));
+    const dx = cx + Math.cos(-0.6)*R, dy = cy + Math.sin(-0.6)*R;
+    const dg = ctx.createRadialGradient(dx,dy,0,dx,dy,R*0.9*dr);
+    dg.addColorStop(0,'rgba(255,250,235,'+ (0.95*dr) +')');
+    dg.addColorStop(0.25,'rgba(248,236,200,'+(0.5*dr)+')');
+    dg.addColorStop(1,'rgba(242,180,65,0)');
+    ctx.fillStyle=dg;
+    ctx.beginPath(); ctx.arc(dx,dy,R*0.9*dr,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(dx,dy,2.6,0,Math.PI*2); ctx.fillStyle='#FFFDF7'; ctx.fill();
+  }
+
+  function loop(t){ draw(t); raf = requestAnimationFrame(loop); }
+  let raf;
+  function start(){ cancelAnimationFrame(raf); resize(); if(reduce){ draw(0); } else { raf=requestAnimationFrame(loop); } }
+  window.addEventListener('resize', function(){ resize(); if(reduce) draw(0); });
+  start();
+})();
+</script>
+
+</body>
+</html>
