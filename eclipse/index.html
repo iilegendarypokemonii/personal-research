@@ -88,6 +88,8 @@
   /* detail */
   #detail{display:none;scroll-margin-top:70px;}
   #detail.active{display:block;}
+  .detailnav{display:flex;gap:10px;flex-wrap:wrap;}
+  #copybtn.ok{border-color:var(--good);color:var(--good);}
   .back{font-family:var(--mono);font-size:.78rem;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:999px;padding:9px 18px;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.18s;}
   .back:hover{border-color:var(--accent);color:var(--accent);}
   .back:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
@@ -207,9 +209,12 @@
   <div id="detail">
     <section>
       <div class="wrap">
-        <button class="back" onclick="closeDetail(true)">&larr; All regions</button>
+        <div class="detailnav">
+          <button class="back" onclick="goBack()">&larr; All regions</button>
+          <button class="back" id="copybtn" onclick="copyLink()">&#128279; Copy link to this page</button>
+        </div>
         <div id="detail-content"></div>
-        <button class="back" style="margin-top:40px;" onclick="closeDetail(true)">&larr; Back to all regions</button>
+        <button class="back" style="margin-top:40px;" onclick="goBack()">&larr; Back to all regions</button>
       </div>
     </section>
   </div>
@@ -231,14 +236,13 @@
 </footer>
 
 <script>
-const IMG = function(tags,w,h,lock){return "https://loremflickr.com/"+w+"/"+h+"/"+tags+"?lock="+lock;};
-
 const REGIONS = {
   "2026":[
     {
       id:"asturias", name:"Asturias", tag:"TOP PICK", tagClass:"pick", price:"€€",
       sub:"Cliffs, cider and the Picos de Europa. The coolest place that still sees the full eclipse.",
-      tags:"asturias,coast", thumb:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Cudillero_Asturias.jpg/1280px-Cudillero_Asturias.jpg", g1:"picos,europa", g2:"cudillero,asturias", lock:11,
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Cudillero_Asturias.jpg/1280px-Cudillero_Asturias.jpg",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Picu_Urriellu.jpg/1280px-Picu_Urriellu.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Lagos_de_Covadonga%2C2.jpg/1280px-Lagos_de_Covadonga%2C2.jpg"],
       stats:{totality:"~1m 45s", cloud:"55-60%"},
       lead:"Asturias is the Spain that catches people off guard: a coast of cliffs and hidden coves backed by the snow-streaked Picos de Europa, fishing villages stacked above their harbours, and a green that owes everything to Atlantic rain.",
       eclipse:"You are well inside the path, with one of the longest stretches of totality on Spanish soil, close to a minute and three-quarters near Oviedo. Darkness arrives around 20:27, roughly an hour before sunset, with the Sun low in the west-northwest at about twelve degrees. Low enough that you want open water, not mountains, on that horizon.",
@@ -252,7 +256,8 @@ const REGIONS = {
     {
       id:"cantabria", name:"Cantabria", tag:"COOL & SCENIC", tagClass:"", price:"€€",
       sub:"Belle-epoque Santander, painted caves and the eastern Picos. Asturias' quieter neighbour.",
-      tags:"santander,spain", thumb:"https://upload.wikimedia.org/wikipedia/commons/a/a9/ColegiataSantillana-1.jpg", g1:"santillana,del,mar", g2:"comillas,cantabria", lock:21,
+      img:"https://upload.wikimedia.org/wikipedia/commons/a/a9/ColegiataSantillana-1.jpg",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/El_Capricho_Gaud%C3%AD_02.jpg/1280px-El_Capricho_Gaud%C3%AD_02.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Playa_del_Sardinero%2C_Santander_-_panoramio.jpg/1280px-Playa_del_Sardinero%2C_Santander_-_panoramio.jpg"],
       stats:{totality:"~1m 40s", cloud:"55-60%"},
       lead:"Cut from similar cloth to Asturias, Cantabria trades a little wildness for elegance. Santander is a grand seafront city of broad beaches, the hinterland hides one of the world's great painted caves at Altamira, and the eastern Picos rise close enough for a morning's drive.",
       eclipse:"Just east of Asturias and still firmly in the path, Cantabria sees totality a touch shorter, around a minute and forty seconds, near 20:28. The same low Sun in the west-northwest, the same need for a clean horizon over the sea.",
@@ -266,7 +271,8 @@ const REGIONS = {
     {
       id:"galicia", name:"Galicia", tag:"END OF THE EARTH", tagClass:"", price:"€€",
       sub:"Seafood, pilgrims and Finisterre, where the eclipse Sun sets straight into the Atlantic.",
-      tags:"finisterre,galicia", thumb:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Finisterre.JPG/1280px-Finisterre.JPG", g1:"santiago,compostela", g2:"galicia,coast", lock:31,
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Finisterre.JPG/1280px-Finisterre.JPG",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Santiago_cathedral_2021.jpg/1280px-Santiago_cathedral_2021.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Las_Islas_C%C3%ADes.jpg/1280px-Las_Islas_C%C3%ADes.jpg"],
       stats:{totality:"~1m 35s", cloud:"50-60%"},
       lead:"Galicia is Spain's wild northwest: ria estuaries, granite villages and some of the best seafood in Europe, all soaked in Atlantic mist and washed down with crisp Albari&ntilde;o. Pilgrims have walked here for a thousand years, and the coast beyond ends at Finisterre, the cape the Romans took for the edge of the world.",
       eclipse:"The shadow touches Spain here first, around 19:27, with totality near 20:26 and the Sun a shade higher than further east, about fourteen degrees. One crucial warning: the city of Santiago itself sits just outside the path and sees a 99.95 percent partial, which is not totality and looks nothing like it. To see the real thing you must be on the coast or further north, inside the band.",
@@ -280,7 +286,8 @@ const REGIONS = {
     {
       id:"aragon", name:"Aragón & the Ebro", tag:"CLEAR-SKY BET", tagClass:"clear", price:"€",
       sub:"Big skies, Moorish Zaragoza and the best odds of actually seeing it. If you can take the heat.",
-      tags:"zaragoza,spain", g1:"pilar,zaragoza", g2:"pyrenees,aragon", lock:41,
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Vista_del_Pilar_desde_el_Puente_del_Voluntariado%2C_Zaragoza%2C_Espa%C3%B1a_2012-05-16%2C_DD_01.JPG/1280px-Vista_del_Pilar_desde_el_Puente_del_Voluntariado%2C_Zaragoza%2C_Espa%C3%B1a_2012-05-16%2C_DD_01.JPG",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Valle_De_Ordesa_%28149217243%29.jpeg/1280px-Valle_De_Ordesa_%28149217243%29.jpeg","https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Aljafer%C3%ADa_Palace.jpg/1280px-Aljafer%C3%ADa_Palace.jpg"],
       stats:{totality:"~1m 45s", cloud:"20-25%"},
       lead:"Leave the coast and Spain turns wide, dry and quiet. The Ebro valley is big-sky country, with Zaragoza at its heart: a city of a colossal riverside basilica, intricate Mud&eacute;jar brickwork and Goya, well off most foreign itineraries. In August the locals decamp to the sea and leave the place to you.",
       eclipse:"This is your best bet for clear sky on the 2026 mainland, with cloud cover down around 20 to 25 percent, on a par with Mallorca. Totality runs about a minute and three-quarters near 20:31. The Sun is very low, only some eight degrees, so you need a genuinely flat western horizon, which the plains hand you for free.",
@@ -294,7 +301,8 @@ const REGIONS = {
     {
       id:"mallorca", name:"Mallorca", tag:"LONGEST TOTALITY", tagClass:"risk", price:"€€€",
       sub:"The longest darkness in Spain, watched from a west-coast cove. If you book very early.",
-      tags:"mallorca,coast", g1:"tramuntana,mallorca", g2:"palma,cathedral", lock:51,
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Catedral_de_Santa_Mar%C3%ADa%2C_Palma_de_Mallorca%2C_Espa%C3%B1a%2C_2022-10-06%2C_DD_01-03_HDR.jpg/1280px-Catedral_de_Santa_Mar%C3%ADa%2C_Palma_de_Mallorca%2C_Espa%C3%B1a%2C_2022-10-06%2C_DD_01-03_HDR.jpg",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Sa_Calobra_%282016.05.17%29.jpg/1280px-Sa_Calobra_%282016.05.17%29.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/0.4._Mar_Mediterr%C3%A0nia_-_Serra_de_Tramuntana._Sa_Calobra._%28Escorca%2C_Mallorca%29.jpg/1280px-0.4._Mar_Mediterr%C3%A0nia_-_Serra_de_Tramuntana._Sa_Calobra._%28Escorca%2C_Mallorca%29.jpg"],
       stats:{totality:"~2m 10s", cloud:"~20%"},
       lead:"Mallorca earns its fame: a serrated mountain range plunging into turquoise coves, almond groves and stone villages, and a handsome capital crowned by a cathedral that seems to float above the sea. It is also, in mid-August, one of the busiest islands in Europe, and the eclipse will only add to the crush.",
       eclipse:"Mallorca gets the longest totality in all of Spain, about two minutes and ten seconds, with excellent cloud odds near 20 percent. The catch is the Sun's height, or lack of it: only four to six degrees above the horizon, so you absolutely need open sea to the west. Totality comes late, around 20:33.",
@@ -310,7 +318,8 @@ const REGIONS = {
     {
       id:"cadiz", name:"Cádiz", tag:"TOP PICK", tagClass:"pick", price:"€€",
       sub:"The longest mainland totality, a high safe Sun and the wild Costa de la Luz.",
-      tags:"cadiz,spain", thumb:"https://upload.wikimedia.org/wikipedia/commons/3/35/Cadiz_aerea.jpg", g1:"tarifa,beach", g2:"jerez,andalusia", lock:61,
+      img:"https://upload.wikimedia.org/wikipedia/commons/3/35/Cadiz_aerea.jpg",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Playa_de_Tarifa%2C_C%C3%A1diz%2C_Espa%C3%B1a%2C_2015-12-09%2C_DD_01.JPG/1280px-Playa_de_Tarifa%2C_C%C3%A1diz%2C_Espa%C3%B1a%2C_2015-12-09%2C_DD_01.JPG","https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Plaza_de_Espa%C3%B1a%2C_Vejer_de_la_Frontera%2C_C%C3%A1diz%2C_Espa%C3%B1a%2C_2015-12-09%2C_DD_02.JPG/1280px-Plaza_de_Espa%C3%B1a%2C_Vejer_de_la_Frontera%2C_C%C3%A1diz%2C_Espa%C3%B1a%2C_2015-12-09%2C_DD_02.JPG"],
       stats:{totality:"~2m 54s", cloud:"10-15%"},
       lead:"C&aacute;diz is the oldest city in western Europe, a sun-bleached tangle of lanes on a near-island, ringed by sea walls and Atlantic light. Its province runs from the long pale beaches of the Costa de la Luz to the sherry bodegas of Jerez and the white villages stacked across the hills.",
       eclipse:"This is the headline act of 2027. Almost the entire province lies in the path, and the city itself gets close to three minutes of totality from about 10:45. The Sun is high, around forty degrees, so unlike 2026 there is no horizon to worry about. Watch from almost anywhere with open sky.",
@@ -324,7 +333,8 @@ const REGIONS = {
     {
       id:"malaga", name:"Málaga", tag:"EASIEST ACCESS", tagClass:"clear", price:"€€",
       sub:"In the path, cloudless, and the simplest flight from Schiphol of the lot.",
-      tags:"malaga,spain", g1:"ronda,spain", g2:"costa,del,sol", lock:71,
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Alcazaba_Catedral_Malaga.jpg/1280px-Alcazaba_Catedral_Malaga.jpg",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Ronda_Spain_Puente-Nuevo-de-Ronda-01.jpg/1280px-Ronda_Spain_Puente-Nuevo-de-Ronda-01.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Balc%C3%B3n_de_Europa_Nerja.jpg/1280px-Balc%C3%B3n_de_Europa_Nerja.jpg"],
       stats:{totality:"~1m 48s", cloud:"10-15%"},
       lead:"M&aacute;laga has quietly become one of Spain's most likeable cities: Picasso's birthplace reborn with galleries and rooftop bars, a Moorish fortress above the old town, and a working port softened by palm-lined promenades. Behind it stretch the Costa del Sol's beaches and, inland, the gorge-straddling drama of Ronda.",
       eclipse:"Much of the province lies in the path, and the city sees about a minute and three-quarters of totality near 10:48, the Sun high and safe overhead. Shorter than C&aacute;diz, but the sheer ease of getting here can tip the balance.",
@@ -338,7 +348,8 @@ const REGIONS = {
     {
       id:"granada-almeria", name:"Granada & Almería", tag:"SOUTHERN EDGE", tagClass:"", price:"€€",
       sub:"The Alhambra and Spain's only desert. Spectacular, but you must go south to reach the band.",
-      tags:"alhambra,granada", thumb:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Granada_Alhambra_von_San_Nicholas_01gm.jpg/1280px-Granada_Alhambra_von_San_Nicholas_01gm.jpg", g1:"cabo,de,gata", g2:"sierra,nevada,spain", lock:81,
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Granada_Alhambra_von_San_Nicholas_01gm.jpg/1280px-Granada_Alhambra_von_San_Nicholas_01gm.jpg",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Fountain_patio_de_los_Leones_Alhambra_Granada_Spain.jpg/1280px-Fountain_patio_de_los_Leones_Alhambra_Granada_Spain.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Cabo_de_Gata_tras_las_dunas.jpg/1280px-Cabo_de_Gata_tras_las_dunas.jpg"],
       stats:{totality:"<2m (edge)", cloud:"10-15%"},
       lead:"Two faces of the deep south. Granada gives you the Alhambra, the most beautiful Moorish palace on earth, perched below the snows of the Sierra Nevada. Almer&iacute;a gives you something stranger: Europe's only true desert, a coast of volcanic capes and empty coves at Cabo de Gata, and badlands so cinematic that Sergio Leone shot his westerns here.",
       eclipse:"Only the southern parts of these two provinces fall inside the path, the coast and the Cabo de Gata area rather than the inland cities. Totality is shorter here, near the edge, around 10:49 with a high Sun. Check that your exact spot is inside the band before you commit, because Granada city sits close to the rim.",
@@ -356,9 +367,9 @@ function renderGrid(year){
   const grid=document.getElementById('grid-'+year);
   grid.innerHTML=REGIONS[year].map(function(r){
     return ''
-    +'<button class="card" onclick="openDetail(\''+year+'\',\''+r.id+'\')" aria-label="Open '+r.name+' guide">'
+    +'<button class="card" onclick="location.hash=\''+year+'-'+r.id+'\'" aria-label="Open '+r.name+' guide">'
       +'<div class="thumb">'
-        +'<img loading="lazy" decoding="async" alt="" src="'+(r.thumb||IMG(r.tags,600,375,r.lock))+'" onerror="this.style.display=\'none\'">'
+        +'<img loading="lazy" decoding="async" alt="" src="'+r.img+'" onerror="this.style.display=\'none\'">'
         +'<span class="tag '+r.tagClass+'">'+r.tag+'</span>'
         +'<span class="price">'+r.price+'</span>'
       +'</div>'
@@ -387,13 +398,24 @@ function eph(r,year){
 
 function block(t,html){return '<div class="block"><h3>'+t+'</h3>'+html+'</div>';}
 
-function openDetail(year,id){
+var active="2026";
+var shownDetail=false;
+
+function applyYear(year){
+  active=year;
+  ['2026','2027'].forEach(function(y){
+    document.getElementById('year-'+y).classList.toggle('active',y===year);
+    document.getElementById('tab-'+y).setAttribute('aria-selected',y===year?'true':'false');
+  });
+}
+
+function renderDetail(year,id){
   var r=REGIONS[year].find(function(x){return x.id===id;});
-  if(!r)return;
+  if(!r)return false;
   var yl=year==="2026"?"12 August 2026 &middot; the evening eclipse":"2 August 2027 &middot; the morning eclipse";
   var html=''
    +'<div class="banner">'
-     +'<img loading="lazy" decoding="async" alt="" src="'+(r.thumb||IMG(r.tags,1200,520,r.lock))+'" onerror="this.style.display=\'none\'">'
+     +'<img loading="lazy" decoding="async" alt="" src="'+r.img+'" onerror="this.style.display=\'none\'">'
      +'<div class="cap"><span class="eyebrow">'+yl+'</span><h2 class="display">'+r.name+'</h2></div>'
    +'</div>'
    +'<p class="lead">'+r.lead+'</p>'
@@ -405,40 +427,68 @@ function openDetail(year,id){
    +block('Where to point your chair','<p>'+r.watch+'</p>')
    +block('The rest of your trip','<p>'+r.beyond+'</p>'
        +'<div class="gallery">'
-         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+IMG(r.g1,600,450,r.lock+1)+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
-         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+IMG(r.g2,600,450,r.lock+2)+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
+         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[0]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
+         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[1]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
        +'</div>')
    +'<div class="verdict"><h3>The verdict</h3><p>'+r.verdict+'</p></div>';
   document.getElementById('detail-content').innerHTML=html;
+  var cb=document.getElementById('copybtn');
+  if(cb){cb.classList.remove('ok');cb.innerHTML='&#128279; Copy link to this page';}
+  return true;
+}
+
+function showDetailView(){
   document.getElementById('home').style.display='none';
   document.getElementById('detail').classList.add('active');
-  scrollToWork();
 }
-
-function closeDetail(doScroll){
+function showGridView(){
   document.getElementById('detail').classList.remove('active');
   document.getElementById('home').style.display='block';
-  if(doScroll)scrollToWork();
 }
-
 function scrollToWork(){
   var y=document.querySelector('.yearbar').offsetTop;
   window.scrollTo({top:y,behavior:'auto'});
 }
 
-function showYear(year){
-  var wasDetail=document.getElementById('detail').classList.contains('active');
-  ['2026','2027'].forEach(function(y){
-    document.getElementById('year-'+y).classList.toggle('active',y===year);
-    var tab=document.getElementById('tab-'+y);
-    tab.setAttribute('aria-selected',y===year?'true':'false');
-  });
-  closeDetail(false);
-  if(wasDetail)scrollToWork();
+/* hash router: #2026, #2027, or #2027-cadiz / #2026-granada-almeria */
+function route(){
+  var h=(location.hash||'').replace(/^#/,'');
+  if(h){
+    var dash=h.indexOf('-');
+    var year=dash===-1?h:h.slice(0,dash);
+    if(REGIONS[year]){
+      applyYear(year);
+      if(dash!==-1){
+        var id=h.slice(dash+1);
+        if(renderDetail(year,id)){
+          showDetailView();
+          scrollToWork();
+          shownDetail=true;
+          return;
+        }
+      }
+    }
+  }
+  // grid view
+  showGridView();
+  if(shownDetail)scrollToWork();
+  shownDetail=false;
+}
+
+/* called from markup */
+function showYear(year){ location.hash=year; }
+function goBack(){ location.hash=active; }
+function copyLink(){
+  var b=document.getElementById('copybtn');
+  var done=function(){ b.classList.add('ok'); b.innerHTML='&#10003; Link copied'; setTimeout(function(){ b.classList.remove('ok'); b.innerHTML='&#128279; Copy link to this page'; },1800); };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(location.href).then(done,done); }
+  else { done(); }
 }
 
 renderGrid('2026');
 renderGrid('2027');
+window.addEventListener('hashchange',route);
+route();
 
 /* hero corona */
 (function(){
