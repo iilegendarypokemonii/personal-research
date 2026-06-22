@@ -238,7 +238,7 @@ const REGIONS = {
     {
       id:"asturias", name:"Asturias", tag:"TOP PICK", tagClass:"pick", price:"€€",
       sub:"Cliffs, cider and the Picos de Europa. The coolest place that still sees the full eclipse.",
-      tags:"asturias,coast", g1:"picos,europa", g2:"cudillero,asturias", lock:11,
+      tags:"asturias,coast", thumb:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Cudillero_Asturias.jpg/1280px-Cudillero_Asturias.jpg", g1:"picos,europa", g2:"cudillero,asturias", lock:11,
       stats:{totality:"~1m 45s", cloud:"55-60%"},
       lead:"Asturias is the Spain that catches people off guard: a coast of cliffs and hidden coves backed by the snow-streaked Picos de Europa, fishing villages stacked above their harbours, and a green that owes everything to Atlantic rain.",
       eclipse:"You are well inside the path, with one of the longest stretches of totality on Spanish soil, close to a minute and three-quarters near Oviedo. Darkness arrives around 20:27, roughly an hour before sunset, with the Sun low in the west-northwest at about twelve degrees. Low enough that you want open water, not mountains, on that horizon.",
@@ -252,7 +252,7 @@ const REGIONS = {
     {
       id:"cantabria", name:"Cantabria", tag:"COOL & SCENIC", tagClass:"", price:"€€",
       sub:"Belle-epoque Santander, painted caves and the eastern Picos. Asturias' quieter neighbour.",
-      tags:"santander,spain", g1:"santillana,del,mar", g2:"comillas,cantabria", lock:21,
+      tags:"santander,spain", thumb:"https://upload.wikimedia.org/wikipedia/commons/a/a9/ColegiataSantillana-1.jpg", g1:"santillana,del,mar", g2:"comillas,cantabria", lock:21,
       stats:{totality:"~1m 40s", cloud:"55-60%"},
       lead:"Cut from similar cloth to Asturias, Cantabria trades a little wildness for elegance. Santander is a grand seafront city of broad beaches, the hinterland hides one of the world's great painted caves at Altamira, and the eastern Picos rise close enough for a morning's drive.",
       eclipse:"Just east of Asturias and still firmly in the path, Cantabria sees totality a touch shorter, around a minute and forty seconds, near 20:28. The same low Sun in the west-northwest, the same need for a clean horizon over the sea.",
@@ -266,7 +266,7 @@ const REGIONS = {
     {
       id:"galicia", name:"Galicia", tag:"END OF THE EARTH", tagClass:"", price:"€€",
       sub:"Seafood, pilgrims and Finisterre, where the eclipse Sun sets straight into the Atlantic.",
-      tags:"finisterre,galicia", g1:"santiago,compostela", g2:"galicia,coast", lock:31,
+      tags:"finisterre,galicia", thumb:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Finisterre.JPG/1280px-Finisterre.JPG", g1:"santiago,compostela", g2:"galicia,coast", lock:31,
       stats:{totality:"~1m 35s", cloud:"50-60%"},
       lead:"Galicia is Spain's wild northwest: ria estuaries, granite villages and some of the best seafood in Europe, all soaked in Atlantic mist and washed down with crisp Albari&ntilde;o. Pilgrims have walked here for a thousand years, and the coast beyond ends at Finisterre, the cape the Romans took for the edge of the world.",
       eclipse:"The shadow touches Spain here first, around 19:27, with totality near 20:26 and the Sun a shade higher than further east, about fourteen degrees. One crucial warning: the city of Santiago itself sits just outside the path and sees a 99.95 percent partial, which is not totality and looks nothing like it. To see the real thing you must be on the coast or further north, inside the band.",
@@ -310,7 +310,7 @@ const REGIONS = {
     {
       id:"cadiz", name:"Cádiz", tag:"TOP PICK", tagClass:"pick", price:"€€",
       sub:"The longest mainland totality, a high safe Sun and the wild Costa de la Luz.",
-      tags:"cadiz,spain", g1:"tarifa,beach", g2:"jerez,andalusia", lock:61,
+      tags:"cadiz,spain", thumb:"https://upload.wikimedia.org/wikipedia/commons/3/35/Cadiz_aerea.jpg", g1:"tarifa,beach", g2:"jerez,andalusia", lock:61,
       stats:{totality:"~2m 54s", cloud:"10-15%"},
       lead:"C&aacute;diz is the oldest city in western Europe, a sun-bleached tangle of lanes on a near-island, ringed by sea walls and Atlantic light. Its province runs from the long pale beaches of the Costa de la Luz to the sherry bodegas of Jerez and the white villages stacked across the hills.",
       eclipse:"This is the headline act of 2027. Almost the entire province lies in the path, and the city itself gets close to three minutes of totality from about 10:45. The Sun is high, around forty degrees, so unlike 2026 there is no horizon to worry about. Watch from almost anywhere with open sky.",
@@ -338,7 +338,7 @@ const REGIONS = {
     {
       id:"granada-almeria", name:"Granada & Almería", tag:"SOUTHERN EDGE", tagClass:"", price:"€€",
       sub:"The Alhambra and Spain's only desert. Spectacular, but you must go south to reach the band.",
-      tags:"alhambra,granada", g1:"cabo,de,gata", g2:"sierra,nevada,spain", lock:81,
+      tags:"alhambra,granada", thumb:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Granada_Alhambra_von_San_Nicholas_01gm.jpg/1280px-Granada_Alhambra_von_San_Nicholas_01gm.jpg", g1:"cabo,de,gata", g2:"sierra,nevada,spain", lock:81,
       stats:{totality:"<2m (edge)", cloud:"10-15%"},
       lead:"Two faces of the deep south. Granada gives you the Alhambra, the most beautiful Moorish palace on earth, perched below the snows of the Sierra Nevada. Almer&iacute;a gives you something stranger: Europe's only true desert, a coast of volcanic capes and empty coves at Cabo de Gata, and badlands so cinematic that Sergio Leone shot his westerns here.",
       eclipse:"Only the southern parts of these two provinces fall inside the path, the coast and the Cabo de Gata area rather than the inland cities. Totality is shorter here, near the edge, around 10:49 with a high Sun. Check that your exact spot is inside the band before you commit, because Granada city sits close to the rim.",
@@ -358,7 +358,7 @@ function renderGrid(year){
     return ''
     +'<button class="card" onclick="openDetail(\''+year+'\',\''+r.id+'\')" aria-label="Open '+r.name+' guide">'
       +'<div class="thumb">'
-        +'<img loading="lazy" decoding="async" alt="" src="'+IMG(r.tags,600,375,r.lock)+'" onerror="this.style.display=\'none\'">'
+        +'<img loading="lazy" decoding="async" alt="" src="'+(r.thumb||IMG(r.tags,600,375,r.lock))+'" onerror="this.style.display=\'none\'">'
         +'<span class="tag '+r.tagClass+'">'+r.tag+'</span>'
         +'<span class="price">'+r.price+'</span>'
       +'</div>'
@@ -393,7 +393,7 @@ function openDetail(year,id){
   var yl=year==="2026"?"12 August 2026 &middot; the evening eclipse":"2 August 2027 &middot; the morning eclipse";
   var html=''
    +'<div class="banner">'
-     +'<img loading="lazy" decoding="async" alt="" src="'+IMG(r.tags,1200,520,r.lock)+'" onerror="this.style.display=\'none\'">'
+     +'<img loading="lazy" decoding="async" alt="" src="'+(r.thumb||IMG(r.tags,1200,520,r.lock))+'" onerror="this.style.display=\'none\'">'
      +'<div class="cap"><span class="eyebrow">'+yl+'</span><h2 class="display">'+r.name+'</h2></div>'
    +'</div>'
    +'<p class="lead">'+r.lead+'</p>'
