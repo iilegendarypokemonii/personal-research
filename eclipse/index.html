@@ -131,11 +131,16 @@
   .linkbtn:hover{border-color:var(--accent);background:rgba(242,180,65,.08);}
   .linkbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
-  /* path map */
-  .pathmap{margin:30px 0 6px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:linear-gradient(180deg,#100D22,#1A1430);}
-  .pathmap .mhead{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-2);padding:13px 22px;border-bottom:1px solid var(--line);}
-  .pathmap svg{display:block;width:100%;height:auto;}
-  .pathmap .mcap{font-family:var(--mono);font-size:.7rem;color:var(--faint);padding:0 22px 16px;}
+  /* path-of-totality map gallery */
+  .maps{padding-bottom:8px;}
+  .mapgallery{margin-top:26px;}
+  .maptabs{display:flex;gap:6px;background:var(--ground-2);border:1px solid var(--line);border-radius:999px;padding:4px;width:max-content;margin-bottom:16px;}
+  .maptab{font-family:var(--mono);font-size:.78rem;border:0;background:transparent;color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.18s;}
+  .maptab.active{background:var(--accent);color:#2A1C04;font-weight:700;}
+  .maptab:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .mapframe{display:block;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#0B1020;}
+  .mapframe img{display:block;width:100%;height:auto;}
+  .maps .mcap{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:12px 0 0;}
 
   /* comparison table */
   .compare{padding:64px 0;border-top:1px solid var(--line);}
@@ -204,6 +209,23 @@
 
 <main>
   <div id="home">
+    <section class="maps">
+      <div class="wrap">
+        <h2 class="display">The two paths across Spain</h2>
+        <p class="seclede">Official ESA maps showing where the band of totality falls each year, with the local timing and the share of the Sun covered. Switch between the two.</p>
+        <div class="mapgallery">
+          <div class="maptabs" role="tablist" aria-label="Eclipse map year">
+            <button class="maptab active" id="maptab-2026" onclick="showMap('2026')">12 Aug 2026</button>
+            <button class="maptab" id="maptab-2027" onclick="showMap('2027')">2 Aug 2027</button>
+          </div>
+          <a class="mapframe" id="maplink" href="maps/map-2026.jpg" target="_blank" rel="noopener">
+            <img id="mapimg" src="maps/map-2026.jpg" alt="ESA map of the 12 August 2026 total solar eclipse over Spain" loading="lazy" decoding="async">
+          </a>
+          <p class="mcap">Source: ESA / Spanish National Geographic Institute. Click the map to open it full size.</p>
+        </div>
+      </div>
+    </section>
+
     <section>
       <div class="wrap">
         <div class="yearpanel active" id="year-2026" role="tabpanel" aria-labelledby="tab-2026">
@@ -212,7 +234,6 @@
             <span class="when">12 AUG 2026 &middot; around 20:30 &middot; low Sun in the west</span>
           </div>
           <p class="seclede">An hour before sunset the shadow sweeps the green north and the dry interior. Totality is brief, under two minutes, and the Sun hangs low, so an open western horizon decides everything.</p>
-          <div class="pathmap" id="map-2026"></div>
           <div class="note">
             <div>
               <h4>The catch</h4>
@@ -232,7 +253,6 @@
             <span class="when">02 AUG 2027 &middot; around 10:47 &middot; high, safe Sun</span>
           </div>
           <p class="seclede">This is the easy one. Mid-morning, the Sun well clear of the horizon, totality past two and a half minutes, and a famously dry Andalusian sky. The price is heat, but the eclipse falls before the day turns cruel.</p>
-          <div class="pathmap" id="map-2027"></div>
           <div class="note">
             <div class="good">
               <h4>Why it is the better eclipse</h4>
@@ -454,15 +474,13 @@ const REGIONS = {
   ]
 };
 
-function small(u,w){ return u.indexOf('/1280px-')>-1 ? u.replace('/1280px-','/'+w+'px-') : u; }
-
 function renderGrid(year){
   const grid=document.getElementById('grid-'+year);
   grid.innerHTML=REGIONS[year].map(function(r){
     return ''
     +'<button class="card" onclick="location.hash=\''+year+'-'+r.id+'\'" aria-label="Open '+r.name+' guide">'
       +'<div class="thumb">'
-        +'<img loading="lazy" decoding="async" alt="'+r.name+'" src="'+small(r.img,640)+'" onerror="this.style.display=\'none\'">'
+        +'<img loading="lazy" decoding="async" alt="'+r.name+'" src="'+r.img+'" onerror="this.style.display=\'none\'">'
         +'<span class="tag '+r.tagClass+'">'+r.tag+'</span>'
         +'<span class="price">'+r.price+'</span>'
       +'</div>'
@@ -509,7 +527,7 @@ function renderDetail(year,id){
   var yl=year==="2026"?"12 August 2026 &middot; the evening eclipse":"2 August 2027 &middot; the morning eclipse";
   var html=''
    +'<div class="banner">'
-     +'<img loading="lazy" decoding="async" alt="'+r.name+'" src="'+small(r.img,1000)+'" onerror="this.style.display=\'none\'">'
+     +'<img loading="lazy" decoding="async" alt="'+r.name+'" src="'+r.img+'" onerror="this.style.display=\'none\'">'
      +'<div class="cap"><span class="eyebrow">'+yl+'</span><h2 class="display">'+r.name+'</h2></div>'
    +'</div>'
    +'<p class="lead">'+r.lead+'</p>'
@@ -523,8 +541,8 @@ function renderDetail(year,id){
        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.mapq)+'">&#128205; Open viewing area in Maps</a>')
    +block('The rest of your trip','<p>'+r.beyond+'</p>'
        +'<div class="gallery">'
-         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+small(r.gal[0],640)+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
-         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+small(r.gal[1],640)+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
+         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[0]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
+         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[1]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
        +'</div>')
    +'<div class="verdict"><h3>The verdict</h3><p>'+r.verdict+'</p></div>';
   document.getElementById('detail-content').innerHTML=html;
@@ -600,45 +618,18 @@ function buildCompare(){
   document.getElementById('cmpbody').innerHTML=rows;
 }
 
-function buildMap(year){
-  var penin='58,96 95,82 150,76 210,72 265,74 320,92 338,120 330,150 322,188 300,225 255,243 200,250 150,250 110,243 78,225 60,180 54,140';
-  var isl='<circle cx="360" cy="168" r="7" fill="#241D44" stroke="#3A2F61" stroke-width="1.5"/>'
-        +'<circle cx="382" cy="150" r="3.5" fill="#241D44" stroke="#3A2F61" stroke-width="1.5"/>'
-        +'<circle cx="342" cy="188" r="4.5" fill="#241D44" stroke="#3A2F61" stroke-width="1.5"/>';
-  var gid='bandg'+year;
-  var band,dots,title;
-  if(year==='2026'){
-    band='<line x1="48" y1="84" x2="378" y2="178" stroke="url(#'+gid+')" stroke-width="56" stroke-linecap="round" opacity="0.30"/>'
-        +'<line x1="48" y1="84" x2="378" y2="178" stroke="#F2B441" stroke-width="1.6" stroke-dasharray="6 6" opacity="0.85"/>';
-    dots=[['Galicia',72,98,'l'],['Asturias',135,86,'t'],['Cantabria',186,90,'b'],['Zaragoza',272,122,'r'],['Mallorca',360,168,'l']];
-    title='Band of totality &middot; 12 Aug 2026 (north)';
-  } else {
-    band='<line x1="38" y1="250" x2="322" y2="232" stroke="url(#'+gid+')" stroke-width="40" stroke-linecap="round" opacity="0.30"/>'
-        +'<line x1="38" y1="250" x2="322" y2="232" stroke="#F2B441" stroke-width="1.6" stroke-dasharray="6 6" opacity="0.85"/>';
-    dots=[['Cádiz',150,247,'t'],['Málaga',212,240,'b'],['Granada / Almería',280,235,'r']];
-    title='Band of totality &middot; 2 Aug 2027 (south)';
-  }
-  var dotsvg=dots.map(function(d){
-    var pos=d[3]||'r', tx=d[1]+8, ty=d[2]+4, anc='start';
-    if(pos==='l'){tx=d[1]-8;anc='end';}
-    else if(pos==='t'){tx=d[1];ty=d[2]-9;anc='middle';}
-    else if(pos==='b'){tx=d[1];ty=d[2]+16;anc='middle';}
-    return '<circle cx="'+d[1]+'" cy="'+d[2]+'" r="4.5" fill="#E5604D" stroke="#161229" stroke-width="1.5"/>'
-      +'<text x="'+tx+'" y="'+ty+'" text-anchor="'+anc+'" fill="#EDE9F0" font-size="11" font-family="ui-monospace,monospace">'+d[0]+'</text>';
-  }).join('');
-  var svg='<svg viewBox="0 0 420 300" role="img" aria-label="'+title.replace('&middot;','-')+'">'
-    +'<defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E5604D"/><stop offset="1" stop-color="#F2B441"/></linearGradient></defs>'
-    +'<polygon points="'+penin+'" fill="#241D44" stroke="#3A2F61" stroke-width="1.5"/>'
-    +isl+band+dotsvg
-    +'</svg>';
-  document.getElementById('map-'+year).innerHTML='<div class="mhead">'+title+'</div>'+svg+'<div class="mcap">Schematic, not to scale. The exact spot matters, especially in 2026 &mdash; check your western horizon.</div>';
+function showMap(year){
+  var img=document.getElementById('mapimg'), link=document.getElementById('maplink');
+  img.src='maps/map-'+year+'.jpg';
+  img.alt='ESA map of the '+(year==='2026'?'12 August 2026':'2 August 2027')+' total solar eclipse over Spain';
+  link.href='maps/map-'+year+'.jpg';
+  document.getElementById('maptab-2026').classList.toggle('active',year==='2026');
+  document.getElementById('maptab-2027').classList.toggle('active',year==='2027');
 }
 
 renderGrid('2026');
 renderGrid('2027');
 buildCompare();
-buildMap('2026');
-buildMap('2027');
 window.addEventListener('hashchange',route);
 route();
 
