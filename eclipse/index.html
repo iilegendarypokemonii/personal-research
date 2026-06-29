@@ -149,7 +149,7 @@
   .compare{padding:64px 0;border-top:1px solid var(--line);}
   .compare h2,.essentials h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 6px;}
   .tablewrap{overflow-x:auto;margin-top:26px;border:1px solid var(--line);border-radius:14px;}
-  table.cmp{border-collapse:collapse;width:100%;min-width:720px;font-size:.92rem;}
+  table.cmp{border-collapse:collapse;width:100%;min-width:880px;font-size:.92rem;}
   table.cmp th,table.cmp td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);white-space:nowrap;}
   table.cmp thead th{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);background:var(--ground-2);}
   table.cmp tbody tr{cursor:pointer;transition:background .15s;}
@@ -176,11 +176,44 @@
   .srclist{display:flex;flex-wrap:wrap;gap:8px 18px;}
   .disc{max-width:72ch;line-height:1.55;}
 
+  /* per-region: planning bar, location map, flight facts, stays, day-by-day */
+  .planbar{display:flex;flex-wrap:wrap;gap:8px 22px;margin:18px 0 0;font-family:var(--mono);font-size:.74rem;color:var(--muted);}
+  .planbar span{display:inline-flex;gap:7px;align-items:center;}
+  .planbar b{color:var(--accent);font-weight:600;}
+  .locmap{margin:16px 0 4px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0B1020;}
+  .locmap iframe{display:block;width:100%;height:340px;border:0;}
+  .flightfacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:16px 0 6px;background:var(--ground-2);}
+  .flightfacts > div{padding:14px 18px;border-right:1px solid var(--line);border-top:1px solid var(--line);}
+  .flightfacts .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:6px;}
+  .flightfacts .v{font-size:.95rem;color:var(--text);line-height:1.4;}
+  .flightfacts .v .mono{font-family:var(--mono);color:var(--accent);}
+  .bagnote{font-size:.88rem;color:var(--muted);margin:12px 0 0;padding-left:14px;border-left:2px solid var(--line);}
+  .staygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0 4px;}
+  .stay{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:7px;}
+  .stay .kind{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);}
+  .stay h4{font-family:var(--serif);font-size:1.12rem;margin:0;line-height:1.15;}
+  .stay .area{font-size:.84rem;color:var(--muted);margin:0;}
+  .stay .snote{font-size:.86rem;color:var(--muted);margin:2px 0 0;flex:1;}
+  .stay .pricerow{display:flex;align-items:baseline;justify-content:space-between;gap:8px;border-top:1px solid var(--line);padding-top:9px;margin-top:4px;}
+  .stay .tot{font-family:var(--mono);font-size:1.05rem;color:var(--accent);font-weight:600;}
+  .stay .sc{font-family:var(--mono);font-size:.72rem;color:var(--good);}
+  .stay .per{font-family:var(--mono);font-size:.66rem;color:var(--faint);}
+  .itin{list-style:none;margin:14px 0 0;padding:0;}
+  .itin li{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:11px 0;border-top:1px solid var(--line);}
+  .itin li:first-child{border-top:0;}
+  .itin .day{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);padding-top:3px;}
+  .itin .what{color:var(--muted);font-size:.95rem;}
+  .itin li.ecl .day{color:var(--accent-2);}
+  .itin li.ecl .what{color:var(--text);}
+  table.cmp td.region small{display:block;font-family:var(--sans);font-size:.78rem;color:var(--muted);white-space:normal;max-width:30ch;}
+  .cmpnote{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:12px 2px 0;line-height:1.5;}
+
   @media (max-width:680px){
     .note,.gallery{grid-template-columns:1fr;}
     .note > div:first-child{border-right:0;border-bottom:1px solid var(--line);}
     .erow > div{border-right:0;}
     .banner{aspect-ratio:3/2;}
+    .itin li{grid-template-columns:84px 1fr;gap:10px;}
     body{font-size:16px;}
   }
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition:none !important;}}
@@ -270,15 +303,16 @@
     <section class="compare">
       <div class="wrap">
         <h2 class="display">Compare every region</h2>
-        <p class="seclede">All eight side by side. Click a row to open its guide. Cool and cloudy sits at the top, hot and clear at the bottom.</p>
+        <p class="seclede">Every region side by side. Click a row to open its full guide. Cool and cloudy sits at the top, hot and clear at the bottom. Flight and stay figures are live August 2026 prices for the 2026 regions.</p>
         <div class="tablewrap">
           <table class="cmp">
             <thead><tr>
-              <th>Region</th><th>When</th><th>Totality</th><th>Aug cloud</th><th>Aug temp</th><th>Crowds</th><th>Cost</th>
+              <th>Region</th><th>When</th><th>Totality</th><th>Aug cloud</th><th>Aug temp</th><th>Crowds</th><th>Flight rt/pers</th><th>Stay · 4ad/6n</th><th>Cost</th>
             </tr></thead>
             <tbody id="cmpbody"></tbody>
           </table>
         </div>
+        <p class="cmpnote">Flight = cheapest return per person from Amsterdam (11&ndash;17 Aug 2026); Stay = lowest of three picked hotels, total for 4 adults / 6 nights. *Asturias is mostly 1-stop on these dates. Totality for Valencia and Madrid is at the nearest spot you drive to &mdash; Valencia city catches barely a minute on the path edge, and Madrid city sees only a 99% partial, so both mean a drive on the day.</p>
       </div>
     </section>
 
@@ -340,7 +374,7 @@
 
 <footer>
   <div class="wrap">
-    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. Prices are rough August estimates for return flights from Amsterdam and a night's lodging, meant for planning, not booking; expect the 2026 figures to climb the closer you get to eclipse day, especially on Mallorca. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
+    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were checked live in late June 2026 on Google Flights and Booking.com for a sample trip of four adults flying Amsterdam&ndash;Spain on 11 August and back on 17 August, with six nights' lodging (two rooms, or an apartment sleeping four); they are snapshots for comparison, not quotes, and will climb as eclipse day nears, so book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
     <div class="srclist">
       <span style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;">SOURCES&nbsp;</span>
       <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
@@ -358,6 +392,23 @@ const REGIONS = {
   "2026":[
     {
       id:"asturias", name:"Asturias", tag:"TOP PICK", tagClass:"pick", price:"€€",
+      flightFrom:"€260 rt*", stayFrom:"€2,552/6n",
+      osm:{bbox:"-7.0,42.9,-4.6,43.8", marker:"43.59,-6.16", cap:"You are inside the path. Base in Oviedo (the capital) or the beach-city of Gij&oacute;n, then drive about 45 minutes to the western coast around Cudillero and Cabo Vidio, where the eclipsed Sun sets over open water. Keep the Picos de Europa behind you, never on your western horizon."},
+      flights:{airport:"OVD (Asturias)", time:"~2h15 nonstop &middot; or 5–9h via Barcelona", fare:"~&euro;260 rt (1-stop); KLM nonstop ~&euro;680", carriers:"KLM (new nonstop, summer 2026); Vueling via Barcelona", baggage:"The priciest and most awkward of the seven for eclipse week — the only cheap seats route through Barcelona, and KLM’s fast new direct (2h15) runs about &euro;680 return on these dates. Bilbao (see Cantabria) is a solid backup."},
+      stays:[
+        {kind:"Value · central", name:"Hotel Gran Regente", area:"Oviedo old town, 400 m from centre", note:"Simple, well-placed base; two double/twin rooms for four.", total:"&euro;2,552", per:"~&euro;425/night · 4 guests, 6 nights", score:"7.9 Good"},
+        {kind:"Solid 4-star", name:"AC Hotel Oviedo Fórum by Marriott", area:"Oviedo, 1.1 km from centre", note:"Reliable modern 4-star with parking — handy for the eclipse-day drive.", total:"&euro;3,278", per:"~&euro;547/night · 4 guests, 6 nights", score:"8.6 Excellent"},
+        {kind:"Nicer 4-star", name:"Eurostars Palacio de Cristal", area:"Oviedo, 1.3 km from centre", note:"Smart, comfortable step up if you want it.", total:"&euro;3,752", per:"~&euro;625/night · 4 guests, 6 nights", score:"8.8 Excellent"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly in, pick up the hire car, settle in Oviedo; evening in the old town and a sidrer&iacute;a (cider poured from overhead)."},
+        {d:"Day 2", t:"Oviedo cathedral and the pre-Romanesque Santa Mar&iacute;a del Naranco; afternoon at Gij&oacute;n’s beach and seafront."},
+        {d:"Day 3", t:"Picos de Europa: drive up to the Covadonga lakes and basilica, with a short mountain walk."},
+        {d:"Day 4", t:"West coast: the fishing villages of Cudillero and Luarca, and scout your eclipse spot at Cabo Vidio / Cabo Bust&oacute;."},
+        {d:"Day 5", t:"Llanes and the eastern coast: wild beaches, the Bufones blowholes, a stretch of coastal path."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Be on the western coast (Cudillero / Cabo Vidio) by late afternoon, open sea to the WNW. Totality ~20:27, Sun only ~12&deg; up — Picos behind you."},
+        {d:"Day 7", t:"Easy morning, then fly home."}
+      ],
       temp:"~24°C", crowd:"Quiet", airport:"OVD", mapq:"Cabo Vidio, Asturias, Spain",
       sub:"Cliffs, cider and the Picos de Europa. The coolest place that still sees the full eclipse.",
       img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Cudillero_Asturias.jpg/1280px-Cudillero_Asturias.jpg",
@@ -374,6 +425,23 @@ const REGIONS = {
     },
     {
       id:"cantabria", name:"Cantabria", tag:"COOL & SCENIC", tagClass:"", price:"€€",
+      flightFrom:"€200 rt", stayFrom:"€1,740/6n",
+      osm:{bbox:"-4.9,43.0,-3.2,43.6", marker:"43.385,-4.29", cap:"Base in Santander, then drive west to the open coast around Comillas and San Vicente de la Barquera for the eclipse, with sea to the west-northwest and the Picos kept at your back."},
+      flights:{airport:"BIO (Bilbao) + ~1h drive", time:"~2h05 nonstop to Bilbao", fare:"~&euro;200 rt (1-stop); KLM nonstop Bilbao ~&euro;390–470", carriers:"KLM (nonstop to Bilbao); Vueling via Barcelona", baggage:"No reliable direct to Santander, so fly Bilbao and drive an hour west. KLM flies Bilbao nonstop in about two hours; the cheapest seats connect through Barcelona."},
+      stays:[
+        {kind:"Value · apartment", name:"Alojamiento en el Corazón de Santander 2", area:"Central Santander, 0.5 km from centre", note:"Two-bedroom flat that sleeps four — best value in town.", total:"&euro;1,740", per:"~&euro;290/night · 4 guests, 6 nights", score:"9.5 Exceptional"},
+        {kind:"Reliable hotel", name:"Hotel Náutico Santander", area:"Near the bay, 1.3 km from centre", note:"Proper hotel with two twin rooms and plenty of reviews behind it.", total:"&euro;2,957", per:"~&euro;493/night · 4 guests, 6 nights", score:"8.7 Excellent"},
+        {kind:"Space for four", name:"Vacare Vega", area:"Central Santander, 0.35 km from centre", note:"Three-bedroom apartment if you want room to spread out.", total:"&euro;1,880", per:"~&euro;313/night · 4 guests, 6 nights", score:"8.8 Excellent"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into Bilbao, drive ~1h to Santander; evening on the Sardinero beachfront."},
+        {d:"Day 2", t:"Santander: the Magdalena peninsula, Centro Bot&iacute;n and the grand seafront."},
+        {d:"Day 3", t:"Santillana del Mar’s medieval lanes and the Altamira cave replica."},
+        {d:"Day 4", t:"Comillas (Gaud&iacute;’s El Capricho) and scout the eclipse coast west of Santander."},
+        {d:"Day 5", t:"Eastern Picos: the Fuente D&eacute; cable car and a mountain day."},
+        {d:"Day 6 · eclipse", ecl:true, t:"West-facing coast around Comillas / San Vicente de la Barquera by late afternoon. Totality ~20:28, Sun ~12&deg; in the WNW."},
+        {d:"Day 7", t:"Easy morning, then fly home from Bilbao."}
+      ],
       temp:"~23°C", crowd:"Quiet", airport:"BIO", mapq:"Comillas, Cantabria, Spain",
       sub:"Belle-epoque Santander, painted caves and the eastern Picos. Asturias' quieter neighbour.",
       img:"https://upload.wikimedia.org/wikipedia/commons/a/a9/ColegiataSantillana-1.jpg",
@@ -390,6 +458,23 @@ const REGIONS = {
     },
     {
       id:"galicia", name:"Galicia", tag:"END OF THE EARTH", tagClass:"", price:"€€",
+      flightFrom:"€210 rt", stayFrom:"€1,576/6n",
+      osm:{bbox:"-9.5,42.4,-7.9,43.4", marker:"42.88,-9.27", cap:"Base in Santiago, then drive about 75 minutes west to Cape Finisterre and the Costa da Morte, where Atlantic cliffs face due west and the eclipsed Sun sets straight into the ocean. Do not watch from Santiago — it sits just outside the path."},
+      flights:{airport:"SCQ (Santiago)", time:"~2h20 nonstop", fare:"Vueling nonstop ~&euro;311; 1-stop from ~&euro;210; KLM nonstop ~&euro;600", carriers:"Vueling and KLM nonstop; Ryanair/easyJet seasonal", baggage:"Daily nonstops in high summer make Santiago easy to reach; from there it is about an hour and a quarter west to the coast and into totality."},
+      stays:[
+        {kind:"Value · central", name:"Lemonade Stays Santiago de Compostela", area:"400 m from the old town", note:"Bright, central rooms; two doubles for four.", total:"&euro;1,576", per:"~&euro;263/night · 4 guests, 6 nights", score:"8.5 Very good"},
+        {kind:"Central favourite", name:"Hotel Gelmírez", area:"0.7 km from the cathedral", note:"Well-reviewed, dead-central, great value for the group.", total:"&euro;2,038", per:"~&euro;340/night · 4 guests, 6 nights", score:"8.8 Excellent"},
+        {kind:"Nicer 4-star", name:"NH Collection Santiago de Compostela", area:"1 km from the old town", note:"Polished 4-star if you want a step up.", total:"&euro;2,262", per:"~&euro;377/night · 4 guests, 6 nights", score:"8.8 Excellent"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into Santiago; evening wander through the old town."},
+        {d:"Day 2", t:"Santiago: the cathedral, old quarter and markets, with octopus and Albari&ntilde;o."},
+        {d:"Day 3", t:"R&iacute;as Baixas: Albari&ntilde;o country at Cambados, or seafood at O Grove; C&iacute;es islands boat if booked."},
+        {d:"Day 4", t:"Drive the wild Costa da Morte and scout Finisterre for the eclipse."},
+        {d:"Day 5", t:"A Coru&ntilde;a or Mux&iacute;a: the Tower of Hercules and lonely coastal towns."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Cape Finisterre / Costa da Morte cliffs by mid-afternoon (they fill early), open Atlantic to the west. Totality ~20:26, Sun ~14&deg;."},
+        {d:"Day 7", t:"Easy morning, then fly home."}
+      ],
       temp:"~24°C", crowd:"Moderate", airport:"SCQ", mapq:"Cabo Fisterra, Galicia, Spain",
       sub:"Seafood, pilgrims and Finisterre, where the eclipse Sun sets straight into the Atlantic.",
       img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Finisterre.JPG/1280px-Finisterre.JPG",
@@ -406,6 +491,23 @@ const REGIONS = {
     },
     {
       id:"aragon", name:"Aragón & the Ebro", tag:"CLEAR-SKY BET", tagClass:"clear", price:"€",
+      flightFrom:"€150 +train", stayFrom:"€2,404/6n",
+      osm:{bbox:"-1.9,41.2,0.2,42.0", marker:"41.65,-0.88", cap:"Base in Zaragoza, then on eclipse evening drive out onto the flat Ebro plains and simply pull off the road — the open meseta hands you the dead-flat western horizon an 8&deg;-high Sun demands."},
+      flights:{airport:"BCN (Barcelona) + AVE train ~1h15", time:"~2h10 to Barcelona, then 1h15 by train", fare:"~&euro;150–220 rt to Barcelona + ~&euro;30–50 AVE train", carriers:"Vueling, Transavia, KLM, easyJet nonstop to Barcelona", baggage:"No convenient direct to Zaragoza, so fly into Barcelona (cheap and frequent) and take the AVE high-speed train. Hire a car for the eclipse evening to chase the clearest patch of sky."},
+      stays:[
+        {kind:"Value hotel", name:"iStay by NH Zaragoza Sport Hotel", area:"Zaragoza, 1.2 km from centre", note:"Straightforward NH-run base; two doubles for four.", total:"&euro;2,404", per:"~&euro;401/night · 4 guests, 6 nights", score:"8.3 Very good"},
+        {kind:"Central 4-star", name:"NH Ciudad de Zaragoza", area:"0.6 km from the Basílica del Pilar", note:"Central and dependable, steps from the riverfront sights.", total:"&euro;3,350", per:"~&euro;558/night · 4 guests, 6 nights", score:"8.5 Very good"},
+        {kind:"Grand splurge", name:"NH Collection Gran Hotel de Zaragoza", area:"350 m from centre", note:"The city’s historic grand hotel if you want to treat yourselves.", total:"&euro;5,522", per:"~&euro;920/night · 4 guests, 6 nights", score:"8.8 Excellent"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into Barcelona, AVE to Zaragoza (~1h15); evening by the floodlit Bas&iacute;lica del Pilar."},
+        {d:"Day 2", t:"Zaragoza: the Pilar basilica, La Seo, the Aljafer&iacute;a palace and tapas in El Tubo."},
+        {d:"Day 3", t:"Goya country: Fuendetodos (his birthplace) or the Mud&eacute;jar town of Tarazona."},
+        {d:"Day 4", t:"Escape the heat in the Aragonese Pyrenees or under the waterfalls of the Monasterio de Piedra."},
+        {d:"Day 5", t:"Scout the plains west of the city for a flat, unbroken western horizon; relaxed evening."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Out onto the open Ebro plains by late afternoon — flat western horizon essential (Sun only ~8&deg;). Totality ~20:31. Stay mobile to dodge any cloud."},
+        {d:"Day 7", t:"Train back to Barcelona and fly home."}
+      ],
       temp:"~34°C", crowd:"Very quiet", airport:"BCN", mapq:"Ebro valley near Zaragoza, Spain",
       sub:"Big skies, Moorish Zaragoza and the best odds of actually seeing it. If you can take the heat.",
       img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Vista_del_Pilar_desde_el_Puente_del_Voluntariado%2C_Zaragoza%2C_Espa%C3%B1a_2012-05-16%2C_DD_01.JPG/1280px-Vista_del_Pilar_desde_el_Puente_del_Voluntariado%2C_Zaragoza%2C_Espa%C3%B1a_2012-05-16%2C_DD_01.JPG",
@@ -421,7 +523,57 @@ const REGIONS = {
       verdict:"The clear-headed choice if seeing totality is the whole point. Best odds, most space, easy escape routes if a cloud threatens. The cost is heat, and that is manageable if you plan around it."
     },
     {
+      id:"valencia", name:"Valencia", tag:"BEST ODDS", tagClass:"clear", price:"€€",
+      temp:"~31°C", crowd:"Busy", airport:"VLC", mapq:"Castellón de la Plana, Spain",
+      flightFrom:"€166 rt", stayFrom:"€2,475/6n",
+      sub:"Paella, science-fiction architecture and the clearest skies on the track. Base in the city, drive north for totality.",
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies.jpg/1280px-Ciutat_de_les_Arts_i_les_Ci%C3%A8ncies.jpg",
+      gal:["https://commons.wikimedia.org/wiki/Special:FilePath/Peniscola_from_the_beach._Year_1985.jpg?width=1024","https://commons.wikimedia.org/wiki/Special:FilePath/El_Palmar_Barraca_2.jpg?width=1024"],
+      stats:{totality:"~1m 34s", cloud:"~25%"},
+      osm:{bbox:"-0.9,39.3,0.7,40.5", marker:"39.99,-0.04", cap:"Base in Valencia city, then drive north into Castell&oacute;n province for the eclipse — Castell&oacute;n de la Plana (~55 min), Alcossebre near the centre line, or Pe&ntilde;&iacute;scola (~1h30). The Sun sets over land here, not the sea, so you need a flat, open WESTERN / inland horizon, not a beach."},
+      lead:"Valencia is Spain’s sunny, easygoing third city: a medieval core of markets and silk-trade palaces wrapped in a green ribbon of park where a river once ran, Calatrava’s white space-age museums to the south, and rice paddies and broad beaches on its doorstep. It also sits under the most reliable mainland sky on the whole 2026 track.",
+      eclipse:"Valencia sits right on the southern edge of the path, so the city itself catches barely a minute of totality with the Sun only three to four degrees up around 20:33 — fragile, and the lowest Sun of any option here. Drive 45 to 90 minutes north into Castell&oacute;n and you buy a safer, longer totality: about 1m34s at Castell&oacute;n de la Plana (20:31) or 1m39s near Pe&ntilde;&iacute;scola (20:30). This is a true sunset eclipse, with the partial phase running almost into sunset.",
+      weather:"This is the headline reason to come east. Eclipsophile rates the Mediterranean coast around Valencia and Castell&oacute;n the best mainland bet on the whole track — roughly a 75 percent chance of a clear view, against the cloud-plagued north (clear on only about half of recent years). The one catch is that very low Sun: a thin band of coastal haze on the western horizon can still spoil it, so stay mobile. August days are warm and humid, around 30 to 32 degrees.",
+      cost:"Far better value than the islands and easier on the wallet than the north for flights. August on the coast is busy and the eclipse adds to it, so book ahead. Reckon on roughly 2,500 to 3,300 euro for six nights for four in a good central hotel or apartment, less for a simple flat.",
+      getting:"Among the simplest journeys here: frequent nonstop flights from Schiphol to Valencia (VLC) in about two and a half hours with Vueling, Transavia, easyJet and KLM. Hire a car for eclipse day — it is essential for the drive north, and demand spikes that week, so book early.",
+      watch:"Do not watch from a Valencia beach: the Sun sets inland to the west, not over the sea. Drive north into Castell&oacute;n and find a spot with a flat, open western (inland) horizon — an elevated field, a low rise, or the headland and castle at Pe&ntilde;&iacute;scola. Aim for the centre line around Alcossebre for the safest totality, and keep a backup spot a few kilometres away in case of low cloud.",
+      beyond:"A week here is easy to fill. Lose yourself in the Central Market and the Barrio del Carmen, wander Calatrava’s Ciudad de las Artes y las Ciencias and its aquarium, cycle the Turia Gardens, and take a golden-hour boat across the Albufera lagoon before paella in El Palmar, where the dish was born. Pe&ntilde;&iacute;scola’s castle town doubles as eclipse-day scouting.",
+      flights:{airport:"VLC (Valencia)", time:"~2h30 nonstop", fare:"From ~&euro;166 rt (Vueling); ~&euro;210–280 typical; KLM ~&euro;350", carriers:"Vueling, Transavia, easyJet, KLM — all nonstop", baggage:"Cheapest fares (Vueling Fly Light, Transavia basic, easyJet, KLM ‘Light’) include only a small under-seat bag; an overhead cabin trolley costs extra (~&euro;10–30 per person each way). KLM Standard fares include a full cabin trolley. None of the cheapest fares include a checked bag."},
+      stays:[
+        {kind:"Central design hotel", name:"Room Mate Cosmo – City Centre", area:"350 m from the centre", note:"Stylish, lively and dead-central; two superior rooms for four.", total:"&euro;2,475", per:"~&euro;413/night · 4 guests, 6 nights", score:"9.4 Wonderful"},
+        {kind:"Apartment for four", name:"Parker The Urban Flats", area:"0.8 km from the centre", note:"Two loft studios with kitchens — space and value for the group.", total:"&euro;2,491", per:"~&euro;415/night · 4 guests, 6 nights", score:"9.3 Wonderful"},
+        {kind:"Nicer · spa", name:"MYR Plaza Mercado & Spa", area:"400 m from centre, by the Central Market", note:"Smart 4-star with a spa, in the heart of the old town.", total:"&euro;3,291", per:"~&euro;549/night · 4 guests, 6 nights", score:"9.4 Wonderful"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into Valencia, collect the hire car; evening in the Barrio del Carmen and dinner in Ruzafa."},
+        {d:"Day 2", t:"Old town: the Central Market, La Lonja silk exchange, the cathedral and Miguelete tower, then the Turia Gardens."},
+        {d:"Day 3", t:"Ciudad de las Artes y las Ciencias and the Oceanogr&agrave;fic; afternoon on Malvarrosa beach, paella by the marina."},
+        {d:"Day 4", t:"Albufera day trip: rice paddies, a lagoon boat at golden hour, and paella in El Palmar."},
+        {d:"Day 5", t:"Scout north — Castell&oacute;n, Alcossebre, Pe&ntilde;&iacute;scola — for a flat western horizon; afternoon at Sagunto or Pe&ntilde;&iacute;scola old town."},
+        {d:"Day 6 · eclipse", ecl:true, t:"In position near Castell&oacute;n / Pe&ntilde;&iacute;scola by ~19:00, flat western horizon. Totality ~20:30–31, Sun only ~4&deg; in the WNW; keep a backup spot for low cloud."},
+        {d:"Day 7", t:"Easy Valencia morning, return the car, fly home."}
+      ],
+      verdict:"The shrewd pick if you want the best odds of actually seeing it and an easy, good-value holiday. The trade is a short totality on a very low Sun and a drive north on the day — but the clearest skies on the mainland and a superb city base make Valencia hard to beat for 2026."
+    },
+    {
       id:"mallorca", name:"Mallorca", tag:"LONGEST TOTALITY", tagClass:"risk", price:"€€€",
+      flightFrom:"€150 rt", stayFrom:"€2,093/6n",
+      osm:{bbox:"2.2,39.25,3.5,40.0", marker:"39.69,2.51", cap:"Base in Palma, then drive 40–60 minutes to the west or southwest coast — Banyalbufar, Port d’Andratx, Sant Elm and the islet of Sa Dragonera — where you get open sea to the west for the very low Sun."},
+      flights:{airport:"PMI (Palma)", time:"~2h30 nonstop", fare:"From ~&euro;150 rt; typically ~&euro;240–320 nonstop, climbing toward eclipse week", carriers:"Transavia, easyJet, KLM and Vueling nonstop", baggage:"The easiest journey of the lot — frequent direct flights from Schiphol. Book early: peak-August Mallorca plus the eclipse will push fares and beds up fast."},
+      stays:[
+        {kind:"Value · old town", name:"Turismo de Interior Ca Sa Padrina", area:"Palma old town, 450 m from centre", note:"Charming small place in the heart of Palma; two doubles.", total:"&euro;2,093", per:"~&euro;349/night · 4 guests, 6 nights", score:"7.7 Good"},
+        {kind:"Mid hotel", name:"Catalonia Majórica", area:"Near the Paseo Marítimo, 2.7 km from centre", note:"Big reliable hotel with a pool, a short walk to the marina.", total:"&euro;3,219", per:"~&euro;537/night · 4 guests, 6 nights", score:"8.5 Very good"},
+        {kind:"Nicer · spa", name:"Isla Mallorca & Spa", area:"Palma, 1.7 km from centre", note:"Comfortable 4-star with a spa to cool off after the heat.", total:"&euro;3,859", per:"~&euro;643/night · 4 guests, 6 nights", score:"8.7 Excellent"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into Palma; evening in the old town beneath the cathedral."},
+        {d:"Day 2", t:"Palma: the cathedral (La Seu), old quarter, Bellver castle and a beach."},
+        {d:"Day 3", t:"Serra de Tramuntana: Valldemossa, Dei&agrave; and the vintage train to S&oacute;ller."},
+        {d:"Day 4", t:"West coast scout: Banyalbufar, Port d’Andratx and Sant Elm — pick your eclipse spot with open sea to the west."},
+        {d:"Day 5", t:"Hidden calas and a boat trip; perhaps Sa Calobra."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Be on the west / southwest coast hours early, open sea to the west (Sun only 4–6&deg;). Totality ~20:33 — the longest in Spain, about 2m10s."},
+        {d:"Day 7", t:"Last swim, then fly home."}
+      ],
       temp:"~30°C", crowd:"Very busy", airport:"PMI", mapq:"Banyalbufar, Mallorca, Spain",
       sub:"The longest darkness in Spain, watched from a west-coast cove. If you book very early.",
       img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Catedral_de_Santa_Mar%C3%ADa%2C_Palma_de_Mallorca%2C_Espa%C3%B1a%2C_2022-10-06%2C_DD_01-03_HDR.jpg/1280px-Catedral_de_Santa_Mar%C3%ADa%2C_Palma_de_Mallorca%2C_Espa%C3%B1a%2C_2022-10-06%2C_DD_01-03_HDR.jpg",
@@ -435,6 +587,39 @@ const REGIONS = {
       watch:"You need a west or southwest-facing shore with clear sea: the west coast around Banyalbufar, Port d'Andratx, Sant Elm and the islet of Sa Dragonera. Claim your place hours early, or better, stay on that coast so you are not driving into the crush at sunset.",
       beyond:"Hike or drive the Serra de Tramuntana and its UNESCO villages, swim in hidden calas, wander old Palma, and eat ensa&iuml;mada by the harbour. A top-tier holiday island, as long as you have made peace with peak-season prices.",
       verdict:"Only worth it if the longest totality is the goal and you will book early and shrug off the crowds and cost. Given your worries about heat and, especially, crowds, it is the weakest fit here, even though the eclipse itself is the best."
+    },
+    {
+      id:"madrid", name:"Madrid", tag:"CITY + DRIVE", tagClass:"risk", price:"€€",
+      temp:"~32°C", crowd:"Heavy traffic", airport:"MAD", mapq:"Aranda de Duero, Spain",
+      flightFrom:"€220 rt", stayFrom:"€1,640/6n",
+      sub:"Spain’s great capital as a base — but Madrid sees only a 99% partial. Drive ~1h45 north to Aranda de Duero for true totality.",
+      img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Plaza_Mayor_De_Madrid_%28215862629%29_edited.jpeg/1280px-Plaza_Mayor_De_Madrid_%28215862629%29_edited.jpeg",
+      gal:["https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Palacio_Real_de_Madrid_Julio_2016_%28cropped%29.jpg/1280px-Palacio_Real_de_Madrid_Julio_2016_%28cropped%29.jpg","https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Toledo_%2837737041515%29.jpg/1280px-Toledo_%2837737041515%29.jpg"],
+      stats:{totality:"~1m 42s", cloud:"~25%"},
+      osm:{bbox:"-4.8,40.2,-2.6,41.9", marker:"41.67,-3.69", cap:"Madrid city is south of the path and sees only a deep partial. Drive ~160 km north up the A-1 to Aranda de Duero — essentially on the centre line — for about 1m42s of totality. Aim for open countryside north or west of the town for a flat western horizon."},
+      lead:"Madrid is the obvious city break: world-class museums on the Paseo del Arte, the Royal Palace, the Retiro’s gardens and the tapas bars of La Latina, with Toledo and Segovia an easy train ride away. The catch for 2026 is that the capital sits just outside the shadow.",
+      eclipse:"Madrid city does NOT get totality — only a deep partial of about 99 percent around 20:32, which stays bright and underwhelming and shows none of the corona. To see the real thing you must drive north into the band. The closest good spot is Aranda de Duero, about 160 km up the A-1, near the centre line: roughly 1m42s of totality around 20:30 with the Sun only ~8 degrees up. Burgos and Soria give a few seconds more, but are further.",
+      weather:"Inland Spain in August is hot and reliably clear, which strongly favours the totality zone north of Madrid — Aranda, the Ribera del Duero and Burgos average around 70 to 80 percent clear skies, far better than the cloudy north coast. Madrid itself is dry and sunny too. The only real risk is thin haze right on the low western horizon, so scout an open, flat spot.",
+      cost:"Madrid has the deepest choice of beds in Spain, so prices stay sane — roughly 1,600 to 3,400 euro for six nights for four in a central hotel — but the best-known central 4-stars sell out fast for eclipse week, so book now. An apartment or aparthotel in Sol, Malasa&ntilde;a or La Latina is often the best value for a group.",
+      getting:"The most-connected route here: frequent nonstop flights from Schiphol to Madrid (MAD) in about 2h40 with KLM, Iberia and Air Europa, plus low-cost options. Hire a car for eclipse day — you cannot reach totality by public transport in time, and you will want the flexibility.",
+      watch:"This one is all about the drive. Leave Madrid in the morning or very early afternoon — not after lunch — and head up the A-1 toward Aranda de Duero. Find open countryside with a flat, unobstructed western horizon (the Sun is only ~8 degrees up). Then brace for the return: Spain’s traffic authority is mounting its biggest-ever summer operation, and everyone heads home in the dark at once. Bring food and water, or stay a night near Aranda.",
+      beyond:"Around the eclipse, Madrid is a full holiday in itself: the Prado, Reina Sof&iacute;a and Thyssen, the Royal Palace and Plaza Mayor, the Retiro and the Templo de Debod at sunset, and long evenings of tapas in La Latina. Day-trip by fast train to Toledo (30 min) or Segovia, or out to El Escorial.",
+      flights:{airport:"MAD (Madrid-Barajas)", time:"~2h40 nonstop", fare:"KLM nonstop from ~&euro;220 rt; Iberia / Air Europa ~&euro;345 (cabin bag incl.)", carriers:"KLM, Iberia, Air Europa nonstop; also easyJet", baggage:"KLM’s cheapest ‘Light’ fares include only a small under-seat bag — a cabin trolley costs extra; KLM Standard, Iberia and Air Europa fares include a full cabin trolley. For four people, compare total-with-baggage, not just the headline fare."},
+      stays:[
+        {kind:"Value · central", name:"Woohoo Rooms Boutique Luna", area:"Central, between Sol and Gran Vía", note:"Two junior suites with king beds — great value, very central.", total:"&euro;1,640", per:"~&euro;273/night · 4 guests, 6 nights", score:"9.4 Wonderful"},
+        {kind:"Classic 4-star", name:"Hotel Regina", area:"Between Puerta del Sol and Gran Vía", note:"Long-established central 4-star with thousands of happy reviews.", total:"&euro;3,170", per:"~&euro;528/night · 4 guests, 6 nights", score:"9.4 Wonderful"},
+        {kind:"Boutique splurge", name:"CoolRooms Palacio de Atocha", area:"Near Atocha / Barrio de las Letras", note:"A design-led palace hotel if you want to treat yourselves.", total:"&euro;5,050", per:"~&euro;842/night · 4 guests, 6 nights", score:"9.5 Exceptional"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into Madrid, central hotel; evening at Puerta del Sol and Plaza Mayor, tapas in La Latina. Book the eclipse hire car."},
+        {d:"Day 2", t:"Art and the Retiro: the Prado and a stroll in the park, plus the Reina Sof&iacute;a (Guernica) or Thyssen."},
+        {d:"Day 3", t:"Royal Madrid: the Royal Palace and Almudena, Plaza de Oriente, and the Templo de Debod at sunset."},
+        {d:"Day 4", t:"Day trip by fast train to Toledo (30 min) or Segovia and its Roman aqueduct."},
+        {d:"Day 5", t:"Second day trip (El Escorial) or a relaxed Madrid day; pick up the hire car."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Leave late morning, drive ~160 km north up the A-1 to Aranda de Duero; flat open western horizon. Totality ~20:30 (~1m42s), Sun ~8&deg;. Expect heavy traffic back after dark."},
+        {d:"Day 7", t:"Recover, return the car, fly home (note 15 Aug is a Spanish holiday — busy)."}
+      ],
+      verdict:"Choose Madrid for a brilliant city holiday with the eclipse as a day-trip prize — but go in clear-eyed: the capital sees only a 99% partial, so totality means a committed drive north and a long, traffic-bound return. Best if the city and the museums matter as much to you as the corona."
     }
   ],
   "2027":[
@@ -525,6 +710,50 @@ function eph(r,year){
 
 function block(t,html){return '<div class="block"><h3>'+t+'</h3>'+html+'</div>';}
 
+function locmap(r){
+  if(!r.osm)return '';
+  var src='https://www.openstreetmap.org/export/embed.html?bbox='+encodeURIComponent(r.osm.bbox)+'&layer=mapnik&marker='+encodeURIComponent(r.osm.marker);
+  return block('Where it is',
+    (r.osm.cap?'<p>'+r.osm.cap+'</p>':'')
+    +'<div class="locmap"><iframe loading="lazy" title="Map showing '+r.name+'" src="'+src+'"></iframe></div>');
+}
+function flightFacts(r){
+  if(!r.flights)return '';
+  var f=r.flights;
+  return '<div class="flightfacts">'
+    +'<div><div class="k">Airport</div><div class="v"><span class="mono">'+f.airport+'</span></div></div>'
+    +'<div><div class="k">Flight time</div><div class="v">'+f.time+'</div></div>'
+    +'<div><div class="k">From · return / person</div><div class="v"><span class="mono">'+f.fare+'</span></div></div>'
+    +'<div><div class="k">Best airlines</div><div class="v">'+f.carriers+'</div></div>'
+  +'</div>'
+  +(f.baggage?'<p class="bagnote"><strong>Cabin baggage:</strong> '+f.baggage+'</p>':'');
+}
+function stayCards(r){
+  if(!r.stays)return '';
+  return '<div class="staygrid">'+r.stays.map(function(s){
+    return '<div class="stay">'
+      +'<span class="kind">'+s.kind+'</span>'
+      +'<h4>'+s.name+'</h4>'
+      +'<p class="area">'+s.area+'</p>'
+      +'<p class="snote">'+s.note+'</p>'
+      +'<div class="pricerow"><span class="tot">'+s.total+'</span><span class="sc">'+s.score+'</span></div>'
+      +'<span class="per">'+s.per+'</span>'
+    +'</div>';
+  }).join('')+'</div>';
+}
+function itinList(r){
+  if(!r.itinerary)return '';
+  return '<ul class="itin">'+r.itinerary.map(function(it){
+    return '<li class="'+(it.ecl?'ecl':'')+'"><span class="day">'+it.d+'</span><span class="what">'+it.t+'</span></li>';
+  }).join('')+'</ul>';
+}
+function gallery(r){
+  return '<div class="gallery">'
+    +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[0]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
+    +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[1]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
+  +'</div>';
+}
+
 var active="2026";
 var shownDetail=false;
 
@@ -537,9 +766,11 @@ function applyYear(year){
   showMap(year);
 }
 
+var STAY_BASE={asturias:"Oviedo",cantabria:"Santander",galicia:"Santiago de Compostela",aragon:"Zaragoza",valencia:"Valencia",mallorca:"Palma de Mallorca",madrid:"Madrid"};
 function renderDetail(year,id){
   var r=REGIONS[year].find(function(x){return x.id===id;});
   if(!r)return false;
+  var stayCity=STAY_BASE[r.id]||r.name;
   var yl=year==="2026"?"12 August 2026 &middot; the evening eclipse":"2 August 2027 &middot; the morning eclipse";
   var html=''
    +'<div class="banner">'
@@ -548,18 +779,21 @@ function renderDetail(year,id){
    +'</div>'
    +'<p class="lead">'+r.lead+'</p>'
    +eph(r,year)
+   +(r.flights?'<div class="planbar"><span>Trip basis: <b>4 adults</b>, ~<b>6 nights</b> (11&ndash;17 Aug 2026)</span><span>Flights &amp; hotels: <b>live prices, late June 2026</b></span></div>':'')
+   +locmap(r)
    +block('The main event','<p>'+r.eclipse+'</p>')
    +block('What the weather is doing','<p>'+r.weather+'</p>')
-   +block('Crowds and cost','<p>'+r.cost+'</p>')
    +block('Getting there from Schiphol','<p>'+r.getting+'</p>'
-       +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q='+encodeURIComponent('flights from Amsterdam to '+r.airport)+'">&#9992; Search flights AMS &rarr; '+r.airport+'</a>')
+       +flightFacts(r)
+       +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q='+encodeURIComponent('flights from Amsterdam to '+r.airport+' on 2026-08-11 returning 2026-08-17')+'">&#9992; Search flights AMS &rarr; '+r.airport+'</a>')
+   +block(r.stays?'Where to stay &amp; what it costs':'Crowds and cost','<p>'+r.cost+'</p>'
+       +stayCards(r)
+       +(r.stays?'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.html?ss='+encodeURIComponent(stayCity)+'&checkin=2026-08-11&checkout=2026-08-17&group_adults=4&no_rooms=2&group_children=0">&#127976; See more stays in '+stayCity+'</a>':''))
    +block('Where to point your chair','<p>'+r.watch+'</p>'
        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.mapq)+'">&#128205; Open viewing area in Maps</a>')
-   +block('The rest of your trip','<p>'+r.beyond+'</p>'
-       +'<div class="gallery">'
-         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[0]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
-         +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[1]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
-       +'</div>')
+   +(r.itinerary
+       ? block('Your week, day by day','<p>'+r.beyond+'</p>'+itinList(r)+gallery(r))
+       : block('The rest of your trip','<p>'+r.beyond+'</p>'+gallery(r)))
    +'<div class="verdict"><h3>The verdict</h3><p>'+r.verdict+'</p></div>';
   document.getElementById('detail-content').innerHTML=html;
   var cb=document.getElementById('copybtn');
@@ -620,6 +854,7 @@ function buildCompare(){
   ['2026','2027'].forEach(function(y){
     var when=y==='2026'?'12 Aug 2026':'2 Aug 2027';
     REGIONS[y].forEach(function(r){
+      var dash='<span class="dash">&mdash;</span>';
       rows+='<tr onclick="location.hash=\''+y+'-'+r.id+'\'">'
         +'<td class="region">'+r.name+'</td>'
         +'<td><span class="yr">'+when+'</span></td>'
@@ -627,6 +862,8 @@ function buildCompare(){
         +'<td class="num">'+r.stats.cloud+'</td>'
         +'<td class="num">'+r.temp+'</td>'
         +'<td>'+r.crowd+'</td>'
+        +'<td class="num">'+(r.flightFrom||dash)+'</td>'
+        +'<td class="num">'+(r.stayFrom||dash)+'</td>'
         +'<td class="num">'+r.price+'</td>'
       +'</tr>';
     });
