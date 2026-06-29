@@ -205,6 +205,19 @@
   .itin .what{color:var(--muted);font-size:.95rem;}
   .itin li.ecl .day{color:var(--accent-2);}
   .itin li.ecl .what{color:var(--text);}
+  /* per-carrier price heatmap */
+  .heatblock{margin:16px 0 6px;}
+  .heatcap{font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:var(--faint);margin:0 0 10px;text-transform:uppercase;}
+  .heatwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;}
+  table.heat{border-collapse:collapse;width:100%;min-width:440px;}
+  table.heat th,table.heat td{padding:9px 8px;text-align:center;font-family:var(--mono);font-size:.82rem;border-bottom:1px solid var(--line);border-right:1px solid var(--line);}
+  table.heat thead th{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:var(--ground-2);font-weight:400;}
+  table.heat th.hc{text-align:left;color:var(--text);font-family:var(--sans);font-size:.86rem;white-space:nowrap;background:var(--ground-2);position:sticky;left:0;}
+  table.heat td{color:var(--text);font-weight:600;}
+  table.heat td .hx{color:var(--faint);font-weight:400;}
+  table.heat tr:last-child th,table.heat tr:last-child td{border-bottom:0;}
+  .heatlegend{display:flex;align-items:center;gap:8px;margin:10px 0 0;font-family:var(--mono);font-size:.62rem;color:var(--faint);}
+  .heatlegend .bar{height:9px;width:120px;border-radius:5px;background:linear-gradient(90deg,hsla(140,70%,45%,.55),hsla(70,70%,45%,.5),hsla(0,70%,45%,.55));}
   table.cmp td.region small{display:block;font-family:var(--sans);font-size:.78rem;color:var(--muted);white-space:normal;max-width:30ch;}
   .cmpnote{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:12px 2px 0;line-height:1.5;}
 
@@ -312,7 +325,7 @@
             <tbody id="cmpbody"></tbody>
           </table>
         </div>
-        <p class="cmpnote">Flight = cheapest return per person from Amsterdam (11&ndash;17 Aug 2026); Stay = lowest of three picked hotels, total for 4 adults / 6 nights. *Asturias is mostly 1-stop on these dates. Totality for Valencia and Madrid is at the nearest spot you drive to &mdash; Valencia city catches barely a minute on the path edge, and Madrid city sees only a 99% partial, so both mean a drive on the day.</p>
+        <p class="cmpnote">Flight = cheapest return per person from Amsterdam; Stay = lowest of three picked hotels, total for 4 adults / 6 nights (2026: 11&ndash;17 Aug; 2027: 1&ndash;7 Aug). *Asturias is mostly 1-stop on these dates. &ldquo;est&rdquo; = 2027 flight estimate (fares not published this far out); 2027 stays are live prices. Totality for Valencia and Madrid is at the nearest spot you drive to &mdash; Valencia city catches barely a minute on the path edge, and Madrid city sees only a 99% partial, so both mean a drive on the day.</p>
       </div>
     </section>
 
@@ -374,7 +387,7 @@
 
 <footer>
   <div class="wrap">
-    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were checked live in late June 2026 on Google Flights and Booking.com for a sample trip of four adults flying Amsterdam&ndash;Spain on 11 August and back on 17 August, with six nights' lodging (two rooms, or an apartment sleeping four); they are snapshots for comparison, not quotes, and will climb as eclipse day nears, so book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
+    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were checked live in late June 2026 on Google Flights and Booking.com for a sample trip of four adults flying Amsterdam&ndash;Spain on 11 August and back on 17 August, with six nights' lodging (two rooms, or an apartment sleeping four); they are snapshots for comparison, not quotes, and will climb as eclipse day nears, so book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each 2026 region also carries a per-carrier price heatmap by departure date (returning 17 August). For 2027, hotel prices are live for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
     <div class="srclist">
       <span style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;">SOURCES&nbsp;</span>
       <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
@@ -625,6 +638,25 @@ const REGIONS = {
   "2027":[
     {
       id:"cadiz", name:"Cádiz", tag:"TOP PICK", tagClass:"pick", price:"€€",
+      flightFrom:"≈€250 est", stayFrom:"€2,384/6n",
+      osm:{bbox:"-6.5,36.0,-5.3,36.9", marker:"36.527,-6.288", cap:"Almost the whole province lies in the path with the Sun high (~40&deg;), so you are spoilt for choice — sea-girt old C&aacute;diz, a Costa de la Luz beach like Zahara or Bolonia, or a white hilltop town such as Vejer. Just keep open sky to the south-east. Base in C&aacute;diz; fly into Seville and drive ~1h15."},
+      flights:{airport:"SVQ (Seville) + ~1h15 drive", time:"~3h nonstop to Seville", fare:"≈€200–320 rt (estimate)", carriers:"Transavia, Vueling nonstop to Seville; M&aacute;laga (AGP) an alternative",
+        heatNote:"August 2027 fares are not on sale yet — airlines load schedules about 11 months ahead, so the per-carrier price heatmap will fill in here from roughly autumn 2026. For now, reckon on the figure above; the 2027 routes use the same low-cost carriers as 2026.",
+        baggage:"Same carriers as 2026: the cheapest fares (Transavia, Vueling, easyJet, KLM ‘Light’) include only a small under-seat bag, with an overhead cabin trolley as a paid add-on (~€10–30 per person each way); KLM Standard, Iberia and Air Europa include a full cabin trolley. No cheapest fare includes a checked bag."},
+      stays:[
+        {kind:"Value · central apt", name:"Nueva ALMUDENA Apartment", area:"Cádiz old town, 250 m from centre", note:"Central, well-rated apartment in the old quarter.", total:"€2,384", per:"~€397/night · 4 guests, 6 nights", score:"9.1 Wonderful"},
+        {kind:"Top-rated apt", name:"Casa ALEGRIA", area:"Cádiz old town, 300 m from centre", note:"Among the best-reviewed central flats in town.", total:"€2,520", per:"~€420/night · 4 guests, 6 nights", score:"9.2 Wonderful"},
+        {kind:"Two-bedroom (sleeps 4)", name:"Apartamento La Pepa de ORO", area:"Cádiz, 0.6 km from centre", note:"Proper two-bedroom flat with room for four.", total:"€2,850", per:"~€475/night · 4 guests, 6 nights", score:"9.2 Wonderful"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into Seville, drive ~1h15 to C&aacute;diz; evening in the sea-walled old town."},
+        {d:"Day 2", t:"C&aacute;diz: the ramparts and cathedral, La Caleta beach, and fried fish in the old quarter."},
+        {d:"Day 3", t:"Jerez: a sherry bodega, flamenco, and the Royal Andalusian riding school."},
+        {d:"Day 4", t:"Costa de la Luz: Zahara and Bolonia beaches, Roman Baelo Claudia; windsurfers at Tarifa."},
+        {d:"Day 5", t:"White towns: Vejer de la Frontera and Medina Sidonia; scout an open-sky eclipse spot."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Watch from a Costa de la Luz beach or old C&aacute;diz with open sky to the SE. ~2m54s of totality around 10:45, Sun high (~40&deg;). Beach and a shaded lunch after."},
+        {d:"Day 7", t:"Do&ntilde;ana flamingos or a last beach, drive to Seville, fly home."}
+      ],
       temp:"~31°C", crowd:"Busy", airport:"SVQ", mapq:"Zahara de los Atunes, Cádiz, Spain",
       sub:"The longest mainland totality, a high safe Sun and the wild Costa de la Luz.",
       img:"https://upload.wikimedia.org/wikipedia/commons/3/35/Cadiz_aerea.jpg",
@@ -641,6 +673,25 @@ const REGIONS = {
     },
     {
       id:"malaga", name:"Málaga", tag:"EASIEST ACCESS", tagClass:"clear", price:"€€",
+      flightFrom:"≈€200 est", stayFrom:"€1,384/6n",
+      osm:{bbox:"-5.0,36.45,-3.8,37.1", marker:"36.721,-4.42", cap:"Much of the province lies in the path with a high Sun, so a Costa del Sol beach, the Alcazaba ramparts or the cliff-edge town of Ronda all work. Edge into central or eastern M&aacute;laga province to sit safely inside the band. The simplest base of the three: fly straight into M&aacute;laga."},
+      flights:{airport:"AGP (Málaga)", time:"~3h nonstop", fare:"≈€150–280 rt (estimate)", carriers:"KLM, Transavia, easyJet, Vueling — all nonstop",
+        heatNote:"August 2027 fares are not on sale yet — airlines load schedules about 11 months ahead, so the per-carrier price heatmap will fill in here from roughly autumn 2026. M&aacute;laga is the best-connected gateway in the south, so expect plenty of cheap nonstops once they open.",
+        baggage:"Same carriers as 2026: the cheapest fares (Transavia, Vueling, easyJet, KLM ‘Light’) include only a small under-seat bag, with an overhead cabin trolley as a paid add-on (~€10–30 per person each way); KLM Standard and Iberia include a full cabin trolley. No cheapest fare includes a checked bag."},
+      stays:[
+        {kind:"Value · 2-bed apt", name:"Holidays2Malaga Central Alameda View", area:"Central, 400 m from centre", note:"Two-bedroom flat right in the centre — good value for four.", total:"€1,384", per:"~€231/night · 4 guests, 6 nights", score:"8.1 Very good"},
+        {kind:"Top-rated apt", name:"Apartamentos Martiricos by P&O", area:"Málaga, 1.2 km from centre", note:"Very high guest scores, a short walk from the old town.", total:"€2,126", per:"~€354/night · 4 guests, 6 nights", score:"9.2 Wonderful"},
+        {kind:"Hotel + pool", name:"Catalonia Málaga", area:"Near the beach, 3.7 km from centre", note:"Reliable big hotel with a pool, handy for the Costa del Sol.", total:"€2,430", per:"~€405/night · 4 guests, 6 nights", score:"8.7 Excellent"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into M&aacute;laga; evening in the revived old town and a rooftop bar."},
+        {d:"Day 2", t:"M&aacute;laga: the Alcazaba, the Picasso Museum, the cathedral and the port promenade."},
+        {d:"Day 3", t:"Ronda: the gorge and the Puente Nuevo, an easy inland day trip."},
+        {d:"Day 4", t:"Nerja caves and white-washed Frigiliana to the east; scout an eclipse spot."},
+        {d:"Day 5", t:"Day trip to the Alhambra in Granada, or a relaxed Costa del Sol beach day."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Watch from a Costa del Sol beach or the Alcazaba ramparts, open sky to the SE. ~1m48s around 10:48, Sun high and safe. Sit in central/eastern province to be inside the band."},
+        {d:"Day 7", t:"Easy morning, then fly home."}
+      ],
       temp:"~31°C", crowd:"Busy", airport:"AGP", mapq:"Playa de la Malagueta, Málaga, Spain",
       sub:"In the path, cloudless, and the simplest flight from Schiphol of the lot.",
       img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Alcazaba_Catedral_Malaga.jpg/1280px-Alcazaba_Catedral_Malaga.jpg",
@@ -657,6 +708,25 @@ const REGIONS = {
     },
     {
       id:"granada-almeria", name:"Granada & Almería", tag:"SOUTHERN EDGE", tagClass:"", price:"€€",
+      flightFrom:"≈€200 est", stayFrom:"€787/6n",
+      osm:{bbox:"-3.9,36.55,-1.8,37.45", marker:"36.733,-2.19", cap:"Only the SOUTHERN parts of these provinces fall inside the path — the coast and the Cabo de Gata area, NOT inland Granada city. Base in Granada for the Alhambra, then drive south on the morning to the Almer&iacute;a coast (Cabo de Gata, or the shore near Motril) for totality. Verify your exact spot is inside the band first."},
+      flights:{airport:"AGP (Málaga) + drive", time:"~3h nonstop to Málaga, then ~1h30 to Granada", fare:"≈€150–280 rt to Málaga (estimate)", carriers:"via Málaga (KLM, Transavia, easyJet); little direct service to Granada (GRX)",
+        heatNote:"August 2027 fares are not on sale yet — airlines load schedules about 11 months ahead, so the per-carrier price heatmap will fill in here from roughly autumn 2026. Treat this as an extension of a M&aacute;laga trip and fly into AGP.",
+        baggage:"Same carriers as 2026: the cheapest fares (Transavia, Vueling, easyJet, KLM ‘Light’) include only a small under-seat bag, with an overhead cabin trolley as a paid add-on (~€10–30 per person each way); KLM Standard and Iberia include a full cabin trolley. No cheapest fare includes a checked bag."},
+      stays:[
+        {kind:"Value · 2-bed (sleeps 4)", name:"Smart Suites Albaicín", area:"Granada, 400 m from centre", note:"Excellent-value two-bedroom suites with stellar reviews.", total:"€787", per:"~€131/night · 4 guests, 6 nights", score:"9.3 Wonderful"},
+        {kind:"Hotel near the Alhambra", name:"Porcel Alixares", area:"Granada, 1.3 km from centre, toward the Alhambra", note:"Well-reviewed hotel a short walk from the Alhambra.", total:"€855", per:"~€143/night · 4 guests, 6 nights", score:"8.6 Excellent"},
+        {kind:"Nicer hotel", name:"Catalonia Granada", area:"Granada, 1.2 km from centre", note:"Polished, central hotel if you want a step up.", total:"€1,340", per:"~€223/night · 4 guests, 6 nights", score:"9.1 Wonderful"}
+      ],
+      itinerary:[
+        {d:"Day 1", t:"Fly into M&aacute;laga, drive ~1h30 to Granada; evening tapas in the Albaic&iacute;n."},
+        {d:"Day 2", t:"The Alhambra and Generalife (book months ahead); the Albaic&iacute;n at sunset."},
+        {d:"Day 3", t:"Sierra Nevada for cool mountain air, or the Sacromonte cave quarter."},
+        {d:"Day 4", t:"Drive south to the coast: Cabo de Gata's volcanic coves; confirm your spot is inside the band."},
+        {d:"Day 5", t:"Tabernas desert (the spaghetti-western sets) or more Cabo de Gata beaches."},
+        {d:"Day 6 · eclipse", ecl:true, t:"Be on the SOUTHERN coast — Cabo de Gata, Almer&iacute;a's beaches, or near Motril — with open sky. ~10:49, high Sun, but shorter near the edge. Do NOT assume Granada city is inside the path."},
+        {d:"Day 7", t:"Drive back to M&aacute;laga and fly home."}
+      ],
       temp:"~31–34°C", crowd:"Moderate", airport:"AGP", mapq:"Cabo de Gata, Almería, Spain",
       sub:"The Alhambra and Spain's only desert. Spectacular, but you must go south to reach the band.",
       img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Granada_Alhambra_von_San_Nicholas_01gm.jpg/1280px-Granada_Alhambra_von_San_Nicholas_01gm.jpg",
@@ -673,6 +743,38 @@ const REGIONS = {
     }
   ]
 };
+
+/* Per-carrier round-trip fares (EUR/person) by departure date, return fixed Mon 17 Aug 2026.
+   Checked on Google Flights, late June 2026. null = not among the cheapest results that day. */
+var FLIGHTHEAT={
+  dates:["8","9","10","11","12"],
+  routes:{
+    "VLC":[{c:"Vueling",p:[166,189,166,166,166]},{c:"Transavia",p:[264,247,240,254,215]},{c:"easyJet",p:[null,290,null,280,null]},{c:"KLM",p:[294,294,294,347,294]}],
+    "MAD":[{c:"KLM",p:[220,220,226,220,220]},{c:"Air Europa",p:[359,374,359,344,329]},{c:"Iberia",p:[385,371,449,344,329]}],
+    "OVD":[{c:"Vueling (via BCN)",p:[352,336,323,311,328]},{c:"Air Europa (1-stop)",p:[454,509,479,434,434]},{c:"KLM (nonstop)",p:[497,462,795,682,421]}],
+    "BIO":[{c:"Vueling (via BCN)",p:[340,307,330,304,294]},{c:"KLM (nonstop)",p:[417,457,540,393,347]}],
+    "SCQ":[{c:"Vueling",p:[311,368,362,311,350]},{c:"KLM (nonstop)",p:[651,718,765,604,524]}],
+    "BCN":[{c:"Vueling",p:[193,182,182,182,182]},{c:"Transavia",p:[217,210,204,191,191]},{c:"KLM",p:[228,213,213,217,213]}],
+    "PMI":[{c:"easyJet",p:[227,249,267,304,216]},{c:"Transavia",p:[263,278,299,237,263]},{c:"Vueling (1-stop)",p:[303,576,279,280,249]}]
+  }
+};
+function heatmap(r){
+  var rows=FLIGHTHEAT.routes[r.airport];
+  if(!rows)return '';
+  var vals=[]; rows.forEach(function(row){row.p.forEach(function(v){if(v!=null)vals.push(v);});});
+  if(!vals.length)return '';
+  var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals);
+  function bg(v){ if(v==null)return ''; var t=max>min?(v-min)/(max-min):0; var hue=(140*(1-t)).toFixed(0); return 'background:hsla('+hue+',70%,45%,'+(0.18+0.34*t).toFixed(2)+');'; }
+  var head='<tr><th class="hc">Airline</th>'+FLIGHTHEAT.dates.map(function(d){return '<th>'+d+' Aug</th>';}).join('')+'</tr>';
+  var body=rows.map(function(row){
+    return '<tr><th class="hc">'+row.c+'</th>'+row.p.map(function(v){return '<td style="'+bg(v)+'">'+(v==null?'<span class="hx">&mdash;</span>':'&euro;'+v)+'</td>';}).join('')+'</tr>';
+  }).join('');
+  return '<div class="heatblock">'
+    +'<div class="heatcap">Cheapest return fare / person by departure date &middot; returning Mon 17 Aug</div>'
+    +'<div class="heatwrap"><table class="heat"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>'
+    +'<div class="heatlegend"><span>cheaper</span><span class="bar"></span><span>dearer</span></div>'
+  +'</div>';
+}
 
 function renderGrid(year){
   const grid=document.getElementById('grid-'+year);
@@ -725,8 +827,7 @@ function flightFacts(r){
     +'<div><div class="k">Flight time</div><div class="v">'+f.time+'</div></div>'
     +'<div><div class="k">From · return / person</div><div class="v"><span class="mono">'+f.fare+'</span></div></div>'
     +'<div><div class="k">Best airlines</div><div class="v">'+f.carriers+'</div></div>'
-  +'</div>'
-  +(f.baggage?'<p class="bagnote"><strong>Cabin baggage:</strong> '+f.baggage+'</p>':'');
+  +'</div>';
 }
 function stayCards(r){
   if(!r.stays)return '';
@@ -766,11 +867,12 @@ function applyYear(year){
   showMap(year);
 }
 
-var STAY_BASE={asturias:"Oviedo",cantabria:"Santander",galicia:"Santiago de Compostela",aragon:"Zaragoza",valencia:"Valencia",mallorca:"Palma de Mallorca",madrid:"Madrid"};
+var STAY_BASE={asturias:"Oviedo",cantabria:"Santander",galicia:"Santiago de Compostela",aragon:"Zaragoza",valencia:"Valencia",mallorca:"Palma de Mallorca",madrid:"Madrid",cadiz:"Cádiz",malaga:"Málaga","granada-almeria":"Granada"};
 function renderDetail(year,id){
   var r=REGIONS[year].find(function(x){return x.id===id;});
   if(!r)return false;
   var stayCity=STAY_BASE[r.id]||r.name;
+  var stayIn=year==="2026"?"checkin=2026-08-11&checkout=2026-08-17":"checkin=2027-08-01&checkout=2027-08-07";
   var yl=year==="2026"?"12 August 2026 &middot; the evening eclipse":"2 August 2027 &middot; the morning eclipse";
   var html=''
    +'<div class="banner">'
@@ -779,16 +881,19 @@ function renderDetail(year,id){
    +'</div>'
    +'<p class="lead">'+r.lead+'</p>'
    +eph(r,year)
-   +(r.flights?'<div class="planbar"><span>Trip basis: <b>4 adults</b>, ~<b>6 nights</b> (11&ndash;17 Aug 2026)</span><span>Flights &amp; hotels: <b>live prices, late June 2026</b></span></div>':'')
+   +(r.flights?'<div class="planbar"><span>Trip basis: <b>4 adults</b>, ~<b>6 nights</b> ('+(year==="2026"?"11&ndash;17 Aug 2026":"1&ndash;7 Aug 2027")+')</span><span>'+(year==="2026"?"Flights &amp; hotels: <b>live prices, late June 2026</b>":"Hotels: <b>live prices</b> &middot; flights: <b>estimated</b> (2027 fares not published yet)")+'</span></div>':'')
    +locmap(r)
    +block('The main event','<p>'+r.eclipse+'</p>')
    +block('What the weather is doing','<p>'+r.weather+'</p>')
    +block('Getting there from Schiphol','<p>'+r.getting+'</p>'
        +flightFacts(r)
-       +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q='+encodeURIComponent('flights from Amsterdam to '+r.airport+' on 2026-08-11 returning 2026-08-17')+'">&#9992; Search flights AMS &rarr; '+r.airport+'</a>')
+       +heatmap(r)
+       +(r.flights&&r.flights.heatNote?'<p class="bagnote">'+r.flights.heatNote+'</p>':'')
+       +(r.flights&&r.flights.baggage?'<p class="bagnote"><strong>Cabin baggage:</strong> '+r.flights.baggage+'</p>':'')
+       +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q='+encodeURIComponent('flights from Amsterdam to '+r.airport+(year==="2026"?' on 2026-08-11 returning 2026-08-17':' on 2027-08-01 returning 2027-08-07'))+'">&#9992; Search flights AMS &rarr; '+r.airport+'</a>')
    +block(r.stays?'Where to stay &amp; what it costs':'Crowds and cost','<p>'+r.cost+'</p>'
        +stayCards(r)
-       +(r.stays?'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.html?ss='+encodeURIComponent(stayCity)+'&checkin=2026-08-11&checkout=2026-08-17&group_adults=4&no_rooms=2&group_children=0">&#127976; See more stays in '+stayCity+'</a>':''))
+       +(r.stays?'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.html?ss='+encodeURIComponent(stayCity)+'&'+stayIn+'&group_adults=4&no_rooms=2&group_children=0">&#127976; See more stays in '+stayCity+'</a>':''))
    +block('Where to point your chair','<p>'+r.watch+'</p>'
        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.mapq)+'">&#128205; Open viewing area in Maps</a>')
    +(r.itinerary
