@@ -126,6 +126,16 @@
   .verdict{margin:36px 0 0;padding:26px 30px;border-radius:14px;border:1px solid var(--accent);background:linear-gradient(135deg,rgba(242,180,65,.10),rgba(229,96,77,.06));}
   .verdict h3{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
   .verdict p{margin:0;font-family:var(--serif);font-size:1.28rem;line-height:1.45;}
+  /* "our pick" recommendation inside the verdict: a concrete flight + hotel + total */
+  .pickrec{margin-top:22px;border-top:1px solid rgba(242,180,65,.32);padding-top:18px;}
+  .pickrec .pkhead{font-family:var(--mono);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:13px;}
+  .pickrec .pkrow{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;}
+  .pickrec .pk{flex:1 1 190px;background:rgba(22,18,41,.5);border:1px solid var(--line);border-radius:10px;padding:11px 14px;display:flex;flex-direction:column;gap:5px;}
+  .pickrec .pkk{font-family:var(--mono);font-size:.56rem;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);}
+  .pickrec .pkv{font-family:var(--mono);font-size:.9rem;line-height:1.35;color:var(--text);}
+  .pickrec .pktot{border-color:var(--accent);background:rgba(242,180,65,.1);flex:1 1 150px;}
+  .pickrec .pktot .pkv{color:var(--accent);font-weight:700;font-size:1.12rem;}
+  .pickrec .pktext{margin:0;font-family:var(--serif);font-size:1.04rem;line-height:1.5;color:var(--text);}
 
   .linkbtn{display:inline-flex;align-items:center;gap:8px;margin-top:6px;font-family:var(--mono);font-size:.78rem;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:8px 16px;transition:.18s;}
   .linkbtn:hover{border-color:var(--accent);background:rgba(242,180,65,.08);}
@@ -170,11 +180,25 @@
   .ecard a:hover{border-color:var(--accent);}
 
   footer{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:.85rem;}
-  footer .wrap{display:flex;flex-direction:column;gap:14px;}
   footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);}
   footer a:hover{color:var(--accent);}
-  .srclist{display:flex;flex-wrap:wrap;gap:8px 18px;}
-  .disc{max-width:72ch;line-height:1.55;}
+  /* two columns: the long disclaimer fills the left, sources + credit use the empty right */
+  .footgrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:30px 52px;align-items:start;}
+  .footmain .disc{margin:0;}
+  .disc{max-width:64ch;line-height:1.55;}
+  .footside{display:flex;flex-direction:column;gap:22px;}
+  .srcblock{display:flex;flex-direction:column;gap:9px;}
+  .srchead{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--faint);}
+  .srclist{display:flex;flex-direction:column;gap:7px;align-items:flex-start;}
+  .madefor{margin:0;line-height:1.5;}
+  @media (max-width:760px){.footgrid{grid-template-columns:1fr;gap:22px;}}
+
+  /* floating back-to-top / back-to-overview button */
+  .totop{position:fixed;right:22px;bottom:22px;z-index:60;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.74rem;font-weight:700;background:var(--accent);color:#2A1C04;border:0;border-radius:999px;padding:11px 18px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45);opacity:0;transform:translateY(14px);transition:opacity .25s ease,transform .25s ease;pointer-events:none;}
+  .totop.show{opacity:1;transform:none;pointer-events:auto;}
+  .totop:hover{filter:brightness(1.06);}
+  .totop:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
+  @media (max-width:680px){.totop{right:14px;bottom:14px;padding:10px 15px;}}
 
   /* per-region: planning bar, location map, flight facts, stays, day-by-day */
   .planbar{display:flex;flex-wrap:wrap;gap:8px 22px;margin:18px 0 0;font-family:var(--mono);font-size:.74rem;color:var(--muted);}
@@ -404,19 +428,27 @@
 </main>
 
 <footer>
-  <div class="wrap">
-    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were looked up on Google Flights and Booking.com on <strong>29&ndash;30 June 2026</strong>, for a sample trip of four adults flying Amsterdam&ndash;Spain with about six nights' lodging (two rooms, or an apartment sleeping four). They are a point-in-time snapshot for comparison, not quotes: fares and room rates change daily and will climb as eclipse day nears, so re-check before booking and book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each 2026 region also carries a nonstop price heatmap (departure against return date, 7&ndash;19 August) with an airline selector. All heatmap fares are nonstop; remember you must depart on or before 12 August to be in Spain for the eclipse. For 2027, hotel prices were looked up the same days for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
-    <div class="srclist">
-      <span style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;">SOURCES&nbsp;</span>
-      <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
-      <a href="https://www.timeanddate.com/eclipse/solar/2026-august-12">timeanddate 2026</a>
-      <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_12,_2026">Wikipedia 2026</a>
-      <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_2,_2027">Wikipedia 2027</a>
-      <a href="https://www.spain.info/en/eclipses/">spain.info</a>
+  <div class="wrap footgrid">
+    <div class="footmain">
+      <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were looked up on Google Flights and Booking.com on <strong>29&ndash;30 June 2026</strong>, for a sample trip of four adults flying Amsterdam&ndash;Spain with about six nights' lodging (two rooms, or an apartment sleeping four). They are a point-in-time snapshot for comparison, not quotes: fares and room rates change daily and will climb as eclipse day nears, so re-check before booking and book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each region's verdict carries a suggested flight-plus-hotel pick whose total covers flights for four and six nights' lodging only, before any hire car, train or extras. Each 2026 region also carries a nonstop price heatmap (departure against return date, 7&ndash;19 August) with an airline selector. All heatmap fares are nonstop; remember you must depart on or before 12 August to be in Spain for the eclipse. For 2027, hotel prices were looked up the same days for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
     </div>
-    <p style="margin-top:6px;">Made for a friend. Clear skies, and don't forget the eclipse glasses. &#127773;</p>
+    <aside class="footside">
+      <div class="srcblock">
+        <span class="srchead">SOURCES</span>
+        <div class="srclist">
+          <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
+          <a href="https://www.timeanddate.com/eclipse/solar/2026-august-12">timeanddate 2026</a>
+          <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_12,_2026">Wikipedia 2026</a>
+          <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_2,_2027">Wikipedia 2027</a>
+          <a href="https://www.spain.info/en/eclipses/">spain.info</a>
+        </div>
+      </div>
+      <p class="madefor">Made for a friend. Clear skies, and don't forget the eclipse glasses. &#127773;</p>
+    </aside>
   </div>
 </footer>
+
+<button id="totop" class="totop" type="button" aria-label="Back to top">&uarr; Top</button>
 
 <script>
 const REGIONS = {
@@ -452,7 +484,9 @@ const REGIONS = {
       getting:"The timing could not be better. KLM begins flying Schiphol straight to Asturias (OVD) in summer 2026, dropping you right inside the path in a little over two hours. Vueling and others serve it too, and Bilbao, a direct hop of about 2h15, makes a solid backup an hour to the east.",
       watch:"Find a west-facing piece of coast with open water to the west-northwest. The western Asturian shore around Cudillero, Cabo Vidio or Cabo Bust&oacute; is ideal. Whatever you do, keep the Picos de Europa behind you rather than between you and the Sun, because at twelve degrees those peaks will swallow it.",
       beyond:"Give it a full week. Walk up to the Covadonga lakes, swim off the wild beaches near Llanes, drink cider poured from overhead in a sidrer&iacute;a, and follow the coast road from one village to the next. The Camino Primitivo, the oldest pilgrim route to Santiago, starts here too.",
-      verdict:"The sensible pick for 2026 if comfort and elbow room matter more than a cast-iron guarantee. Cool, beautiful, genuinely in the path and now easy to reach. Stay mobile and make peace with the cloud."
+      verdict:"The sensible pick for 2026 if comfort and elbow room matter more than a cast-iron guarantee. Cool, beautiful, genuinely in the path and now easy to reach. Stay mobile and make peace with the cloud.",
+      plan:{fly:"KLM nonstop to Oviedo, ~&euro;680 rt pp",flyPP:680,stay:"Hotel Gran Regente &middot; &euro;2,552 / 6n",stayTot:2552,est:false,
+        text:"If the 2h15 nonstop is worth it, fly KLM straight into Oviedo and base at the central Hotel Gran Regente. The nonstop premium is real, though: the same week connects through Barcelona for about &euro;260 pp, which would cut flights-plus-hotel to roughly &euro;3,600. Either way add ~&euro;300 for a week's hire car, essential for the coast on eclipse evening."}
     },
     {
       id:"cantabria", name:"Cantabria", tag:"COOL & SCENIC", tagClass:"", price:"€€",
@@ -485,7 +519,9 @@ const REGIONS = {
       getting:"There is no reliable year-round direct to Santander, so fly Amsterdam to Bilbao, a quick 2h15 with Vueling, and drive an hour west; or arrive on the new Asturias service and approach from the other side.",
       watch:"A west-facing coast with sea to the horizon: the beaches west of Santander and around Comillas and San Vicente de la Barquera. Keep the Picos at your back to the south.",
       beyond:"Sun yourself on Santander's Sardinero beach, wander the flawless medieval lanes of Santillana del Mar, visit the Altamira replica cave, and admire Gaud&iacute;'s whimsical El Capricho in Comillas before heading inland for the mountains. It pairs naturally with a few days in Asturias.",
-      verdict:"Near enough a twin of Asturias for climate and calm. Choose it if Santander, the caves and the eastern Picos call to you more than the Asturian coast. The cloud risk comes as standard."
+      verdict:"Near enough a twin of Asturias for climate and calm. Choose it if Santander, the caves and the eastern Picos call to you more than the Asturian coast. The cloud risk comes as standard.",
+      plan:{fly:"Vueling / KLM nonstop to Bilbao, ~&euro;300 rt pp",flyPP:300,stay:"Santander two-bed apartment &middot; &euro;1,740 / 6n",stayTot:1740,est:false,
+        text:"Fly nonstop into Bilbao, pick up a car and drive the hour west to Santander, where the central two-bedroom apartment is the best value of the northern bases. Budget about &euro;300 more for the week's hire car you will need for the open coast on eclipse evening."}
     },
     {
       id:"galicia", name:"Galicia", tag:"END OF THE EARTH", tagClass:"", price:"€€",
@@ -518,7 +554,9 @@ const REGIONS = {
       getting:"KLM flies Schiphol direct to Santiago (SCQ) daily in high summer, joined by Vueling, Ryanair and easyJet, in about 2h20. From there it is an hour and a quarter west to the coast and into totality.",
       watch:"Cape Finisterre and the Costa da Morte were made for this: Atlantic cliffs facing due west, nothing between you and the setting eclipse but ocean. It is an obvious draw, so stake your spot hours ahead.",
       beyond:"Lose a morning in Santiago's old town and its vast cathedral, feast on goose barnacles and octopus, drink Albari&ntilde;o in the R&iacute;as Baixas, and drive the lonely, lovely Costa da Morte. Walking the final stage out to Finisterre is the classic flourish.",
-      verdict:"Pick Galicia for the romance of totality dying into the Atlantic at the end of the world. Just commit to driving to the coast on the day, and do not watch from Santiago expecting the full show."
+      verdict:"Pick Galicia for the romance of totality dying into the Atlantic at the end of the world. Just commit to driving to the coast on the day, and do not watch from Santiago expecting the full show.",
+      plan:{fly:"Vueling nonstop to Santiago, ~&euro;311 rt pp",flyPP:311,stay:"Lemonade Stays Santiago &middot; &euro;1,576 / 6n",stayTot:1576,est:false,
+        text:"Take a Vueling nonstop into Santiago and stay central at Lemonade Stays, with a car for the 75-minute run out to Finisterre on the day. Travelling light on a 1-stop fare drops the flights to about &euro;210 pp and the trip to roughly &euro;2,400, plus ~&euro;300 for the car."}
     },
     {
       id:"aragon", name:"Aragón & the Ebro", tag:"CLEAR-SKY BET", tagClass:"clear", price:"€",
@@ -551,7 +589,9 @@ const REGIONS = {
       getting:"There is no convenient direct from Schiphol, so fly Amsterdam to Barcelona and take the AVE high-speed train to Zaragoza in about 1h15, or route through Madrid. Hire a car for the eclipse evening so you can chase the clearest patch of sky.",
       watch:"The open Ebro plains make a flat western horizon easy to find, which an eight-degree Sun demands. Scout a spot with no distant hills or town silhouette to the west. Space is the real luxury out here; there will be no jostling for position.",
       beyond:"Climb the towers of Zaragoza's Bas&iacute;lica del Pilar, follow the Mud&eacute;jar trail, stand where Goya grew up, then escape the heat in the Aragonese Pyrenees or under the waterfalls of the Monasterio de Piedra. Less polished than the coast, and all the more genuine for it.",
-      verdict:"The clear-headed choice if seeing totality is the whole point. Best odds, most space, easy escape routes if a cloud threatens. The cost is heat, and that is manageable if you plan around it."
+      verdict:"The clear-headed choice if seeing totality is the whole point. Best odds, most space, easy escape routes if a cloud threatens. The cost is heat, and that is manageable if you plan around it.",
+      plan:{fly:"Vueling nonstop to Barcelona, ~&euro;175 rt pp + AVE",flyPP:175,stay:"iStay by NH Sport, Zaragoza &middot; &euro;2,404 / 6n",stayTot:2404,est:false,
+        text:"Fly cheap into Barcelona, take the AVE to Zaragoza (about &euro;40 pp each way) and base at the NH Sport, then hire a car for the eclipse evening to chase clear sky on the Ebro plains. The flights are among the cheapest here; it is the hotel that lifts the total."}
     },
     {
       id:"valencia", name:"Valencia", tag:"BEST ODDS", tagClass:"clear", price:"€€",
@@ -584,7 +624,9 @@ const REGIONS = {
         {d:"Day 6 · eclipse", ecl:true, t:"In position near Castell&oacute;n / Pe&ntilde;&iacute;scola by ~19:00, flat western horizon. Totality ~20:30–31, Sun only ~4&deg; in the WNW; keep a backup spot for low cloud."},
         {d:"Day 7", t:"Easy Valencia morning, return the car, fly home."}
       ],
-      verdict:"The shrewd pick if you want the best odds of actually seeing it and an easy, good-value holiday. The trade is a short totality on a very low Sun and a drive north on the day — but the clearest skies on the mainland and a superb city base make Valencia hard to beat for 2026."
+      verdict:"The shrewd pick if you want the best odds of actually seeing it and an easy, good-value holiday. The trade is a short totality on a very low Sun and a drive north on the day — but the clearest skies on the mainland and a superb city base make Valencia hard to beat for 2026.",
+      plan:{fly:"Vueling nonstop to Valencia, ~&euro;166 rt pp",flyPP:166,stay:"Room Mate Cosmo &middot; &euro;2,475 / 6n",stayTot:2475,est:false,
+        text:"Vueling's nonstop to Valencia is the cheapest eastern-or-northern flight on the board; pair it with the central Room Mate Cosmo (or the Parker flats for more space at about the same price) and a hire car for the drive north into Castell&oacute;n. Reckon ~&euro;300 more for the car."}
     },
     {
       id:"mallorca", name:"Mallorca", tag:"LONGEST TOTALITY", tagClass:"risk", price:"€€€",
@@ -617,7 +659,9 @@ const REGIONS = {
       getting:"The easiest journey of the lot: frequent direct flights Schiphol to Palma (PMI) with KLM, Transavia and easyJet, around 2h30.",
       watch:"You need a west or southwest-facing shore with clear sea: the west coast around Banyalbufar, Port d'Andratx, Sant Elm and the islet of Sa Dragonera. Claim your place hours early, or better, stay on that coast so you are not driving into the crush at sunset.",
       beyond:"Hike or drive the Serra de Tramuntana and its UNESCO villages, swim in hidden calas, wander old Palma, and eat ensa&iuml;mada by the harbour. A top-tier holiday island, as long as you have made peace with peak-season prices.",
-      verdict:"Only worth it if the longest totality is the goal and you will book early and shrug off the crowds and cost. Given your worries about heat and, especially, crowds, it is the weakest fit here, even though the eclipse itself is the best."
+      verdict:"Only worth it if the longest totality is the goal and you will book early and shrug off the crowds and cost. Given your worries about heat and, especially, crowds, it is the weakest fit here, even though the eclipse itself is the best.",
+      plan:{fly:"easyJet / Transavia nonstop to Palma, ~&euro;180 rt pp",flyPP:180,stay:"Ca Sa Padrina, Palma old town &middot; &euro;2,093 / 6n",stayTot:2093,est:false,
+        text:"The flight is the easy part &mdash; frequent nonstops to Palma from about &euro;180 pp if you book early. Base in the old town at Ca Sa Padrina and add a hire car for the west coast. Be warned that both fares and beds climb hard toward eclipse week, so this total only holds if you book months ahead."}
     },
     {
       id:"madrid", name:"Madrid", tag:"CITY + DRIVE", tagClass:"risk", price:"€€",
@@ -650,7 +694,9 @@ const REGIONS = {
         {d:"Day 6 · eclipse", ecl:true, t:"Leave late morning, drive ~160 km north up the A-1 to Aranda de Duero; flat open western horizon. Totality ~20:30 (~1m42s), Sun ~8&deg;. Expect heavy traffic back after dark."},
         {d:"Day 7", t:"Recover, return the car, fly home (note 15 Aug is a Spanish holiday — busy)."}
       ],
-      verdict:"Choose Madrid for a brilliant city holiday with the eclipse as a day-trip prize — but go in clear-eyed: the capital sees only a 99% partial, so totality means a committed drive north and a long, traffic-bound return. Best if the city and the museums matter as much to you as the corona."
+      verdict:"Choose Madrid for a brilliant city holiday with the eclipse as a day-trip prize — but go in clear-eyed: the capital sees only a 99% partial, so totality means a committed drive north and a long, traffic-bound return. Best if the city and the museums matter as much to you as the corona.",
+      plan:{fly:"KLM nonstop to Madrid, ~&euro;226 rt pp",flyPP:226,stay:"Woohoo Rooms Boutique Luna &middot; &euro;1,640 / 6n",stayTot:1640,est:false,
+        text:"KLM's nonstop into Barajas paired with the central, great-value Woohoo Rooms is the cheapest comfortable week here. Add a hire car for eclipse day (~&euro;300) for the drive north to Aranda de Duero &mdash; you cannot reach totality by train in time, and the return runs late and busy."}
     }
   ],
   "2027":[
@@ -687,7 +733,9 @@ const REGIONS = {
       getting:"There is no dependable direct to Jerez (XRY), so the simplest route is Schiphol to Seville (SVQ) with Transavia or Vueling, then an hour and a quarter south. M&aacute;laga (AGP) is the alternative, about two hours' drive east.",
       watch:"With the Sun high you are spoilt for choice: a Costa de la Luz beach at Zahara or Bolonia, the ramparts of old C&aacute;diz, or a hilltop white town like Vejer de la Frontera. Just keep open sky to the southeast.",
       beyond:"One of Spain's great weeks. Wander sea-girt C&aacute;diz, windsurf at Tarifa where two seas meet, tour the sherry houses and flamenco bars of Jerez, drive the white villages, and look for flamingos in the Do&ntilde;ana wetlands. Beach mornings, shaded lunches, late lively nights.",
-      verdict:"The standout across both years. Longest mainland totality, a high and safe Sun, dependable skies and a superb holiday. If you do only one eclipse, make it this one."
+      verdict:"The standout across both years. Longest mainland totality, a high and safe Sun, dependable skies and a superb holiday. If you do only one eclipse, make it this one.",
+      plan:{fly:"Transavia / Vueling nonstop to Seville, ~&euro;250 rt pp (est)",flyPP:250,stay:"Nueva Almudena apartment, C&aacute;diz &middot; &euro;2,384 / 6n",stayTot:2384,est:true,
+        text:"Fly into Seville (fares are estimated until schedules open around autumn 2026), drive 1h15 to C&aacute;diz and take the central Nueva Almudena apartment, with a car for the Costa de la Luz beaches. The high morning Sun means almost any open spot works, so there are no special viewing logistics to pay for."}
     },
     {
       id:"malaga", name:"Málaga", tag:"EASIEST ACCESS", tagClass:"clear", price:"€€",
@@ -722,7 +770,9 @@ const REGIONS = {
       getting:"The easiest gateway in this whole guide: frequent direct flights Schiphol to M&aacute;laga (AGP) with KLM, Transavia, easyJet and Vueling, around three hours. Step off the plane and you are essentially there.",
       watch:"High Sun, so almost anywhere works: a Costa del Sol beach, the Alcazaba ramparts, or the cliff-edge town of Ronda inland. Edge into central or eastern M&aacute;laga province to sit safely inside the band.",
       beyond:"Explore M&aacute;laga's revived old town and Picasso museum, laze on the Costa del Sol, gawp at Ronda's gorge, cool off in the Nerja caves, and take an easy day trip to the Alhambra in Granada.",
-      verdict:"The low-effort choice for 2027: in the path, near-certain clear sky and the most painless flight from home. You trade about a minute of totality for maximum ease against C&aacute;diz."
+      verdict:"The low-effort choice for 2027: in the path, near-certain clear sky and the most painless flight from home. You trade about a minute of totality for maximum ease against C&aacute;diz.",
+      plan:{fly:"Nonstop to M&aacute;laga, ~&euro;200 rt pp (est)",flyPP:200,stay:"Holidays2Malaga two-bed apartment &middot; &euro;1,384 / 6n",stayTot:1384,est:true,
+        text:"The simplest trip of either year: a nonstop into M&aacute;laga and a central two-bedroom flat steps from the old town, with a car only if you want Ronda and the inland beaches. Cheap, in the path and near-certain clear sky &mdash; the low-effort 2027 pick."}
     },
     {
       id:"granada-almeria", name:"Granada & Almería", tag:"SOUTHERN EDGE", tagClass:"", price:"€€",
@@ -757,7 +807,9 @@ const REGIONS = {
       getting:"There is no easy direct to Granada (GRX) or Almer&iacute;a (LEI), so fly Schiphol to M&aacute;laga (AGP) and drive: about 1h30 to Granada, 2h30 to Cabo de Gata. Treat this as an extension of a M&aacute;laga or C&aacute;diz trip.",
       watch:"For totality, head to the southern coast: the Cabo de Gata natural park, Almer&iacute;a's beaches, or the shore near Motril. Do not assume the Alhambra is inside the path; verify it, and be ready to drive south on the morning.",
       beyond:"Tour the Alhambra and the steep white Albaic&iacute;n in Granada, swim in the volcanic coves of Cabo de Gata, ride out to the spaghetti-western deserts near Tabernas, and cool off high in the Sierra Nevada. It slots beautifully alongside M&aacute;laga or C&aacute;diz.",
-      verdict:"Come for the scenery and to round out a M&aacute;laga or C&aacute;diz trip, but treat the eclipse as something you drive to the southern coast for, not a sure thing in Granada city."
+      verdict:"Come for the scenery and to round out a M&aacute;laga or C&aacute;diz trip, but treat the eclipse as something you drive to the southern coast for, not a sure thing in Granada city.",
+      plan:{fly:"Nonstop to M&aacute;laga, ~&euro;200 rt pp (est)",flyPP:200,stay:"Smart Suites Albaic&iacute;n, Granada &middot; &euro;787 / 6n",stayTot:787,est:true,
+        text:"The cheapest week in the guide: fly nonstop into M&aacute;laga, take the bargain Smart Suites in Granada's Albaic&iacute;n, and hire a car for the 1h30 drive up plus the eclipse-morning run south to the Almer&iacute;a coast. Just confirm your exact viewing spot is inside the band before you commit."}
     }
   ]
 };
@@ -839,6 +891,21 @@ function heatBox(r){
     +'<span class="heatlegend"><span>cheaper</span><span class="bar"></span><span>dearer</span></span></div>'
     +'<div class="heatcap">Nonstop return fare per person, in euros. Depart on or before <b>12 Aug</b> (&#127769;) to catch the eclipse; 17 Aug was the original back-by date. Dot = no nonstop that day. Click any price to open it on Google Flights. <b>Looked up 29&ndash;30 Jun 2026</b> &mdash; fares change daily and climb as the date nears.</div>'
     +'<div class="heatwrap" id="heat-'+r.airport+'">'+heatTable(r.airport,'__cheap')+'</div>'
+  +'</div>';
+}
+
+function eur(n){return '€'+Number(n).toLocaleString('en-US');}
+function planBox(r){
+  if(!r.plan)return '';
+  var p=r.plan, tot=p.flyPP*4+p.stayTot;
+  return '<div class="pickrec">'
+    +'<div class="pkhead">Our pick for four'+(p.est?' &middot; 2027 estimate':'')+'</div>'
+    +'<div class="pkrow">'
+      +'<div class="pk"><span class="pkk">Fly &middot; 4 adults rt</span><span class="pkv">'+p.fly+'</span></div>'
+      +'<div class="pk"><span class="pkk">Stay &middot; 6 nights</span><span class="pkv">'+p.stay+'</span></div>'
+      +'<div class="pk pktot"><span class="pkk">Flights + hotel</span><span class="pkv">&asymp; '+eur(tot)+'</span></div>'
+    +'</div>'
+    +'<p class="pktext">'+p.text+'</p>'
   +'</div>';
 }
 
@@ -966,7 +1033,7 @@ function renderDetail(year,id){
    +(r.itinerary
        ? block('Your week, day by day','<p>'+r.beyond+'</p>'+itinList(r)+gallery(r))
        : block('The rest of your trip','<p>'+r.beyond+'</p>'+gallery(r)))
-   +'<div class="verdict"><h3>The verdict</h3><p>'+r.verdict+'</p></div>';
+   +'<div class="verdict"><h3>The verdict</h3><p>'+r.verdict+'</p>'+planBox(r)+'</div>';
   document.getElementById('detail-content').innerHTML=html;
   var cb=document.getElementById('copybtn');
   if(cb){cb.classList.remove('ok');cb.innerHTML='&#128279; Copy link to this page';}
@@ -1108,6 +1175,22 @@ route();
     new IntersectionObserver(function(es){ if(es[0].isIntersecting){ if(!running) start(); } else { stop(); } },{threshold:0}).observe(c);
   }
   start();
+})();
+
+/* floating button: returns you to the regions overview from a detail page,
+   or to the top of whichever view you are on. Appears once you scroll down. */
+(function(){
+  var btn=document.getElementById('totop'); if(!btn)return;
+  function inDetail(){return document.getElementById('detail').classList.contains('active');}
+  function syncLabel(){btn.innerHTML=inDetail()?'&larr; All regions':'&uarr; Top';}
+  function onScroll(){ if(window.pageYOffset>520) btn.classList.add('show'); else btn.classList.remove('show'); }
+  btn.addEventListener('click',function(){
+    if(inDetail()) goBack();
+    else window.scrollTo({top:0,behavior:'smooth'});
+  });
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('hashchange',syncLabel);
+  syncLabel(); onScroll();
 })();
 </script>
 </body>
