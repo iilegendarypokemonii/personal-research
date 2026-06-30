@@ -54,10 +54,11 @@
   .toggle button{font-family:var(--mono);font-size:.78rem;border:0;background:transparent;color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.18s;}
   .toggle button[aria-selected="true"]{background:var(--accent);color:#2A1C04;font-weight:700;}
   .toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-  /* on a region page the sticky header swaps the year toggle for back + copy-link */
-  .yearbar .detailnav{display:none;margin-left:auto;}
-  .yearbar.detailmode .detailnav{display:flex;}
+  /* on a region page the sticky header shows back (far left, by convention) + copy-link (right) */
+  .yearbar .hdronly{display:none;}
+  .yearbar.detailmode .hdronly{display:inline-flex;}
   .yearbar.detailmode .toggle{display:none;}
+  .yearbar.detailmode #copybtn{margin-left:auto;}
   .yearbar .back{padding:8px 14px;}
   @media (max-width:520px){.yearbar.detailmode .brandmark{display:none;}}
 
@@ -292,15 +293,13 @@
 
 <nav class="yearbar" id="yearbar" aria-label="Choose eclipse year">
   <div class="wrap">
+    <button class="back hdronly" onclick="goBack()">&larr; All regions</button>
     <span class="brandmark">Chasing the Shadow</span>
     <div class="toggle" role="tablist" aria-label="Eclipse year">
       <button role="tab" id="tab-2026" aria-selected="true" aria-controls="year-2026" onclick="showYear('2026')">12 Aug 2026</button>
       <button role="tab" id="tab-2027" aria-selected="false" aria-controls="year-2027" onclick="showYear('2027')">02 Aug 2027</button>
     </div>
-    <div class="detailnav" id="hdrnav">
-      <button class="back" onclick="goBack()">&larr; All regions</button>
-      <button class="back" id="copybtn" onclick="copyLink()">&#128279; Copy link</button>
-    </div>
+    <button class="back hdronly" id="copybtn" onclick="copyLink()">&#128279; Copy link</button>
   </div>
 </nav>
 
