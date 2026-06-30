@@ -54,6 +54,12 @@
   .toggle button{font-family:var(--mono);font-size:.78rem;border:0;background:transparent;color:var(--muted);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.18s;}
   .toggle button[aria-selected="true"]{background:var(--accent);color:#2A1C04;font-weight:700;}
   .toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  /* on a region page the sticky header swaps the year toggle for back + copy-link */
+  .yearbar .detailnav{display:none;margin-left:auto;}
+  .yearbar.detailmode .detailnav{display:flex;}
+  .yearbar.detailmode .toggle{display:none;}
+  .yearbar .back{padding:8px 14px;}
+  @media (max-width:520px){.yearbar.detailmode .brandmark{display:none;}}
 
   section{padding:64px 0;}
   .seclede{color:var(--muted);max-width:64ch;margin:.4em 0 0;}
@@ -179,19 +185,15 @@
   .ecard a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--line);}
   .ecard a:hover{border-color:var(--accent);}
 
-  footer{border-top:1px solid var(--line);padding:44px 0 60px;color:var(--faint);font-size:.85rem;}
+  footer{border-top:1px solid var(--line);padding:40px 0 56px;color:var(--faint);font-size:.82rem;}
   footer a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line);}
   footer a:hover{color:var(--accent);}
-  /* two columns: the long disclaimer fills the left, sources + credit use the empty right */
-  .footgrid{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:30px 52px;align-items:start;}
-  .footmain .disc{margin:0;}
-  .disc{max-width:64ch;line-height:1.55;}
-  .footside{display:flex;flex-direction:column;gap:22px;}
-  .srcblock{display:flex;flex-direction:column;gap:9px;}
-  .srchead{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;color:var(--faint);}
-  .srclist{display:flex;flex-direction:column;gap:7px;align-items:flex-start;}
-  .madefor{margin:0;line-height:1.5;}
-  @media (max-width:760px){.footgrid{grid-template-columns:1fr;gap:22px;}}
+  /* disclaimer flows across two columns so it spreads horizontally and stays short; sources sit under it */
+  .disc{max-width:none;margin:0 0 18px;line-height:1.5;column-count:2;column-gap:44px;text-align:justify;}
+  .srclist{display:flex;flex-wrap:wrap;align-items:center;gap:7px 16px;margin:0 0 12px;}
+  .srchead{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--faint);}
+  .madefor{margin:0;}
+  @media (max-width:680px){.disc{column-count:1;text-align:left;}}
 
   /* floating back-to-top / back-to-overview button */
   .totop{position:fixed;right:22px;bottom:22px;z-index:60;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.74rem;font-weight:700;background:var(--accent);color:#2A1C04;border:0;border-radius:999px;padding:11px 18px;cursor:pointer;box-shadow:0 6px 24px rgba(0,0,0,.45);opacity:0;transform:translateY(14px);transition:opacity .25s ease,transform .25s ease;pointer-events:none;}
@@ -288,12 +290,16 @@
   </div>
 </header>
 
-<nav class="yearbar" aria-label="Choose eclipse year">
+<nav class="yearbar" id="yearbar" aria-label="Choose eclipse year">
   <div class="wrap">
     <span class="brandmark">Chasing the Shadow</span>
     <div class="toggle" role="tablist" aria-label="Eclipse year">
       <button role="tab" id="tab-2026" aria-selected="true" aria-controls="year-2026" onclick="showYear('2026')">12 Aug 2026</button>
       <button role="tab" id="tab-2027" aria-selected="false" aria-controls="year-2027" onclick="showYear('2027')">02 Aug 2027</button>
+    </div>
+    <div class="detailnav" id="hdrnav">
+      <button class="back" onclick="goBack()">&larr; All regions</button>
+      <button class="back" id="copybtn" onclick="copyLink()">&#128279; Copy link</button>
     </div>
   </div>
 </nav>
@@ -416,10 +422,6 @@
   <div id="detail">
     <section>
       <div class="wrap">
-        <div class="detailnav">
-          <button class="back" onclick="goBack()">&larr; All regions</button>
-          <button class="back" id="copybtn" onclick="copyLink()">&#128279; Copy link to this page</button>
-        </div>
         <div id="detail-content"></div>
         <button class="back" style="margin-top:40px;" onclick="goBack()">&larr; Back to all regions</button>
       </div>
@@ -428,23 +430,17 @@
 </main>
 
 <footer>
-  <div class="wrap footgrid">
-    <div class="footmain">
-      <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were looked up on Google Flights and Booking.com on <strong>29&ndash;30 June 2026</strong>, for a sample trip of four adults flying Amsterdam&ndash;Spain with about six nights' lodging (two rooms, or an apartment sleeping four). They are a point-in-time snapshot for comparison, not quotes: fares and room rates change daily and will climb as eclipse day nears, so re-check before booking and book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each region's verdict carries a suggested flight-plus-hotel pick whose total covers flights for four and six nights' lodging only, before any hire car, train or extras. Each 2026 region also carries a nonstop price heatmap (departure against return date, 7&ndash;19 August) with an airline selector. All heatmap fares are nonstop; remember you must depart on or before 12 August to be in Spain for the eclipse. For 2027, hotel prices were looked up the same days for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
+  <div class="wrap">
+    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were looked up on Google Flights and Booking.com on <strong>29&ndash;30 June 2026</strong>, for a sample trip of four adults flying Amsterdam&ndash;Spain with about six nights' lodging (two rooms, or an apartment sleeping four). They are a point-in-time snapshot for comparison, not quotes: fares and room rates change daily and climb as eclipse day nears, so re-check before booking and book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each verdict's suggested flight-plus-hotel pick totals flights for four and six nights' lodging only, before any hire car, train or extras. Each 2026 region also carries a nonstop price heatmap (departure against return, 7&ndash;19 August) with an airline selector; remember you must depart on or before 12 August to be in Spain for the eclipse. For 2027, hotel prices were looked up the same days for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
+    <div class="srclist">
+      <span class="srchead">SOURCES</span>
+      <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
+      <a href="https://www.timeanddate.com/eclipse/solar/2026-august-12">timeanddate 2026</a>
+      <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_12,_2026">Wikipedia 2026</a>
+      <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_2,_2027">Wikipedia 2027</a>
+      <a href="https://www.spain.info/en/eclipses/">spain.info</a>
     </div>
-    <aside class="footside">
-      <div class="srcblock">
-        <span class="srchead">SOURCES</span>
-        <div class="srclist">
-          <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
-          <a href="https://www.timeanddate.com/eclipse/solar/2026-august-12">timeanddate 2026</a>
-          <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_12,_2026">Wikipedia 2026</a>
-          <a href="https://en.wikipedia.org/wiki/Solar_eclipse_of_August_2,_2027">Wikipedia 2027</a>
-          <a href="https://www.spain.info/en/eclipses/">spain.info</a>
-        </div>
-      </div>
-      <p class="madefor">Made for a friend. Clear skies, and don't forget the eclipse glasses. &#127773;</p>
-    </aside>
+    <p class="madefor">Made for a friend. Clear skies, and don't forget the eclipse glasses. &#127773;</p>
   </div>
 </footer>
 
@@ -1036,17 +1032,19 @@ function renderDetail(year,id){
    +'<div class="verdict"><h3>The verdict</h3><p>'+r.verdict+'</p>'+planBox(r)+'</div>';
   document.getElementById('detail-content').innerHTML=html;
   var cb=document.getElementById('copybtn');
-  if(cb){cb.classList.remove('ok');cb.innerHTML='&#128279; Copy link to this page';}
+  if(cb){cb.classList.remove('ok');cb.innerHTML='&#128279; Copy link';}
   return true;
 }
 
 function showDetailView(){
   document.getElementById('home').style.display='none';
   document.getElementById('detail').classList.add('active');
+  document.getElementById('yearbar').classList.add('detailmode');
 }
 function showGridView(){
   document.getElementById('detail').classList.remove('active');
   document.getElementById('home').style.display='block';
+  document.getElementById('yearbar').classList.remove('detailmode');
 }
 function scrollToWork(){
   var y=document.querySelector('.yearbar').offsetTop;
@@ -1083,7 +1081,7 @@ function showYear(year){ location.hash=year; }
 function goBack(){ location.hash=active; }
 function copyLink(){
   var b=document.getElementById('copybtn');
-  var done=function(){ b.classList.add('ok'); b.innerHTML='&#10003; Link copied'; setTimeout(function(){ b.classList.remove('ok'); b.innerHTML='&#128279; Copy link to this page'; },1800); };
+  var done=function(){ b.classList.add('ok'); b.innerHTML='&#10003; Link copied'; setTimeout(function(){ b.classList.remove('ok'); b.innerHTML='&#128279; Copy link'; },1800); };
   if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(location.href).then(done,done); }
   else { done(); }
 }
@@ -1182,15 +1180,13 @@ route();
 (function(){
   var btn=document.getElementById('totop'); if(!btn)return;
   function inDetail(){return document.getElementById('detail').classList.contains('active');}
-  function syncLabel(){btn.innerHTML=inDetail()?'&larr; All regions':'&uarr; Top';}
-  function onScroll(){ if(window.pageYOffset>520) btn.classList.add('show'); else btn.classList.remove('show'); }
-  btn.addEventListener('click',function(){
-    if(inDetail()) goBack();
-    else window.scrollTo({top:0,behavior:'smooth'});
-  });
+  /* on a region page the header already carries a sticky "All regions" button,
+     so the floating control is only the scroll-to-top shortcut on the overview */
+  function onScroll(){ if(!inDetail() && window.pageYOffset>520) btn.classList.add('show'); else btn.classList.remove('show'); }
+  btn.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
   window.addEventListener('scroll',onScroll,{passive:true});
-  window.addEventListener('hashchange',syncLabel);
-  syncLabel(); onScroll();
+  window.addEventListener('hashchange',onScroll);
+  onScroll();
 })();
 </script>
 </body>
