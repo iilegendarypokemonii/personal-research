@@ -216,13 +216,17 @@
   .heatwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;}
   table.heat{border-collapse:collapse;width:100%;min-width:520px;}
   table.heat th,table.heat td{padding:8px 7px;text-align:center;font-family:var(--mono);font-size:.8rem;border-bottom:1px solid var(--line);border-right:1px solid var(--line);white-space:nowrap;}
-  table.heat thead th{font-size:.64rem;letter-spacing:.04em;color:var(--muted);background:var(--ground-2);font-weight:400;}
-  table.heat thead th.ecl{color:var(--accent-2);font-weight:700;}
-  table.heat thead th.ecl .wd{color:var(--accent-2);}
-  table.heat th.hr{text-align:right;color:var(--muted);background:var(--ground-2);position:sticky;left:0;z-index:1;line-height:1.2;}
-  table.heat th.hcorner{background:var(--ground-2);position:sticky;left:0;z-index:2;padding:4px 7px;}
-  .hcorner .axdep,.hcorner .axret{display:block;font-size:.56rem;letter-spacing:.04em;color:var(--faint);line-height:1.25;}
-  .heat .wd{display:block;font-size:.56rem;color:var(--faint);font-weight:400;letter-spacing:.05em;}
+  table.heat thead th{background:var(--ground-2);font-weight:400;}
+  /* date headers: identical typography on BOTH axes (departure cols + return rows) */
+  table.heat th.dcol,table.heat th.hr{font-family:var(--mono);font-size:.74rem;font-weight:400;letter-spacing:.02em;color:var(--muted);line-height:1.25;}
+  table.heat th.hr{text-align:right;background:var(--ground-2);position:sticky;left:0;z-index:1;}
+  table.heat th.dcol.ecl{color:var(--accent-2);font-weight:700;}
+  table.heat th.dcol.ecl .wd{color:var(--accent-2);}
+  /* axis-direction labels */
+  table.heat th.axtop{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:400;padding:7px;border-bottom:1px solid var(--line);}
+  table.heat th.hcorner{background:var(--ground-2);position:sticky;left:0;z-index:2;padding:6px 8px;text-align:right;vertical-align:bottom;}
+  .hcorner .axlbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);white-space:nowrap;}
+  .heat .wd{display:block;font-family:var(--mono);font-size:.56rem;color:var(--faint);font-weight:400;letter-spacing:.05em;}
   table.heat td{color:var(--text);font-weight:600;padding:0;}
   table.heat td.best{outline:2px solid var(--accent);outline-offset:-2px;}
   table.heat td .hx{display:block;padding:8px 7px;color:var(--faint);font-weight:400;}
@@ -815,7 +819,9 @@ function heatTable(ap,car){
   var rng=heatRange(ap), min=rng[0], max=rng[1], cmin=Infinity;
   M.forEach(function(row){row.forEach(function(v){if(v!=null&&v<cmin)cmin=v;});});
   function bg(v){if(v==null)return '';var t=max>min?(v-min)/(max-min):0;var hue=(140*(1-t)).toFixed(0);return 'background:hsla('+hue+',72%,45%,'+(0.16+0.36*t).toFixed(2)+');';}
-  var head='<tr><th class="hcorner"><span class="axret">ret &darr;</span><span class="axdep">dep &rarr;</span></th>'+FLIGHTHEAT.dep.map(function(d){return '<th'+(d===FLIGHTHEAT.eclipseDep?' class="ecl"':'')+'><span class="wd">'+hWd(d)+'</span>'+d+' Aug'+(d===FLIGHTHEAT.eclipseDep?' &#127769;':'')+'</th>';}).join('')+'</tr>';
+  var head='<tr><th class="hcorner" rowspan="2"><span class="axlbl">Return &darr;</span></th>'
+    +'<th class="axtop" colspan="'+FLIGHTHEAT.dep.length+'">Departure &rarr;</th></tr>'
+    +'<tr>'+FLIGHTHEAT.dep.map(function(d){return '<th class="dcol'+(d===FLIGHTHEAT.eclipseDep?' ecl':'')+'"><span class="wd">'+hWd(d)+'</span>'+d+' Aug'+(d===FLIGHTHEAT.eclipseDep?' &#127769;':'')+'</th>';}).join('')+'</tr>';
   var body=M.map(function(row,ri){var rd=FLIGHTHEAT.ret[ri];return '<tr><th class="hr"><span class="wd">'+hWd(rd)+'</span>'+rd+' Aug</th>'+row.map(function(v,di){
     if(v==null)return '<td><span class="hx">&middot;</span></td>';
     var u=flightUrl(ap,FLIGHTHEAT.dep[di],rd,car);
@@ -831,7 +837,7 @@ function heatBox(r){
   return '<div class="heatblock">'
     +'<div class="heatbar"><label class="heatlbl">Airline&nbsp;<select class="heatsel" onchange="drawHeat(\''+r.airport+'\',this.value)">'+opts+'</select></label>'
     +'<span class="heatlegend"><span>cheaper</span><span class="bar"></span><span>dearer</span></span></div>'
-    +'<div class="heatcap">Nonstop return fare per person &middot; rows = <b>return</b> date, columns = <b>departure</b> date. Depart on or before <b>12 Aug</b> (&#127769;) to catch the eclipse; 17 Aug was the original back-by date. Dot = no nonstop that day. Click a price to open it on Google Flights. <b>Looked up 29&ndash;30 Jun 2026</b> &mdash; fares change daily and climb as the date nears.</div>'
+    +'<div class="heatcap">Nonstop return fare per person, in euros. Depart on or before <b>12 Aug</b> (&#127769;) to catch the eclipse; 17 Aug was the original back-by date. Dot = no nonstop that day. Click any price to open it on Google Flights. <b>Looked up 29&ndash;30 Jun 2026</b> &mdash; fares change daily and climb as the date nears.</div>'
     +'<div class="heatwrap" id="heat-'+r.airport+'">'+heatTable(r.airport,'__cheap')+'</div>'
   +'</div>';
 }
