@@ -401,7 +401,7 @@
 
 <footer>
   <div class="wrap">
-    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were checked live in late June 2026 on Google Flights and Booking.com for a sample trip of four adults flying Amsterdam&ndash;Spain on 11 August and back on 17 August, with six nights' lodging (two rooms, or an apartment sleeping four); they are snapshots for comparison, not quotes, and will climb as eclipse day nears, so book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each 2026 region also carries a nonstop price heatmap (departure against return date, 7&ndash;19 August) with an airline selector. All heatmap fares are nonstop; remember you must depart on or before 12 August to be in Spain for the eclipse. For 2027, hotel prices are live for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
+    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were looked up on Google Flights and Booking.com on <strong>29&ndash;30 June 2026</strong>, for a sample trip of four adults flying Amsterdam&ndash;Spain with about six nights' lodging (two rooms, or an apartment sleeping four). They are a point-in-time snapshot for comparison, not quotes: fares and room rates change daily and will climb as eclipse day nears, so re-check before booking and book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each 2026 region also carries a nonstop price heatmap (departure against return date, 7&ndash;19 August) with an airline selector. All heatmap fares are nonstop; remember you must depart on or before 12 August to be in Spain for the eclipse. For 2027, hotel prices were looked up the same days for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
     <div class="srclist">
       <span style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;">SOURCES&nbsp;</span>
       <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
@@ -831,7 +831,7 @@ function heatBox(r){
   return '<div class="heatblock">'
     +'<div class="heatbar"><label class="heatlbl">Airline&nbsp;<select class="heatsel" onchange="drawHeat(\''+r.airport+'\',this.value)">'+opts+'</select></label>'
     +'<span class="heatlegend"><span>cheaper</span><span class="bar"></span><span>dearer</span></span></div>'
-    +'<div class="heatcap">Nonstop return fare per person &middot; rows = <b>return</b> date, columns = <b>departure</b> date. Depart on or before <b>12 Aug</b> (&#127769;) to catch the eclipse; 17 Aug was the original back-by date. Dot = no nonstop that day.</div>'
+    +'<div class="heatcap">Nonstop return fare per person &middot; rows = <b>return</b> date, columns = <b>departure</b> date. Depart on or before <b>12 Aug</b> (&#127769;) to catch the eclipse; 17 Aug was the original back-by date. Dot = no nonstop that day. Click a price to open it on Google Flights. <b>Looked up 29&ndash;30 Jun 2026</b> &mdash; fares change daily and climb as the date nears.</div>'
     +'<div class="heatwrap" id="heat-'+r.airport+'">'+heatTable(r.airport,'__cheap')+'</div>'
   +'</div>';
 }
@@ -941,7 +941,7 @@ function renderDetail(year,id){
    +'</div>'
    +'<p class="lead">'+r.lead+'</p>'
    +eph(r,year)
-   +(r.flights?'<div class="planbar"><span>Trip basis: <b>4 adults</b>, ~<b>6 nights</b> ('+(year==="2026"?"11&ndash;17 Aug 2026":"1&ndash;7 Aug 2027")+')</span><span>'+(year==="2026"?"Flights &amp; hotels: <b>live prices, late June 2026</b>":"Hotels: <b>live prices</b> &middot; flights: <b>estimated</b> (2027 fares not published yet)")+'</span></div>':'')
+   +(r.flights?'<div class="planbar"><span>Trip basis: <b>4 adults</b>, ~<b>6 nights</b> ('+(year==="2026"?"11&ndash;17 Aug 2026":"1&ndash;7 Aug 2027")+')</span><span>'+(year==="2026"?"Flights &amp; hotels: <b>looked up 29&ndash;30 Jun 2026</b> &middot; rise toward eclipse day":"Hotels: <b>looked up 30 Jun 2026</b> &middot; flights: <b>estimated</b> (2027 fares not published yet)")+'</span></div>':'')
    +locmap(r)
    +block('The main event','<p>'+r.eclipse+'</p>')
    +block('What the weather is doing','<p>'+r.weather+'</p>')
@@ -953,6 +953,7 @@ function renderDetail(year,id){
        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q='+encodeURIComponent('flights from Amsterdam to '+r.airport+(year==="2026"?' on 2026-08-11 returning 2026-08-17':' on 2027-08-01 returning 2027-08-07'))+'">&#9992; Search flights AMS &rarr; '+r.airport+'</a>')
    +block(r.stays?'Where to stay &amp; what it costs':'Crowds and cost','<p>'+r.cost+'</p>'
        +stayCards(r)
+       +(r.stays?'<p class="bagnote">Totals are for <strong>4 adults &middot; 6 nights</strong>, looked up on Booking.com on <strong>'+(year==="2026"?"29&ndash;30 Jun 2026":"30 Jun 2026")+'</strong>. Room rates change daily and rise as the date nears &mdash; treat as a guide and book early.</p>':'')
        +(r.stays?'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.html?ss='+encodeURIComponent(stayCity)+'&'+stayIn+'&group_adults=4&no_rooms=2&group_children=0">&#127976; See more stays in '+stayCity+'</a>':''))
    +block('Where to point your chair','<p>'+r.watch+'</p>'
        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.mapq)+'">&#128205; Open viewing area in Maps</a>')
@@ -1090,8 +1091,16 @@ route();
     ctx.beginPath();ctx.arc(dx,dy,2.6,0,Math.PI*2);ctx.fillStyle='#FFFDF7';ctx.fill();
   }
   function loop(t){draw(t);raf=requestAnimationFrame(loop);}
-  function start(){cancelAnimationFrame(raf);resize();if(reduce){draw(0);}else{raf=requestAnimationFrame(loop);}}
-  window.addEventListener('resize',function(){resize();if(reduce)draw(0);});
+  var running=false;
+  function start(){cancelAnimationFrame(raf);resize();draw(performance.now());if(!reduce){running=true;raf=requestAnimationFrame(loop);}}
+  function stop(){running=false;cancelAnimationFrame(raf);}
+  window.addEventListener('resize',function(){resize();draw(performance.now());});
+  /* Only animate while the hero is actually on screen: this keeps scrolling
+     smooth on long pages and makes the header repaint instantly when you
+     scroll back up to it, instead of catching up over a few seconds. */
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ if(es[0].isIntersecting){ if(!running) start(); } else { stop(); } },{threshold:0}).observe(c);
+  }
   start();
 })();
 </script>
