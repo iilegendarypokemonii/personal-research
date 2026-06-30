@@ -205,19 +205,28 @@
   .itin .what{color:var(--muted);font-size:.95rem;}
   .itin li.ecl .day{color:var(--accent-2);}
   .itin li.ecl .what{color:var(--text);}
-  /* per-carrier price heatmap */
+  /* per-carrier 2D price heatmap (departure x return) */
   .heatblock{margin:16px 0 6px;}
-  .heatcap{font-family:var(--mono);font-size:.66rem;letter-spacing:.04em;color:var(--faint);margin:0 0 10px;text-transform:uppercase;}
+  .heatbar{display:flex;align-items:center;justify-content:space-between;gap:14px 18px;flex-wrap:wrap;margin-bottom:10px;}
+  .heatlbl{font-family:var(--mono);font-size:.74rem;color:var(--muted);display:inline-flex;align-items:center;}
+  .heatsel{font-family:var(--mono);font-size:.8rem;background:var(--ground-2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer;}
+  .heatsel:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+  .heatcap{font-family:var(--mono);font-size:.66rem;letter-spacing:.02em;color:var(--faint);margin:0 0 10px;line-height:1.55;}
+  .heatcap b{color:var(--accent);}
   .heatwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;}
-  table.heat{border-collapse:collapse;width:100%;min-width:440px;}
-  table.heat th,table.heat td{padding:9px 8px;text-align:center;font-family:var(--mono);font-size:.82rem;border-bottom:1px solid var(--line);border-right:1px solid var(--line);}
-  table.heat thead th{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:var(--ground-2);font-weight:400;}
-  table.heat th.hc{text-align:left;color:var(--text);font-family:var(--sans);font-size:.86rem;white-space:nowrap;background:var(--ground-2);position:sticky;left:0;}
+  table.heat{border-collapse:collapse;width:100%;min-width:520px;}
+  table.heat th,table.heat td{padding:8px 7px;text-align:center;font-family:var(--mono);font-size:.8rem;border-bottom:1px solid var(--line);border-right:1px solid var(--line);white-space:nowrap;}
+  table.heat thead th{font-size:.64rem;letter-spacing:.04em;color:var(--muted);background:var(--ground-2);font-weight:400;}
+  table.heat thead th.ecl{color:var(--accent-2);font-weight:700;}
+  table.heat th.hr{text-align:right;color:var(--muted);background:var(--ground-2);position:sticky;left:0;z-index:1;}
+  table.heat th.hcorner{background:var(--ground-2);position:sticky;left:0;z-index:2;padding:4px 7px;}
+  .hcorner .axdep,.hcorner .axret{display:block;font-size:.56rem;letter-spacing:.04em;color:var(--faint);line-height:1.25;}
   table.heat td{color:var(--text);font-weight:600;}
+  table.heat td.best{outline:2px solid var(--accent);outline-offset:-2px;}
   table.heat td .hx{color:var(--faint);font-weight:400;}
   table.heat tr:last-child th,table.heat tr:last-child td{border-bottom:0;}
-  .heatlegend{display:flex;align-items:center;gap:8px;margin:10px 0 0;font-family:var(--mono);font-size:.62rem;color:var(--faint);}
-  .heatlegend .bar{height:9px;width:120px;border-radius:5px;background:linear-gradient(90deg,hsla(140,70%,45%,.55),hsla(70,70%,45%,.5),hsla(0,70%,45%,.55));}
+  .heatlegend{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.62rem;color:var(--faint);}
+  .heatlegend .bar{height:9px;width:90px;border-radius:5px;background:linear-gradient(90deg,hsla(140,72%,45%,.5),hsla(60,72%,45%,.5),hsla(0,72%,45%,.55));}
   table.cmp td.region small{display:block;font-family:var(--sans);font-size:.78rem;color:var(--muted);white-space:normal;max-width:30ch;}
   .cmpnote{font-family:var(--mono);font-size:.72rem;color:var(--faint);margin:12px 2px 0;line-height:1.5;}
 
@@ -387,7 +396,7 @@
 
 <footer>
   <div class="wrap">
-    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were checked live in late June 2026 on Google Flights and Booking.com for a sample trip of four adults flying Amsterdam&ndash;Spain on 11 August and back on 17 August, with six nights' lodging (two rooms, or an apartment sleeping four); they are snapshots for comparison, not quotes, and will climb as eclipse day nears, so book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each 2026 region also carries a per-carrier price heatmap by departure date (returning 17 August). For 2027, hotel prices are live for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
+    <p class="disc">Eclipse times, durations and Sun heights are approximate and shift across each region; once you have a spot, confirm the local circumstances and check for hills or buildings on your western horizon, which matters enormously in 2026 when the Sun is only a few degrees up. For the 2026 regions, flight and hotel prices were checked live in late June 2026 on Google Flights and Booking.com for a sample trip of four adults flying Amsterdam&ndash;Spain on 11 August and back on 17 August, with six nights' lodging (two rooms, or an apartment sleeping four); they are snapshots for comparison, not quotes, and will climb as eclipse day nears, so book early. Flight fares are cheapest return per person and usually exclude a checked or overhead cabin bag &mdash; see each region's cabin-baggage note. Each 2026 region also carries a nonstop price heatmap (departure against return date, 7&ndash;19 August) with an airline selector. All heatmap fares are nonstop; remember you must depart on or before 12 August to be in Spain for the eclipse. For 2027, hotel prices are live for 1&ndash;7 August 2027, but flight fares are rough estimates, as airlines have not yet published August 2027 schedules this far out. Weather figures are long-run August averages, not forecasts. Photographs are illustrative.</p>
     <div class="srclist">
       <span style="color:var(--faint);font-family:var(--mono);font-size:.72rem;letter-spacing:.12em;">SOURCES&nbsp;</span>
       <a href="https://eclipsophile.com/tse2026/">Eclipsophile</a>
@@ -744,35 +753,70 @@ const REGIONS = {
   ]
 };
 
-/* Per-carrier round-trip fares (EUR/person) by departure date, return fixed Mon 17 Aug 2026.
-   Checked on Google Flights, late June 2026. null = not among the cheapest results that day. */
+/* NONSTOP return fares (EUR/person) as a departure x return matrix per carrier.
+   rows = RETURN date [13..19 Aug], cols = DEPARTURE date [7..13 Aug]. null = no nonstop / not priced.
+   Checked on Google Flights' date grid, late June 2026. "Cheapest" is derived per-cell across carriers. */
 var FLIGHTHEAT={
-  dates:["8","9","10","11","12"],
+  dep:[7,8,9,10,11,12,13], ret:[13,14,15,16,17,18,19], eclipseDep:12,
   routes:{
-    "VLC":[{c:"Vueling",p:[166,189,166,166,166]},{c:"Transavia",p:[264,247,240,254,215]},{c:"easyJet",p:[null,290,null,280,null]},{c:"KLM",p:[294,294,294,347,294]}],
-    "MAD":[{c:"KLM",p:[220,220,226,220,220]},{c:"Air Europa",p:[359,374,359,344,329]},{c:"Iberia",p:[385,371,449,344,329]}],
-    "OVD":[{c:"Vueling (via BCN)",p:[352,336,323,311,328]},{c:"Air Europa (1-stop)",p:[454,509,479,434,434]},{c:"KLM (nonstop)",p:[497,462,795,682,421]}],
-    "BIO":[{c:"Vueling (via BCN)",p:[340,307,330,304,294]},{c:"KLM (nonstop)",p:[417,457,540,393,347]}],
-    "SCQ":[{c:"Vueling",p:[311,368,362,311,350]},{c:"KLM (nonstop)",p:[651,718,765,604,524]}],
-    "BCN":[{c:"Vueling",p:[193,182,182,182,182]},{c:"Transavia",p:[217,210,204,191,191]},{c:"KLM",p:[228,213,213,217,213]}],
-    "PMI":[{c:"easyJet",p:[227,249,267,304,216]},{c:"Transavia",p:[263,278,299,237,263]},{c:"Vueling (1-stop)",p:[303,576,279,280,249]}]
+    "VLC":{
+      "Vueling":[[214,214,237,214,214,214,null],[214,214,237,214,214,214,214],[214,214,237,214,214,214,214],[222,222,245,222,222,222,222],[166,166,189,166,166,166,166],[null,null,181,null,null,null,null],[null,166,189,166,166,166,166]],
+      "Transavia":[[278,307,290,283,297,258,267],[294,323,306,299,313,274,283],[310,339,322,315,329,290,299],[248,277,260,253,267,228,237],[235,264,247,240,254,null,224],[248,277,260,253,267,228,237],[235,264,247,240,254,null,224]],
+      "easyJet":[[255,null,269,281,259,null,null],[244,null,258,270,248,null,258],[null,null,null,null,null,null,null],[286,null,300,312,290,null,300],[276,null,290,302,280,null,290],[null,null,204,216,194,null,204],[null,null,null,null,null,null,null]],
+      "KLM":[[354,324,317,324,409,356,null],[438,408,408,408,485,442,442],[377,347,347,347,400,347,347],[327,297,297,297,350,297,297],[334,304,294,294,347,304,294],[301,271,271,271,314,271,null],[354,324,324,324,350,297,297]]
+    },
+    "MAD":{
+      "KLM":[[239,239,239,244,271,271,319],[286,286,286,291,286,330,330],[277,277,277,282,277,277,277],[295,295,295,301,295,295,295],[null,null,null,226,null,null,null],[248,248,248,254,248,248,248],[262,262,262,267,262,262,262]],
+      "Iberia":[[370,416,402,480,375,360,390],[415,461,447,525,420,405,405],[430,476,462,540,435,420,420],[400,446,432,510,405,390,390],[339,385,371,449,344,329,329],[296,342,328,406,301,null,null],[296,342,328,406,301,null,null]],
+      "Air Europa":[[318,318,333,318,303,288,383],[359,359,374,359,344,329,329],[359,359,374,359,344,329,329],[359,359,374,359,344,329,329],[359,359,374,359,344,329,329],[298,298,313,298,283,null,null],[298,298,293,278,283,null,null]]
+    },
+    "OVD":{
+      "KLM":[[832,796,740,null,946,699,null],[682,645,573,897,796,549,454],[718,620,585,946,832,585,491],[682,587,551,875,796,549,454],[568,531,476,795,682,421,null],[946,909,854,null,null,799,718],[682,645,590,909,796,549,454]]
+    },
+    "BIO":{
+      "KLM":[[519,473,513,597,467,467,626],[652,606,647,729,582,599,626],[668,622,658,746,599,553,553],[619,573,614,697,550,504,504],[462,417,457,540,393,347,347],[null,417,457,540,393,347,347],[null,null,449,532,385,null,null]],
+      "Vueling":[[null,null,null,null,null,null,null],[385,null,351,357,null,309,null],[null,null,null,null,null,null,null],[370,null,336,342,null,294,null],[370,null,336,342,null,294,null],[null,null,null,null,null,null,null],[302,null,268,274,null,null,null]]
+    },
+    "SCQ":{
+      "KLM":[[531,501,533,615,453,null,null],[647,621,685,729,604,594,585],[597,571,636,679,537,527,518],[778,752,816,879,718,708,699],[681,651,718,765,604,594,585],[615,585,651,699,537,527,518],[615,585,651,699,537,527,518]]
+    },
+    "BCN":{
+      "Vueling":[[182,193,182,182,182,182,214],[175,186,175,175,175,175,175],[197,208,197,197,197,197,197],[175,186,175,175,175,175,175],[182,193,182,182,182,182,182],[163,174,163,163,163,163,163],[null,150,null,null,null,null,null]],
+      "Transavia":[[306,313,306,300,287,287,null],[201,208,201,195,null,null,185],[261,268,261,255,242,242,245],[221,228,221,215,202,202,205],[210,217,210,204,191,191,194],[338,345,338,332,319,319,322],[233,240,233,227,214,214,217]],
+      "KLM":[[257,247,228,228,254,248,289],[253,232,209,213,213,231,237],[281,252,246,246,253,246,246],[300,275,256,256,263,256,261],[257,228,213,213,217,213,217],[273,244,228,200,233,228,232],[217,188,172,172,null,172,176]]
+    },
+    "PMI":{
+      "easyJet":[[328,270,291,309,321,259,278],[330,272,294,312,323,261,280],[347,289,310,328,340,278,297],[319,261,283,301,312,250,269],[313,255,277,295,306,244,263],[228,170,191,209,221,null,178],[277,219,241,259,270,208,227]],
+      "Transavia":[[278,263,278,299,263,263,252],[337,322,337,358,322,322,311],[295,280,295,316,280,280,269],[278,263,278,299,263,263,252],[278,263,278,299,263,263,252],[337,322,337,358,322,322,311],[261,246,261,282,246,246,null]]
+    }
   }
 };
-function heatmap(r){
-  var rows=FLIGHTHEAT.routes[r.airport];
-  if(!rows)return '';
-  var vals=[]; rows.forEach(function(row){row.p.forEach(function(v){if(v!=null)vals.push(v);});});
-  if(!vals.length)return '';
-  var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals);
-  function bg(v){ if(v==null)return ''; var t=max>min?(v-min)/(max-min):0; var hue=(140*(1-t)).toFixed(0); return 'background:hsla('+hue+',70%,45%,'+(0.18+0.34*t).toFixed(2)+');'; }
-  var head='<tr><th class="hc">Airline</th>'+FLIGHTHEAT.dates.map(function(d){return '<th>'+d+' Aug</th>';}).join('')+'</tr>';
-  var body=rows.map(function(row){
-    return '<tr><th class="hc">'+row.c+'</th>'+row.p.map(function(v){return '<td style="'+bg(v)+'">'+(v==null?'<span class="hx">&mdash;</span>':'&euro;'+v)+'</td>';}).join('')+'</tr>';
-  }).join('');
+function heatMat(ap,car){
+  var R=FLIGHTHEAT.routes[ap]; if(!R)return null;
+  if(car&&car!=="__cheap"&&R[car])return R[car];
+  var keys=Object.keys(R);
+  return FLIGHTHEAT.ret.map(function(_,ri){return FLIGHTHEAT.dep.map(function(__,di){var best=null;keys.forEach(function(k){var v=R[k][ri]?R[k][ri][di]:null;if(v!=null&&(best==null||v<best))best=v;});return best;});});
+}
+function heatRange(ap){var R=FLIGHTHEAT.routes[ap],vals=[];Object.keys(R).forEach(function(k){R[k].forEach(function(row){row.forEach(function(v){if(v!=null)vals.push(v);});});});return [Math.min.apply(null,vals),Math.max.apply(null,vals)];}
+function heatTable(ap,car){
+  var M=heatMat(ap,car); if(!M)return '';
+  var rng=heatRange(ap), min=rng[0], max=rng[1], cmin=Infinity;
+  M.forEach(function(row){row.forEach(function(v){if(v!=null&&v<cmin)cmin=v;});});
+  function bg(v){if(v==null)return '';var t=max>min?(v-min)/(max-min):0;var hue=(140*(1-t)).toFixed(0);return 'background:hsla('+hue+',72%,45%,'+(0.16+0.36*t).toFixed(2)+');';}
+  var head='<tr><th class="hcorner"><span class="axret">ret &darr;</span><span class="axdep">dep &rarr;</span></th>'+FLIGHTHEAT.dep.map(function(d){return '<th'+(d===FLIGHTHEAT.eclipseDep?' class="ecl"':'')+'>'+d+' Aug'+(d===FLIGHTHEAT.eclipseDep?' &#127769;':'')+'</th>';}).join('')+'</tr>';
+  var body=M.map(function(row,ri){return '<tr><th class="hr">'+FLIGHTHEAT.ret[ri]+' Aug</th>'+row.map(function(v){return '<td class="'+(v!=null&&v===cmin?'best':'')+'" style="'+bg(v)+'">'+(v==null?'<span class="hx">&middot;</span>':'&euro;'+v)+'</td>';}).join('')+'</tr>';}).join('');
+  return '<table class="heat"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>';
+}
+function drawHeat(ap,car){var el=document.getElementById('heat-'+ap);if(el)el.innerHTML=heatTable(ap,car);}
+function heatBox(r){
+  var R=FLIGHTHEAT.routes[r.airport]; if(!R)return '';
+  var cars=Object.keys(R);
+  var opts='<option value="__cheap">Cheapest &middot; any airline</option>'+cars.map(function(c){return '<option value="'+c+'">'+c+'</option>';}).join('');
   return '<div class="heatblock">'
-    +'<div class="heatcap">Cheapest return fare / person by departure date &middot; returning Mon 17 Aug</div>'
-    +'<div class="heatwrap"><table class="heat"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>'
-    +'<div class="heatlegend"><span>cheaper</span><span class="bar"></span><span>dearer</span></div>'
+    +'<div class="heatbar"><label class="heatlbl">Airline&nbsp;<select class="heatsel" onchange="drawHeat(\''+r.airport+'\',this.value)">'+opts+'</select></label>'
+    +'<span class="heatlegend"><span>cheaper</span><span class="bar"></span><span>dearer</span></span></div>'
+    +'<div class="heatcap">Nonstop return fare per person &middot; rows = <b>return</b> date, columns = <b>departure</b> date. Depart on or before <b>12 Aug</b> (&#127769;) to catch the eclipse; 17 Aug was the original back-by date. Dot = no nonstop that day.</div>'
+    +'<div class="heatwrap" id="heat-'+r.airport+'">'+heatTable(r.airport,'__cheap')+'</div>'
   +'</div>';
 }
 
@@ -887,7 +931,7 @@ function renderDetail(year,id){
    +block('What the weather is doing','<p>'+r.weather+'</p>')
    +block('Getting there from Schiphol','<p>'+r.getting+'</p>'
        +flightFacts(r)
-       +heatmap(r)
+       +heatBox(r)
        +(r.flights&&r.flights.heatNote?'<p class="bagnote">'+r.flights.heatNote+'</p>':'')
        +(r.flights&&r.flights.baggage?'<p class="bagnote"><strong>Cabin baggage:</strong> '+r.flights.baggage+'</p>':'')
        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/travel/flights?q='+encodeURIComponent('flights from Amsterdam to '+r.airport+(year==="2026"?' on 2026-08-11 returning 2026-08-17':' on 2027-08-01 returning 2027-08-07'))+'">&#9992; Search flights AMS &rarr; '+r.airport+'</a>')
