@@ -218,12 +218,17 @@
   table.heat th,table.heat td{padding:8px 7px;text-align:center;font-family:var(--mono);font-size:.8rem;border-bottom:1px solid var(--line);border-right:1px solid var(--line);white-space:nowrap;}
   table.heat thead th{font-size:.64rem;letter-spacing:.04em;color:var(--muted);background:var(--ground-2);font-weight:400;}
   table.heat thead th.ecl{color:var(--accent-2);font-weight:700;}
-  table.heat th.hr{text-align:right;color:var(--muted);background:var(--ground-2);position:sticky;left:0;z-index:1;}
+  table.heat thead th.ecl .wd{color:var(--accent-2);}
+  table.heat th.hr{text-align:right;color:var(--muted);background:var(--ground-2);position:sticky;left:0;z-index:1;line-height:1.2;}
   table.heat th.hcorner{background:var(--ground-2);position:sticky;left:0;z-index:2;padding:4px 7px;}
   .hcorner .axdep,.hcorner .axret{display:block;font-size:.56rem;letter-spacing:.04em;color:var(--faint);line-height:1.25;}
-  table.heat td{color:var(--text);font-weight:600;}
+  .heat .wd{display:block;font-size:.56rem;color:var(--faint);font-weight:400;letter-spacing:.05em;}
+  table.heat td{color:var(--text);font-weight:600;padding:0;}
   table.heat td.best{outline:2px solid var(--accent);outline-offset:-2px;}
-  table.heat td .hx{color:var(--faint);font-weight:400;}
+  table.heat td .hx{display:block;padding:8px 7px;color:var(--faint);font-weight:400;}
+  .hcell{display:block;padding:8px 7px;color:inherit;text-decoration:none;}
+  .hcell:hover{text-decoration:underline;box-shadow:inset 0 0 0 2px rgba(237,233,240,.6);}
+  .hcell:focus-visible{outline:2px solid var(--accent);outline-offset:-2px;}
   table.heat tr:last-child th,table.heat tr:last-child td{border-bottom:0;}
   .heatlegend{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.62rem;color:var(--faint);}
   .heatlegend .bar{height:9px;width:90px;border-radius:5px;background:linear-gradient(90deg,hsla(140,72%,45%,.5),hsla(60,72%,45%,.5),hsla(0,72%,45%,.55));}
@@ -798,13 +803,24 @@ function heatMat(ap,car){
   return FLIGHTHEAT.ret.map(function(_,ri){return FLIGHTHEAT.dep.map(function(__,di){var best=null;keys.forEach(function(k){var v=R[k][ri]?R[k][ri][di]:null;if(v!=null&&(best==null||v<best))best=v;});return best;});});
 }
 function heatRange(ap){var R=FLIGHTHEAT.routes[ap],vals=[];Object.keys(R).forEach(function(k){R[k].forEach(function(row){row.forEach(function(v){if(v!=null)vals.push(v);});});});return [Math.min.apply(null,vals),Math.max.apply(null,vals)];}
+function hWd(d){return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(2026,7,d).getDay()];}
+function flightUrl(ap,depD,retD,car){
+  var pad=function(n){return n<10?'0'+n:''+n;};
+  var air=(car&&car!=="__cheap")?car+' ':'';
+  var q='nonstop '+air+'flights from AMS to '+ap+' on 2026-08-'+pad(depD)+' returning 2026-08-'+pad(retD);
+  return 'https://www.google.com/travel/flights?q='+encodeURIComponent(q);
+}
 function heatTable(ap,car){
   var M=heatMat(ap,car); if(!M)return '';
   var rng=heatRange(ap), min=rng[0], max=rng[1], cmin=Infinity;
   M.forEach(function(row){row.forEach(function(v){if(v!=null&&v<cmin)cmin=v;});});
   function bg(v){if(v==null)return '';var t=max>min?(v-min)/(max-min):0;var hue=(140*(1-t)).toFixed(0);return 'background:hsla('+hue+',72%,45%,'+(0.16+0.36*t).toFixed(2)+');';}
-  var head='<tr><th class="hcorner"><span class="axret">ret &darr;</span><span class="axdep">dep &rarr;</span></th>'+FLIGHTHEAT.dep.map(function(d){return '<th'+(d===FLIGHTHEAT.eclipseDep?' class="ecl"':'')+'>'+d+' Aug'+(d===FLIGHTHEAT.eclipseDep?' &#127769;':'')+'</th>';}).join('')+'</tr>';
-  var body=M.map(function(row,ri){return '<tr><th class="hr">'+FLIGHTHEAT.ret[ri]+' Aug</th>'+row.map(function(v){return '<td class="'+(v!=null&&v===cmin?'best':'')+'" style="'+bg(v)+'">'+(v==null?'<span class="hx">&middot;</span>':'&euro;'+v)+'</td>';}).join('')+'</tr>';}).join('');
+  var head='<tr><th class="hcorner"><span class="axret">ret &darr;</span><span class="axdep">dep &rarr;</span></th>'+FLIGHTHEAT.dep.map(function(d){return '<th'+(d===FLIGHTHEAT.eclipseDep?' class="ecl"':'')+'><span class="wd">'+hWd(d)+'</span>'+d+' Aug'+(d===FLIGHTHEAT.eclipseDep?' &#127769;':'')+'</th>';}).join('')+'</tr>';
+  var body=M.map(function(row,ri){var rd=FLIGHTHEAT.ret[ri];return '<tr><th class="hr"><span class="wd">'+hWd(rd)+'</span>'+rd+' Aug</th>'+row.map(function(v,di){
+    if(v==null)return '<td><span class="hx">&middot;</span></td>';
+    var u=flightUrl(ap,FLIGHTHEAT.dep[di],rd,car);
+    return '<td class="'+(v===cmin?'best':'')+'" style="'+bg(v)+'"><a class="hcell" href="'+u+'" target="_blank" rel="noopener" title="Open this nonstop flight on Google Flights">&euro;'+v+'</a></td>';
+  }).join('')+'</tr>';}).join('');
   return '<table class="heat"><thead>'+head+'</thead><tbody>'+body+'</tbody></table>';
 }
 function drawHeat(ap,car){var el=document.getElementById('heat-'+ap);if(el)el.innerHTML=heatTable(ap,car);}
