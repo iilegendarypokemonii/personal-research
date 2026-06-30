@@ -215,6 +215,9 @@
   .flightfacts .v{font-size:.95rem;color:var(--text);line-height:1.4;}
   .flightfacts .v .mono{font-family:var(--mono);color:var(--accent);}
   .bagnote{font-size:.88rem;color:var(--muted);margin:12px 0 0;padding-left:14px;border-left:2px solid var(--line);}
+  .watchtip{margin:16px 0 6px;padding:14px 18px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:10px;background:rgba(242,180,65,.06);}
+  .watchtip .tiphead{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+  .watchtip p{margin:0;font-size:.97rem;line-height:1.55;color:var(--text);}
   .staygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0 4px;}
   .stay{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:7px;}
   .stay .kind{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);}
@@ -478,6 +481,7 @@ const REGIONS = {
       cost:"This is a region Spaniards holiday in, not a package-tour magnet, so the beaches and villages absorb the crowds and prices stay sane. Reckon on roughly 150 to 300 euro return from Amsterdam in August, and 90 to 150 a night for a good hotel or casa rural.",
       getting:"The timing could not be better. KLM begins flying Schiphol straight to Asturias (OVD) in summer 2026, dropping you right inside the path in a little over two hours. Vueling and others serve it too, and Bilbao, a direct hop of about 2h15, makes a solid backup an hour to the east.",
       watch:"Find a west-facing piece of coast with open water to the west-northwest. The western Asturian shore around Cudillero, Cabo Vidio or Cabo Bust&oacute; is ideal. Whatever you do, keep the Picos de Europa behind you rather than between you and the Sun, because at twelve degrees those peaks will swallow it.",
+      meseta:{head:"Cloudy forecast? Drop south to Le&oacute;n",text:"The Asturian coast is the cloud gamble. If the outlook sours, the high Castilian meseta is about ninety minutes south through the mountains, and <strong>Le&oacute;n</strong> sits near the centre line with roughly <strong>1m45s</strong> of totality &mdash; longer than the coast, under far better August skies. Not somewhere to trade an Asturian holiday for, but the dependable spot to actually see it. The mountain passes clog on eclipse day, so set off early."},
       beyond:"Give it a full week. Walk up to the Covadonga lakes, swim off the wild beaches near Llanes, drink cider poured from overhead in a sidrer&iacute;a, and follow the coast road from one village to the next. The Camino Primitivo, the oldest pilgrim route to Santiago, starts here too.",
       verdict:"The sensible pick for 2026 if comfort and elbow room matter more than a cast-iron guarantee. Cool, beautiful, genuinely in the path and now easy to reach. Stay mobile and make peace with the cloud.",
       plan:{fly:"KLM nonstop to Oviedo, ~&euro;680 rt pp",flyPP:680,stay:"Hotel Gran Regente &middot; &euro;2,552 / 6n",stayTot:2552,est:false,
@@ -513,6 +517,7 @@ const REGIONS = {
       cost:"Relaxed and well-priced, Santander being dignified rather than rowdy. Flights run around 120 to 260 euro return by way of Bilbao, with hotels 90 to 140 a night.",
       getting:"There is no reliable year-round direct to Santander, so fly Amsterdam to Bilbao, a quick 2h15 with Vueling, and drive an hour west; or arrive on the new Asturias service and approach from the other side.",
       watch:"A west-facing coast with sea to the horizon: the beaches west of Santander and around Comillas and San Vicente de la Barquera. Keep the Picos at your back to the south.",
+      meseta:{head:"Cloudy forecast? Drop south to the meseta",text:"As on the Asturian coast, low cloud can spoil the show. The reliable fallback is to drive about an hour and three-quarters south onto the high meseta around <strong>Burgos</strong> or <strong>Palencia</strong> &mdash; both near the centre line, both close to <strong>1m40s</strong> of totality under much clearer skies. A long day-trip rather than a base, but the surest bet from a northern coast."},
       beyond:"Sun yourself on Santander's Sardinero beach, wander the flawless medieval lanes of Santillana del Mar, visit the Altamira replica cave, and admire Gaud&iacute;'s whimsical El Capricho in Comillas before heading inland for the mountains. It pairs naturally with a few days in Asturias.",
       verdict:"Near enough a twin of Asturias for climate and calm. Choose it if Santander, the caves and the eastern Picos call to you more than the Asturian coast. The cloud risk comes as standard.",
       plan:{fly:"Vueling / KLM nonstop to Bilbao, ~&euro;300 rt pp",flyPP:300,stay:"Santander two-bed apartment &middot; &euro;1,740 / 6n",stayTot:1740,est:false,
@@ -583,6 +588,7 @@ const REGIONS = {
       cost:"Wonderfully uncrowded, and the cheapest option here. Inland Spain empties in August, so you can simply pull off the road into an open field. Reckon on 100 to 220 euro return flying via Barcelona plus a 30 to 50 euro fast train, and 70 to 120 a night for a room.",
       getting:"There is no convenient direct from Schiphol, so fly Amsterdam to Barcelona and take the AVE high-speed train to Zaragoza in about 1h15, or route through Madrid. Hire a car for the eclipse evening so you can chase the clearest patch of sky.",
       watch:"The open Ebro plains make a flat western horizon easy to find, which an eight-degree Sun demands. Scout a spot with no distant hills or town silhouette to the west. Space is the real luxury out here; there will be no jostling for position.",
+      meseta:{head:"Aim for the Bardenas Reales",text:"You are already in the clearest-sky region on the whole path. For the most dramatic seat, drive northwest into the <strong>Bardenas Reales</strong>, a UNESCO badlands semi-desert &mdash; dead flat, empty and dark, with the unbroken western horizon an 8&deg;-high Sun demands. Edging toward the centre line out here stretches totality from Zaragoza's ~1m25s to nearer <strong>1m45s</strong>. Services are sparse, so carry everything you need."},
       beyond:"Climb the towers of Zaragoza's Bas&iacute;lica del Pilar, follow the Mud&eacute;jar trail, stand where Goya grew up, then escape the heat in the Aragonese Pyrenees or under the waterfalls of the Monasterio de Piedra. Less polished than the coast, and all the more genuine for it.",
       verdict:"The clear-headed choice if seeing totality is the whole point. Best odds, most space, easy escape routes if a cloud threatens. The cost is heat, and that is manageable if you plan around it.",
       plan:{fly:"Vueling nonstop to Barcelona, ~&euro;175 rt pp + AVE",flyPP:175,stay:"iStay by NH Sport, Zaragoza &middot; &euro;2,404 / 6n",stayTot:2404,est:false,
@@ -673,6 +679,7 @@ const REGIONS = {
       cost:"Madrid has the deepest choice of beds in Spain, so prices stay sane — roughly 1,600 to 3,400 euro for six nights for four in a central hotel — but the best-known central 4-stars sell out fast for eclipse week, so book now. An apartment or aparthotel in Sol, Malasa&ntilde;a or La Latina is often the best value for a group.",
       getting:"The most-connected route here: frequent nonstop flights from Schiphol to Madrid (MAD) in about 2h40 with KLM, Iberia and Air Europa, plus low-cost options. Hire a car for eclipse day — you cannot reach totality by public transport in time, and you will want the flexibility.",
       watch:"This one is all about the drive. Leave Madrid in the morning or very early afternoon — not after lunch — and head up the A-1 toward Aranda de Duero. Find open countryside with a flat, unobstructed western horizon (the Sun is only ~8 degrees up). Then brace for the return: Spain’s traffic authority is mounting its biggest-ever summer operation, and everyone heads home in the dark at once. Bring food and water, or stay a night near Aranda.",
+      meseta:{head:"Skip the partial &middot; take the AVE north",text:"Madrid sees only a 99% partial, so totality means heading north whatever you do. Beyond Aranda de Duero, two proper cities sit on the high-speed line and inside the path: <strong>Valladolid</strong> (about an hour by AVE) and <strong>Burgos</strong> (about 1h45, closer to the centre line and a little over a minute and a half of totality). Neither is somewhere to base a holiday, but as an eclipse day-trip they beat a roadside verge &mdash; clear meseta skies, a city to wait out the afternoon, and a fast train home instead of the A-1 crush."},
       beyond:"Around the eclipse, Madrid is a full holiday in itself: the Prado, Reina Sof&iacute;a and Thyssen, the Royal Palace and Plaza Mayor, the Retiro and the Templo de Debod at sunset, and long evenings of tapas in La Latina. Day-trip by fast train to Toledo (30 min) or Segovia, or out to El Escorial.",
       flights:{airport:"MAD (Madrid-Barajas)", time:"~2h40 nonstop", fare:"KLM nonstop from ~&euro;220 rt; Iberia / Air Europa ~&euro;345 (cabin bag incl.)", carriers:"KLM, Iberia, Air Europa nonstop; also easyJet", baggage:"KLM’s cheapest ‘Light’ fares include only a small under-seat bag — a cabin trolley costs extra; KLM Standard, Iberia and Air Europa fares include a full cabin trolley. For four people, compare total-with-baggage, not just the headline fare."},
       stays:[
@@ -976,6 +983,10 @@ function itinList(r){
     return '<li class="'+(it.ecl?'ecl':'')+'"><span class="day">'+it.d+'</span><span class="what">'+it.t+'</span></li>';
   }).join('')+'</ul>';
 }
+function watchTip(r){
+  if(!r.meseta)return '';
+  return '<div class="watchtip"><span class="tiphead">'+r.meseta.head+'</span><p>'+r.meseta.text+'</p></div>';
+}
 function gallery(r){
   return '<div class="gallery">'
     +'<div class="imgwrap"><img loading="lazy" decoding="async" alt="" src="'+r.gal[0]+'" onerror="this.closest(\'.imgwrap\').style.display=\'none\'"></div>'
@@ -1024,6 +1035,7 @@ function renderDetail(year,id){
        +(r.stays?'<p class="bagnote">Totals are for <strong>4 adults &middot; 6 nights</strong>, looked up on Booking.com on <strong>'+(year==="2026"?"29&ndash;30 Jun 2026":"30 Jun 2026")+'</strong>. Room rates change daily and rise as the date nears &mdash; treat as a guide and book early.</p>':'')
        +(r.stays?'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.booking.com/searchresults.html?ss='+encodeURIComponent(stayCity)+'&'+stayIn+'&group_adults=4&no_rooms=2&group_children=0">&#127976; See more stays in '+stayCity+'</a>':''))
    +block('Where to point your chair','<p>'+r.watch+'</p>'
+       +watchTip(r)
        +'<a class="linkbtn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.mapq)+'">&#128205; Open viewing area in Maps</a>')
    +(r.itinerary
        ? block('Your week, day by day','<p>'+r.beyond+'</p>'+itinList(r)+gallery(r))
